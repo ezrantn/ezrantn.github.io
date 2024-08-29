@@ -72,9 +72,19 @@ style = 'catppuccin-frappe'
 # Giscus comments
 [params.giscus]
 enable = false
-repo = "user/repo"
-repoid = "repoId"
+repo = "ezrantn/ezrantn.github.io"
+repoid = "849173383"
 category = "General"
-categoryid = "categoryId"
+categoryid = "DIC_kwDOLtSsz84CfLm4"
 mapping = "pathname"
 theme = "preferred_color_scheme"
+
+[[deployment.matchers]]
+pattern = "^.+\\.(js|css|svg|ttf|woff2)$"
+cacheControl = "max-age=31536000, no-transform, public"
+gzip = true
+
+[[deployment.matchers]]
+pattern = "^.+\\.(png|jpg|gif|webp)$"
+cacheControl = "max-age=31536000, no-transform, public"
+gzip = false
