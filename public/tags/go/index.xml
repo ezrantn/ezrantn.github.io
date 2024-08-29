@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Go on Ezra Natanael</title>
-    <link>http://localhost:1313/tags/go/</link>
+    <link>https://ezrantn.github.io/tags/go/</link>
     <description>Recent content in Go on Ezra Natanael</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 25 May 2024 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/go/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://ezrantn.github.io/tags/go/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Understanding and Preventing Nil Pointer Dereference Panics in Go</title>
-      <link>http://localhost:1313/posts/preventing-nil-pointer-in-go/</link>
+      <link>https://ezrantn.github.io/posts/preventing-nil-pointer-in-go/</link>
       <pubDate>Sat, 25 May 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/preventing-nil-pointer-in-go/</guid>
+      <guid>https://ezrantn.github.io/posts/preventing-nil-pointer-in-go/</guid>
       <description>Preventing Pointer to Panic in Go</description>
     </item>
   </channel>
