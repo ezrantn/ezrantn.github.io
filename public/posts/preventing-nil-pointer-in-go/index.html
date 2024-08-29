@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en-us"
+  dir="ltr">
+
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+
+
+
+<link rel="icon" type="image/ico" href="http://localhost:1313//favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313//favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313//favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="http://localhost:1313//android-chrome-192x192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="http://localhost:1313//apple-touch-icon.png">
+
+<meta name="description" content="Preventing Pointer to Panic in Go"/>
+
+<title>
+    
+    Understanding and Preventing Nil Pointer Dereference Panics in Go | Ezra Natanael
+    
+</title>
+
+<link rel="canonical" href="http://localhost:1313/posts/preventing-nil-pointer-in-go/"/>
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/assets/combined.min.66ed288e713700859ba6a96e0b16ff08246cb2096b1ac7749bf0627a619f0681.css" media="all">
+
+
+
+
+
+
+  </head>
+
+  
+
+  
+  
+  
+
+  <body class="dark">
+
+    <div class="content">
+      <header>
+        
+
+<div class="header">
+
+    
+
+    <h1 class="header-title">Ezra Natanael</h1>
+
+    <div class="flex">
+        
+
+        
+        
+      
+        <p class="small ">
+            <a href="/" >
+                /home
+            </a>
+        </p>
+        
+      
+        <p class="small ">
+            <a href="/posts" >
+                /posts
+            </a>
+        </p>
+        
+        
+    </div>
+
+    
+
+</div>
+
+      </header>
+
+      <main class="main">
+        
+
+
+
+
+
+<div class="breadcrumbs">
+    
+    <a href="/">Home</a>
+    <span class="breadcrumbs-separator"> > </span>
+    
+    <a href="/posts/">Posts</a>
+    <span class="breadcrumbs-separator"> > </span>
+    
+    <a class="breadcrumbs-current" href="/posts/preventing-nil-pointer-in-go/">Understanding and Preventing Nil Pointer Dereference Panics in Go</a>
+</div>
+
+
+
+<div  class="autonumber" >
+
+  <div class="single-intro-container">
+
+    
+
+    <h1 class="single-title">Understanding and Preventing Nil Pointer Dereference Panics in Go</h1>
+    
+    <p class="single-summary">Preventing Pointer to Panic in Go</p>
+    
+
+    
+
+    <p class="single-readtime">
+      
+      
+      
+      <time datetime="2024-05-25T00:00:00&#43;00:00">May 25, 2024</time>
+      
+
+      
+      &nbsp; · &nbsp;
+      7 min read
+      
+    </p>
+
+  </div>
+
+  
+
+  
+
+  
+  <aside class="toc">
+    <p><strong>Table of contents</strong></p>
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#code">Code</a></li>
+    <li><a href="#when">When</a></li>
+    <li><a href="#solution">Solution</a></li>
+  </ul>
+</nav>
+  </aside>
+  
+
+  
+
+  <div class="single-content">
+    <h2 id="introduction">Introduction</h2>
+<p>For those who code in Go, you might encounter a common error: the nil pointer error. This error can be confusing for beginners and even for those with previous programming experience. But don’t worry, I’ll explain everything about the nil pointer error and how to prevent it.</p>
+<p>Imagine your computer’s memory as a big storage unit with many compartments. Each compartment has a unique number, which we call an address. A pointer is like a note that you write down one of these addresses on, so you can quickly find a specific compartment again.</p>
+<p>A nil pointer is like a blank note — it doesn’t have any address written on it. It points to nowhere, meaning it doesn’t tell you where to find a compartment in memory.</p>
+<p>Dereferencing a pointer is like reading the note to see which compartment it points to, then going to that compartment to get whatever is stored there.</p>
+<p>If you try to dereference a nil pointer (read a blank note), you end up with no address to go to. In Go, doing this causes the program to panic. A panic is like the program throwing up its hands and saying, “I don’t know what to do!” This panic stops the program from running and causes it to crash.</p>
+<p>So, a nil pointer dereference panic happens when you try to use a pointer that points to nowhere. Since there’s no valid address to access, Go can’t continue and shuts down the program to prevent further errors.</p>
+<h2 id="code">Code</h2>
+<p>Let see some code in action!</p>
+<p>First, I’m going to demonstrate a code <strong>without</strong> a pointer:</p>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#81c8be">package</span> main
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#81c8be">import</span> (
+</span></span><span style="display:flex;"><span> <span style="color:#a6d189">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#737994;font-style:italic">// declare a Person struct with 2 values Name and Age
+</span></span></span><span style="display:flex;"><span><span style="color:#737994;font-style:italic"></span><span style="color:#e78284">type</span> Person <span style="color:#e78284">struct</span> {
+</span></span><span style="display:flex;"><span> Name <span style="color:#e78284">string</span>
+</span></span><span style="display:flex;"><span> Age <span style="color:#e78284">int</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#737994;font-style:italic">// Accessing Person struct to see the value
+</span></span></span><span style="display:flex;"><span><span style="color:#737994;font-style:italic"></span><span style="color:#e78284">func</span> <span style="color:#8caaee">main</span>() {
+</span></span><span style="display:flex;"><span> <span style="color:#e78284">var</span> person Person
+</span></span><span style="display:flex;"><span> fmt.<span style="color:#8caaee">Println</span>(person.Name)
+</span></span><span style="display:flex;"><span> fmt.<span style="color:#8caaee">Println</span>(person.Age)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#737994;font-style:italic">// Output:
+</span></span></span><span style="display:flex;"><span><span style="color:#737994;font-style:italic">// 
+</span></span></span><span style="display:flex;"><span><span style="color:#737994;font-style:italic">// 0
+</span></span></span></code></pre></div><p>If you run the code above, you won’t see an error. It just outputs an empty string and zero in the console, right? So why does that happen? When you run the code, the output is an empty string and zero because <code>person.Name</code> is initialized to the default value for a string, which is an empty string. Similarly, <code>person.Age</code> is set to zero because that is the default value for an integer.</p>
+<p>So the conclusion is: if we declare a struct and access the values in the struct <strong>without</strong> using a pointer, and the values haven’t been initialized, we can do that because Go will use the default value of each data type.</p>
+<p>Now let’s see some code <strong>with</strong> pointer:</p>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#81c8be">package</span> main
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#81c8be">import</span> (
+</span></span><span style="display:flex;"><span> <span style="color:#a6d189">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#737994;font-style:italic">// declare a Person struct with 2 values Name and Age
+</span></span></span><span style="display:flex;"><span><span style="color:#737994;font-style:italic"></span><span style="color:#e78284">type</span> Person <span style="color:#e78284">struct</span> {
+</span></span><span style="display:flex;"><span> Name <span style="color:#e78284">string</span>
+</span></span><span style="display:flex;"><span> Age <span style="color:#e78284">int</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#737994;font-style:italic">// Accessing Person struct with a pointer to see the value
+</span></span></span><span style="display:flex;"><span><span style="color:#737994;font-style:italic"></span><span style="color:#e78284">func</span> <span style="color:#8caaee">main</span>() {
+</span></span><span style="display:flex;"><span> <span style="color:#e78284">var</span> person <span style="color:#99d1db;font-weight:bold">*</span>Person
+</span></span><span style="display:flex;"><span> fmt.<span style="color:#8caaee">Println</span>(person.Name)
+</span></span><span style="display:flex;"><span> fmt.<span style="color:#8caaee">Println</span>(person.Age)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#737994;font-style:italic">/* Output:
+</span></span></span><span style="display:flex;"><span><span style="color:#737994;font-style:italic">panic: runtime error: invalid memory address or nil pointer dereference
+</span></span></span><span style="display:flex;"><span><span style="color:#737994;font-style:italic">[signal SIGSEGV: segmentation violation code=0x1 addr=0x0 pc=0x47afba]
+</span></span></span><span style="display:flex;"><span><span style="color:#737994;font-style:italic">
+</span></span></span><span style="display:flex;"><span><span style="color:#737994;font-style:italic">goroutine 1 [running]:
+</span></span></span><span style="display:flex;"><span><span style="color:#737994;font-style:italic">main.main()
+</span></span></span><span style="display:flex;"><span><span style="color:#737994;font-style:italic">        /home/ezrantn/Documents/Coding/Golang/pointers/main.go:14 +0x1a
+</span></span></span><span style="display:flex;"><span><span style="color:#737994;font-style:italic">exit status 2
+</span></span></span><span style="display:flex;"><span><span style="color:#737994;font-style:italic">*/</span>
+</span></span></code></pre></div><p>Since <code>Person</code> is a nil pointer (not pointing to any valid memory address), attempting to access its fields (<code>Name</code> and <code>Age</code>) results in a nil pointer dereference. This means Go doesn’t know the values of <code>Name</code> and <code>Age</code> since it hasn’t been initialized.</p>
+<p>Using a pointer without proper initialization leads to a <strong>“nil pointer dereference”</strong> error. This happens because the pointer doesn’t have a valid memory address to access.</p>
+<p>But if we decide to initialize both values with the help of a function, like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#81c8be">package</span> main
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#81c8be">import</span> (
+</span></span><span style="display:flex;"><span> <span style="color:#a6d189">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e78284">type</span> Person <span style="color:#e78284">struct</span> {
+</span></span><span style="display:flex;"><span> Name <span style="color:#e78284">string</span>
+</span></span><span style="display:flex;"><span> Age <span style="color:#e78284">int</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#737994;font-style:italic">// function to create new person returning a pointer of Person
+</span></span></span><span style="display:flex;"><span><span style="color:#737994;font-style:italic"></span><span style="color:#e78284">func</span> <span style="color:#8caaee">createNewPerson</span>(name <span style="color:#e78284">string</span>, age <span style="color:#e78284">int</span>) <span style="color:#99d1db;font-weight:bold">*</span>Person {
+</span></span><span style="display:flex;"><span> <span style="color:#ca9ee6">return</span> <span style="color:#99d1db;font-weight:bold">&amp;</span>Person{
+</span></span><span style="display:flex;"><span>  Name: name,
+</span></span><span style="display:flex;"><span>  Age: age,
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e78284">func</span> <span style="color:#8caaee">main</span>() {
+</span></span><span style="display:flex;"><span> <span style="color:#737994;font-style:italic">// initialized both values
+</span></span></span><span style="display:flex;"><span><span style="color:#737994;font-style:italic"></span> person <span style="color:#99d1db;font-weight:bold">:=</span> <span style="color:#8caaee">createNewPerson</span>(<span style="color:#a6d189">&#34;John&#34;</span>, <span style="color:#ef9f76">20</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> fmt.<span style="color:#8caaee">Println</span>(person.Name)
+</span></span><span style="display:flex;"><span> fmt.<span style="color:#8caaee">Println</span>(person.Age)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#737994;font-style:italic">/* Output:
+</span></span></span><span style="display:flex;"><span><span style="color:#737994;font-style:italic">John
+</span></span></span><span style="display:flex;"><span><span style="color:#737994;font-style:italic">20
+</span></span></span><span style="display:flex;"><span><span style="color:#737994;font-style:italic">*/</span>
+</span></span></code></pre></div><p>The provided code demonstrates this issue and fixes it by introducing the <code>createNewPerson</code> function. This function takes a name and age, creates a Person struct, initializes its fields, and returns a pointer to the newly created struct.</p>
+<p>By using this function in <code>main</code>, we ensure the <code>person</code> pointer points to a valid memory location with the Person data. This allows you to access the <code>Name</code> and <code>Age</code> fields successfully.</p>
+<hr>
+<h2 id="when">When</h2>
+<p>If you’re wondering when you should use pointers and when you shouldn’t, you should know that in Go, pointers are used in a variety of contexts to efficiently manage memory and enable specific programming paradigms. Here are some key circumstances when pointers are especially useful.</p>
+<ol>
+<li>
+<p>Modifying Function Arguments:</p>
+<p>Pointers are often used to allow functions to modify their arguments. By passing a pointer to the argument, the function can change the value of the original variable, not just a copy of it.</p>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span> <span style="color:#81c8be">package</span> main
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#81c8be">import</span> <span style="color:#a6d189">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#e78284">func</span> <span style="color:#8caaee">modifyValue</span>(val <span style="color:#99d1db;font-weight:bold">*</span><span style="color:#e78284">int</span>) {
+</span></span><span style="display:flex;"><span>     <span style="color:#99d1db;font-weight:bold">*</span>val = <span style="color:#ef9f76">100</span>
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#e78284">func</span> <span style="color:#8caaee">main</span>() {
+</span></span><span style="display:flex;"><span>     num <span style="color:#99d1db;font-weight:bold">:=</span> <span style="color:#ef9f76">10</span>
+</span></span><span style="display:flex;"><span>     <span style="color:#8caaee">modifyValue</span>(<span style="color:#99d1db;font-weight:bold">&amp;</span>num)
+</span></span><span style="display:flex;"><span>     fmt.<span style="color:#8caaee">Println</span>(num) <span style="color:#737994;font-style:italic">// Output: 100
+</span></span></span><span style="display:flex;"><span><span style="color:#737994;font-style:italic"></span> }
+</span></span></code></pre></div></li>
+<li>
+<p>Avoiding Copies of Large Structures:</p>
+<p>When dealing with large structs, passing them by value can be inefficient as it involves copying the entire structure. Using pointers can avoid this overhead by passing references instead of copying the data.</p>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span> <span style="color:#81c8be">package</span> main
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#81c8be">import</span> <span style="color:#a6d189">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#e78284">type</span> LargeStruct <span style="color:#e78284">struct</span> {
+</span></span><span style="display:flex;"><span>     Data [<span style="color:#ef9f76">1000</span>]<span style="color:#e78284">int</span>
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#e78284">func</span> <span style="color:#8caaee">processStruct</span>(ls <span style="color:#99d1db;font-weight:bold">*</span>LargeStruct) {
+</span></span><span style="display:flex;"><span>     <span style="color:#737994;font-style:italic">// Process the struct
+</span></span></span><span style="display:flex;"><span><span style="color:#737994;font-style:italic"></span>     ls.Data[<span style="color:#ef9f76">0</span>] = <span style="color:#ef9f76">1</span> <span style="color:#737994;font-style:italic">// Example modification
+</span></span></span><span style="display:flex;"><span><span style="color:#737994;font-style:italic"></span> }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#e78284">func</span> <span style="color:#8caaee">main</span>() {
+</span></span><span style="display:flex;"><span>     ls <span style="color:#99d1db;font-weight:bold">:=</span> LargeStruct{}
+</span></span><span style="display:flex;"><span>     <span style="color:#8caaee">processStruct</span>(<span style="color:#99d1db;font-weight:bold">&amp;</span>ls)
+</span></span><span style="display:flex;"><span>     fmt.<span style="color:#8caaee">Println</span>(ls.Data[<span style="color:#ef9f76">0</span>]) <span style="color:#737994;font-style:italic">// Output: 1
+</span></span></span><span style="display:flex;"><span><span style="color:#737994;font-style:italic"></span> }
+</span></span></code></pre></div></li>
+<li>
+<p>Implementing Methods that Modify the Receiver:</p>
+<p>Pointers are used to define methods that modify the receiver’s state. If a method needs to modify the receiver, it must have a pointer receiver.</p>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span> <span style="color:#81c8be">package</span> main
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#81c8be">import</span> <span style="color:#a6d189">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#e78284">type</span> Counter <span style="color:#e78284">struct</span> {
+</span></span><span style="display:flex;"><span>     value <span style="color:#e78284">int</span>
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#e78284">func</span> (c <span style="color:#99d1db;font-weight:bold">*</span>Counter) <span style="color:#8caaee">Increment</span>() {
+</span></span><span style="display:flex;"><span>     c.value<span style="color:#99d1db;font-weight:bold">++</span>
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#e78284">func</span> <span style="color:#8caaee">main</span>() {
+</span></span><span style="display:flex;"><span>     c <span style="color:#99d1db;font-weight:bold">:=</span> <span style="color:#99d1db;font-weight:bold">&amp;</span>Counter{}
+</span></span><span style="display:flex;"><span>     c.<span style="color:#8caaee">Increment</span>()
+</span></span><span style="display:flex;"><span>     fmt.<span style="color:#8caaee">Println</span>(c.value) <span style="color:#737994;font-style:italic">// Output: 1
+</span></span></span><span style="display:flex;"><span><span style="color:#737994;font-style:italic"></span> }
+</span></span></code></pre></div></li>
+</ol>
+<p>The three most common and important uses of pointers in Go are these three contexts. There are many situations in which pointers should be used, so I recommend reading up on them <a href="https://gobyexample.com/pointers">here</a>. They provide more powerful and flexible programming and aid in performance optimization.</p>
+<hr>
+<h2 id="solution">Solution</h2>
+<p>Thus, the key query is: How can I keep my code from causing nil pointer dereference? We’ll go over some advice I have for you together.</p>
+<p>Preventing nil pointer dereference in Go is crucial to avoid runtime panics and ensure robust code. Here are some best practices along with code examples to handle and prevent nil pointer dereferences effectively:</p>
+<ol>
+<li>
+<p>Check For nil Before Dereferencing:</p>
+<p>Before accessing a pointer’s value, always check if the pointer is nil. This ensures that you do not attempt to dereference a nil pointer, which would result in a runtime panic.</p>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span> <span style="color:#81c8be">package</span> main
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#81c8be">import</span> <span style="color:#a6d189">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#e78284">type</span> Node <span style="color:#e78284">struct</span> {
+</span></span><span style="display:flex;"><span>     Value <span style="color:#e78284">int</span>
+</span></span><span style="display:flex;"><span>     Next  <span style="color:#99d1db;font-weight:bold">*</span>Node
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#e78284">func</span> <span style="color:#8caaee">printNodeValue</span>(node <span style="color:#99d1db;font-weight:bold">*</span>Node) {
+</span></span><span style="display:flex;"><span>     <span style="color:#ca9ee6">if</span> node <span style="color:#99d1db;font-weight:bold">==</span> <span style="color:#ef9f76">nil</span> {
+</span></span><span style="display:flex;"><span>         fmt.<span style="color:#8caaee">Println</span>(<span style="color:#a6d189">&#34;Node is nil&#34;</span>)
+</span></span><span style="display:flex;"><span>         <span style="color:#ca9ee6">return</span>
+</span></span><span style="display:flex;"><span>     }
+</span></span><span style="display:flex;"><span>     fmt.<span style="color:#8caaee">Println</span>(<span style="color:#a6d189">&#34;Node Value:&#34;</span>, node.Value)
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#e78284">func</span> <span style="color:#8caaee">main</span>() {
+</span></span><span style="display:flex;"><span>     <span style="color:#e78284">var</span> node <span style="color:#99d1db;font-weight:bold">*</span>Node
+</span></span><span style="display:flex;"><span>     <span style="color:#8caaee">printNodeValue</span>(node) <span style="color:#737994;font-style:italic">// Output: Node is nil
+</span></span></span><span style="display:flex;"><span><span style="color:#737994;font-style:italic"></span>
+</span></span><span style="display:flex;"><span>     node = <span style="color:#99d1db;font-weight:bold">&amp;</span>Node{Value: <span style="color:#ef9f76">42</span>}
+</span></span><span style="display:flex;"><span>     <span style="color:#8caaee">printNodeValue</span>(node) <span style="color:#737994;font-style:italic">// Output: Node Value: 42
+</span></span></span><span style="display:flex;"><span><span style="color:#737994;font-style:italic"></span> }
+</span></span></code></pre></div></li>
+<li>
+<p>Use Default Values and Initialization:</p>
+<p>Ensure pointers are properly initialized before use. This can be done by providing default values or initializing pointers as part of struct initialization.</p>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span> <span style="color:#81c8be">package</span> main
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#81c8be">import</span> <span style="color:#a6d189">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#e78284">type</span> Config <span style="color:#e78284">struct</span> {
+</span></span><span style="display:flex;"><span>     Name    <span style="color:#e78284">string</span>
+</span></span><span style="display:flex;"><span>     Timeout <span style="color:#99d1db;font-weight:bold">*</span><span style="color:#e78284">int</span>
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#e78284">func</span> <span style="color:#8caaee">main</span>() {
+</span></span><span style="display:flex;"><span>     defaultTimeout <span style="color:#99d1db;font-weight:bold">:=</span> <span style="color:#ef9f76">30</span>
+</span></span><span style="display:flex;"><span>     cfg <span style="color:#99d1db;font-weight:bold">:=</span> Config{Name: <span style="color:#a6d189">&#34;AppConfig&#34;</span>, Timeout: <span style="color:#99d1db;font-weight:bold">&amp;</span>defaultTimeout}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>     <span style="color:#ca9ee6">if</span> cfg.Timeout <span style="color:#99d1db;font-weight:bold">!=</span> <span style="color:#ef9f76">nil</span> {
+</span></span><span style="display:flex;"><span>         fmt.<span style="color:#8caaee">Println</span>(<span style="color:#a6d189">&#34;Timeout:&#34;</span>, <span style="color:#99d1db;font-weight:bold">*</span>cfg.Timeout) <span style="color:#737994;font-style:italic">// Output: Timeout: 30
+</span></span></span><span style="display:flex;"><span><span style="color:#737994;font-style:italic"></span>     } <span style="color:#ca9ee6">else</span> {
+</span></span><span style="display:flex;"><span>         fmt.<span style="color:#8caaee">Println</span>(<span style="color:#a6d189">&#34;Timeout is not set&#34;</span>)
+</span></span><span style="display:flex;"><span>     }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>     <span style="color:#737994;font-style:italic">// Without initialization
+</span></span></span><span style="display:flex;"><span><span style="color:#737994;font-style:italic"></span>     <span style="color:#e78284">var</span> uninitConfig Config
+</span></span><span style="display:flex;"><span>     <span style="color:#ca9ee6">if</span> uninitConfig.Timeout <span style="color:#99d1db;font-weight:bold">!=</span> <span style="color:#ef9f76">nil</span> {
+</span></span><span style="display:flex;"><span>         fmt.<span style="color:#8caaee">Println</span>(<span style="color:#a6d189">&#34;Timeout:&#34;</span>, <span style="color:#99d1db;font-weight:bold">*</span>uninitConfig.Timeout)
+</span></span><span style="display:flex;"><span>     } <span style="color:#ca9ee6">else</span> {
+</span></span><span style="display:flex;"><span>         fmt.<span style="color:#8caaee">Println</span>(<span style="color:#a6d189">&#34;Timeout is not set&#34;</span>) <span style="color:#737994;font-style:italic">// Output: Timeout is not set
+</span></span></span><span style="display:flex;"><span><span style="color:#737994;font-style:italic"></span>     }
+</span></span><span style="display:flex;"><span> }
+</span></span></code></pre></div></li>
+<li>
+<p>Use Constructor Function:</p>
+<p>Create constructor functions to initialize structs and their pointer fields. This ensures that all fields are properly set up, reducing the risk of nil pointer dereference.</p>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span> <span style="color:#81c8be">package</span> main
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#81c8be">import</span> <span style="color:#a6d189">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#e78284">type</span> User <span style="color:#e78284">struct</span> {
+</span></span><span style="display:flex;"><span>     Name  <span style="color:#e78284">string</span>
+</span></span><span style="display:flex;"><span>     Email <span style="color:#99d1db;font-weight:bold">*</span><span style="color:#e78284">string</span>
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#e78284">func</span> <span style="color:#8caaee">NewUser</span>(name, email <span style="color:#e78284">string</span>) <span style="color:#99d1db;font-weight:bold">*</span>User {
+</span></span><span style="display:flex;"><span>     <span style="color:#ca9ee6">return</span> <span style="color:#99d1db;font-weight:bold">&amp;</span>User{Name: name, Email: <span style="color:#99d1db;font-weight:bold">&amp;</span>email}
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#e78284">func</span> <span style="color:#8caaee">main</span>() {
+</span></span><span style="display:flex;"><span>     user <span style="color:#99d1db;font-weight:bold">:=</span> <span style="color:#8caaee">NewUser</span>(<span style="color:#a6d189">&#34;Alice&#34;</span>, <span style="color:#a6d189">&#34;alice@example.com&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>     <span style="color:#ca9ee6">if</span> user.Email <span style="color:#99d1db;font-weight:bold">!=</span> <span style="color:#ef9f76">nil</span> {
+</span></span><span style="display:flex;"><span>         fmt.<span style="color:#8caaee">Println</span>(<span style="color:#a6d189">&#34;User Email:&#34;</span>, <span style="color:#99d1db;font-weight:bold">*</span>user.Email) <span style="color:#737994;font-style:italic">// Output: User Email: alice@example.com
+</span></span></span><span style="display:flex;"><span><span style="color:#737994;font-style:italic"></span>     } <span style="color:#ca9ee6">else</span> {
+</span></span><span style="display:flex;"><span>         fmt.<span style="color:#8caaee">Println</span>(<span style="color:#a6d189">&#34;Email is not set&#34;</span>)
+</span></span><span style="display:flex;"><span>     }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>     <span style="color:#737994;font-style:italic">// Handling nil pointer initialization
+</span></span></span><span style="display:flex;"><span><span style="color:#737994;font-style:italic"></span>     <span style="color:#e78284">var</span> email <span style="color:#e78284">string</span>
+</span></span><span style="display:flex;"><span>     userWithoutEmail <span style="color:#99d1db;font-weight:bold">:=</span> <span style="color:#99d1db;font-weight:bold">&amp;</span>User{Name: <span style="color:#a6d189">&#34;Bob&#34;</span>}
+</span></span><span style="display:flex;"><span>     <span style="color:#ca9ee6">if</span> userWithoutEmail.Email <span style="color:#99d1db;font-weight:bold">!=</span> <span style="color:#ef9f76">nil</span> {
+</span></span><span style="display:flex;"><span>         fmt.<span style="color:#8caaee">Println</span>(<span style="color:#a6d189">&#34;User Email:&#34;</span>, <span style="color:#99d1db;font-weight:bold">*</span>userWithoutEmail.Email)
+</span></span><span style="display:flex;"><span>     } <span style="color:#ca9ee6">else</span> {
+</span></span><span style="display:flex;"><span>         fmt.<span style="color:#8caaee">Println</span>(<span style="color:#a6d189">&#34;Email is not set&#34;</span>) <span style="color:#737994;font-style:italic">// Output: Email is not set
+</span></span></span><span style="display:flex;"><span><span style="color:#737994;font-style:italic"></span>     }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>     userWithoutEmail.Email = <span style="color:#99d1db;font-weight:bold">&amp;</span>email
+</span></span><span style="display:flex;"><span>     <span style="color:#99d1db;font-weight:bold">*</span>userWithoutEmail.Email = <span style="color:#a6d189">&#34;bob@example.com&#34;</span>
+</span></span><span style="display:flex;"><span>     fmt.<span style="color:#8caaee">Println</span>(<span style="color:#a6d189">&#34;User Email:&#34;</span>, <span style="color:#99d1db;font-weight:bold">*</span>userWithoutEmail.Email) <span style="color:#737994;font-style:italic">// Output: User Email: bob@example.com
+</span></span></span><span style="display:flex;"><span><span style="color:#737994;font-style:italic"></span> }
+</span></span></code></pre></div></li>
+</ol>
+<p>These practices help in writing safer Go code by preventing nil pointer dereference errors. For more information try to <a href="https://go.dev/doc/effective_go">read</a> this documentation.</p>
+<hr>
+<p>Although there’s a lot of information here, if you’re new to coding and run into this issue, you can improve as a developer by learning from this. Have no fear of nil pointer dereference; I appreciate you taking the time to read this. Happy hacking! 👋</p>
+
+    
+  </div>
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+  <div class="back-to-top">
+    <a href="#top">
+      back to top
+    </a>
+  </div>
+  
+
+</div>
+
+
+      </main>
+    </div>
+
+    <footer>
+      <p>Powered by
+    <a href="https://gohugo.io/">Hugo</a>
+    and
+    <a href="https://github.com/tomfran/typo">tomfran/typo</a>
+</p>
+
+
+<link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css">
+<script defer
+  src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script>
+
+<script defer
+  src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body);"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false }
+      ]
+    });
+  });
+</script>
+
+    </footer>
+
+  </body>
+
+  <script>
+
+  function isAuto() {
+    return document.body.classList.contains("auto");
+  }
+
+  function setTheme() {
+    if (!isAuto()) {
+      return
+    }
+
+    document.body.classList.remove("auto");
+    let cls = "light";
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      cls = "dark";
+    }
+
+    document.body.classList.add(cls);
+  }
+
+  function invertBody() {
+    document.body.classList.toggle("dark");
+    document.body.classList.toggle("light");
+  }
+
+  if (isAuto()) {
+    window.matchMedia('(prefers-color-scheme: dark)').addListener(invertBody);
+  }
+
+  setTheme();
+
+</script>
+
+</html>
