@@ -138,8 +138,6 @@ The provided code demonstrates this issue and fixes it by introducing the `creat
 
 By using this function in `main`, we ensure the `person` pointer points to a valid memory location with the Person data. This allows you to access the `Name` and `Age` fields successfully.
 
-***
-
 ## When
 
 If you’re wondering when you should use pointers and when you shouldn’t, you should know that in Go, pointers are used in a variety of contexts to efficiently manage memory and enable specific programming paradigms. Here are some key circumstances when pointers are especially useful.
@@ -212,8 +210,6 @@ If you’re wondering when you should use pointers and when you shouldn’t, you
    ```
 
 The three most common and important uses of pointers in Go are these three contexts. There are many situations in which pointers should be used, so I recommend reading up on them [here](https://gobyexample.com/pointers). They provide more powerful and flexible programming and aid in performance optimization.
-
-***
 
 ## Solution
 
@@ -329,7 +325,5 @@ Preventing nil pointer dereference in Go is crucial to avoid runtime panics and 
    ```
 
 These practices help in writing safer Go code by preventing nil pointer dereference errors. For more information try to [read](https://go.dev/doc/effective_go) this documentation.
-
-***
 
 Although there’s a lot of information here, if you’re new to coding and run into this issue, you can improve as a developer by learning from this. Have no fear of nil pointer dereference; I appreciate you taking the time to read this. Happy hacking! 👋

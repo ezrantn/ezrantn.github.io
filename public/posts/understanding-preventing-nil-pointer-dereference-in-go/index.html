@@ -263,7 +263,6 @@
 </span></span></span><span style="display:flex;"><span><span style="color:#737994;font-style:italic">*/</span>
 </span></span></code></pre></div><p>The provided code demonstrates this issue and fixes it by introducing the <code>createNewPerson</code> function. This function takes a name and age, creates a Person struct, initializes its fields, and returns a pointer to the newly created struct.</p>
 <p>By using this function in <code>main</code>, we ensure the <code>person</code> pointer points to a valid memory location with the Person data. This allows you to access the <code>Name</code> and <code>Age</code> fields successfully.</p>
-<hr>
 <h2 id="when">When</h2>
 <p>If you’re wondering when you should use pointers and when you shouldn’t, you should know that in Go, pointers are used in a variety of contexts to efficiently manage memory and enable specific programming paradigms. Here are some key circumstances when pointers are especially useful.</p>
 <ol>
@@ -329,7 +328,6 @@
 </span></span></code></pre></div></li>
 </ol>
 <p>The three most common and important uses of pointers in Go are these three contexts. There are many situations in which pointers should be used, so I recommend reading up on them <a href="https://gobyexample.com/pointers">here</a>. They provide more powerful and flexible programming and aid in performance optimization.</p>
-<hr>
 <h2 id="solution">Solution</h2>
 <p>Thus, the key query is: How can I keep my code from causing nil pointer dereference? We’ll go over some advice I have for you together.</p>
 <p>Preventing nil pointer dereference in Go is crucial to avoid runtime panics and ensure robust code. Here are some best practices along with code examples to handle and prevent nil pointer dereferences effectively:</p>
@@ -434,7 +432,6 @@
 </span></span></code></pre></div></li>
 </ol>
 <p>These practices help in writing safer Go code by preventing nil pointer dereference errors. For more information try to <a href="https://go.dev/doc/effective_go">read</a> this documentation.</p>
-<hr>
 <p>Although there’s a lot of information here, if you’re new to coding and run into this issue, you can improve as a developer by learning from this. Have no fear of nil pointer dereference; I appreciate you taking the time to read this. Happy hacking! 👋</p>
 
     
@@ -444,6 +441,35 @@
 
   
   
+
+<div class="single-pagination">
+    <hr />
+
+    <div class="flex">
+
+        <div class="single-pagination-prev">
+            
+        </div>
+
+        <div class="single-pagination-next">
+            
+            <div class="single-pagination-container-next">
+                <div class="single-pagination-text">
+                    <a href="/posts/how-to-integrate-postgresql-in-go/">
+                        Integrating PostgreSQL with Go
+                    </a>
+                </div>
+                <div class="single-pagination-text">→</div>
+            </div>
+            
+        </div>
+
+    </div>
+
+    <hr />
+</div>
+
+
 
   
 

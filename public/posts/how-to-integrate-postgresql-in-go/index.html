@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en-us"
+  dir="ltr">
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+
+
+
+<link rel="icon" type="image/ico" href="https://ezrantn.github.io//favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://ezrantn.github.io//favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://ezrantn.github.io//favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="https://ezrantn.github.io//android-chrome-192x192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://ezrantn.github.io//apple-touch-icon.png">
+
+<meta name="description" content="PostgreSQL Integration in Go"/>
+
+<title>
+    
+    Integrating PostgreSQL with Go | Ezra Natanael
+    
+</title>
+
+<link rel="canonical" href="https://ezrantn.github.io/posts/how-to-integrate-postgresql-in-go/"/>
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/assets/combined.min.66ed288e713700859ba6a96e0b16ff08246cb2096b1ac7749bf0627a619f0681.css" media="all">
+
+
+
+
+  
+
+
+
+
+
+
+  </head>
+
+  
+
+  
+  
+  
+
+  <body class="dark">
+
+    <div class="content">
+      <header>
+        
+
+<div class="header">
+
+    
+
+    <h1 class="header-title">Ezra Natanael</h1>
+
+    <div class="flex">
+        
+
+        
+        
+      
+        <p class="small ">
+            <a href="/" >
+                /home
+            </a>
+        </p>
+        
+      
+        <p class="small ">
+            <a href="/posts" >
+                /posts
+            </a>
+        </p>
+        
+        
+    </div>
+
+    
+
+</div>
+
+      </header>
+
+      <main class="main">
+        
+
+
+
+
+
+<div class="breadcrumbs">
+    
+    <a href="/">Home</a>
+    <span class="breadcrumbs-separator"> > </span>
+    
+    <a href="/posts/">Posts</a>
+    <span class="breadcrumbs-separator"> > </span>
+    
+    <a class="breadcrumbs-current" href="/posts/how-to-integrate-postgresql-in-go/">Integrating PostgreSQL with Go</a>
+</div>
+
+
+
+<div  class="autonumber" >
+
+  <div class="single-intro-container">
+
+    
+
+    <h1 class="single-title">Integrating PostgreSQL with Go</h1>
+    
+    <p class="single-summary">PostgreSQL Integration in Go</p>
+    
+
+    
+
+    <p class="single-readtime">
+      
+      
+      
+      <time datetime="2024-08-29T00:00:00&#43;00:00">August 29, 2024</time>
+      
+
+      
+      &nbsp; · &nbsp;
+      18 min read
+      
+    </p>
+
+  </div>
+
+  
+
+  
+
+  
+  <aside class="toc">
+    <p><strong>Table of Contents</strong></p>
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#setting-up-a-project">Setting Up A Project</a></li>
+    <li><a href="#libraries">Libraries</a></li>
+    <li><a href="#code-setup">Code Setup</a></li>
+    <li><a href="#code-to-connect">Code to Connect</a></li>
+    <li><a href="#connection-pool">Connection Pool</a></li>
+    <li><a href="#database-migration">Database Migration</a></li>
+    <li><a href="#executing-queries">Executing Queries</a></li>
+  </ul>
+</nav>
+  </aside>
+  
+
+  
+
+  <div class="single-content">
+    <h2 id="introduction">Introduction</h2>
+<p>PostgreSQL, an open-source relational database system, is widely used by developers for its performance and dependability. Integrating it with Go, a statically typed programming language, allows for high-performance applications.</p>
+<p>An issue that beginners frequently run into when combining PostgreSQL with Go is effectively managing database connections. It is tempting to initiate numerous database connections at once with Go&rsquo;s concurrency model, but this can soon result in resource exhaustion or performance problems if connection pooling and management aren&rsquo;t done properly.</p>
+<p>Beginners may also find it difficult to ensure that their queries are protected from SQL injection attacks or to handle SQL errors gracefully. For anyone working with PostgreSQL in Go, knowing how to set up the connection pool correctly, write secure SQL statements, and handle failures well are essential.</p>
+<p>In this article, I&rsquo;ll guide you through establishing a connection to PostgreSQL using Go, making the most of its powerful features. We’ll cover everything from setting up a PostgreSQL instance using Docker to configuring your Go project, connecting Go with PostgreSQL, writing secure queries to prevent SQL injection, and much more. So, without further ado, let&rsquo;s get started!</p>
+<h2 id="setting-up-a-project">Setting Up A Project</h2>
+<ol>
+<li>
+<p>Setting Up a PostgreSQL via Docker</p>
+<p>I assume you&rsquo;re already familiar with Docker and know how to start the Docker engine. If not, you can <a href="https://www.postgresql.org/download">download</a> PostgreSQL locally and follow the installation instructions provided by the <a href="https://www.postgresql.org/docs">official documentation</a>. For the purposes of this tutorial, I&rsquo;ll be using Docker to set up PostgreSQL.</p>
+<p>First and foremost, you&rsquo;ll want to start Docker and pull the PostgreSQL Docker image. The command will look like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span> $ docker run --name pg -e <span style="color:#f2d5cf">POSTGRES_PASSWORD</span><span style="color:#99d1db;font-weight:bold">=</span><span style="color:#ef9f76">123</span> -p 5432:5432 -d postgres
+</span></span></code></pre></div><p>Feel free to name your PostgreSQL instance as you like; the container name is set after the <code>--name</code> flag. In this example, I&rsquo;ve named the instance <code>pg</code> because it&rsquo;s short and easy to remember. The next step is to configure the database password by setting the <code>POSTGRES_PASSWORD</code> environment variable. Here, I&rsquo;ve used <code>123</code> for simplicity, but in a real-world scenario, you&rsquo;ll want to choose a more secure password.</p>
+<p>To verify that the Docker container is up and running, use the following command:</p>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span> $ docker ps
+</span></span></code></pre></div></li>
+<li>
+<p>Creating a Database in PostgreSQL</p>
+<p>Once your Docker instance is up and running, it&rsquo;s time to create your database. You can do this by accessing the terminal within your PostgreSQL container. To do so, run the following command:</p>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span> $ docker <span style="color:#99d1db">exec</span> -it &lt;your container name&gt; bash
+</span></span></code></pre></div><p>Once inside the container, connect to the PostgreSQL server using the <code>psql</code> command:</p>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span> $ psql -U &lt;your postgres username&gt;
+</span></span></code></pre></div><p>After accessing your PostgreSQL terminal, you can create a new database by typing the following command:</p>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span> <span style="color:#ca9ee6">CREATE</span> <span style="color:#ca9ee6">DATABASE</span> pg_go;
+</span></span></code></pre></div><p>In this tutorial, the database is named <code>pg_go</code> for demonstration purposes, but feel free to use any name that suits your needs.</p>
+<p>To verify that your new database has been created, list all the databases available within your PostgreSQL container by using the following command:</p>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span> $ <span style="color:#8caaee">\l</span>
+</span></span><span style="display:flex;"><span> $ <span style="color:#8caaee">\q</span> <span style="color:#737994;font-style:italic"># To quit the PostgreSQL interactive terminal</span>
+</span></span></code></pre></div><p>If your newly created database appears in the list, congratulations! You&rsquo;ve successfully set up PostgreSQL in a Docker container and created a database within it.</p>
+</li>
+<li>
+<p>Creating a Go Project</p>
+<p>As the title suggests, it&rsquo;s time to create your Go project. I won&rsquo;t go into the details, assuming you&rsquo;re already familiar with Go or even have an existing project.</p>
+<p>However, if you don&rsquo;t have a project yet, now is the perfect time to start one!</p>
+</li>
+</ol>
+<p>Alright, we&rsquo;ve set up all the necessary requirements in both PostgreSQL and Go. Now it&rsquo;s time to dive deeper into the technical details of how PostgreSQL interacts with Go. Get ready—we&rsquo;re going to do a lot of coding!</p>
+<h2 id="libraries">Libraries</h2>
+<p>When it comes to connecting PostgreSQL with Go, there are several libraries available, each with its own strengths. In this tutorial, we&rsquo;ll focus on <code>pgx</code>, a popular and powerful library for interacting with PostgreSQL databases in Go.</p>
+<p><code>pgx (PostgreSQL Extension for Go)</code> is known for its performance and feature-rich capabilities. Here are some of the key advantages of using <code>pgx</code>:</p>
+<ol>
+<li>
+<p>Performance:</p>
+<p><code>pgx</code> is designed with performance in mind. It offers a highly optimized and efficient interface for PostgreSQL, often resulting in faster query execution and reduced overhead compared to other libraries.</p>
+</li>
+<li>
+<p>Native PostgreSQL Support:</p>
+<p><code>pgx</code> provides native support for PostgreSQL features, including advanced data types and custom types. This allows for more seamless and direct interactions with PostgreSQL&rsquo;s capabilities.</p>
+</li>
+<li>
+<p>Connection Pooling:</p>
+<p>Built-in connection pooling is a major advantage of <code>pgx</code>. This feature helps manage database connections efficiently, reducing latency and improving the scalability of your application.</p>
+</li>
+</ol>
+<p>You can install <code>pgx</code> using the following command:</p>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span> $ go get github.com/jackc/pgx/v5
+</span></span></code></pre></div><p>For many users, this command works perfectly fine. However, if you encounter issues, you might need to include the <code>stdlib</code> sub-package:</p>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span> $ go get github.com/jackc/pgx/v5/stdlib
+</span></span></code></pre></div><p>The <code>stdlib</code> sub-package provides compatibility with Go&rsquo;s <code>database/sql</code> interface. Some projects require this additional package for proper integration, especially if your code relies on the standard SQL interface. While many users won&rsquo;t need this, including it can resolve potential issues.</p>
+<h2 id="code-setup">Code Setup</h2>
+<p>Let&rsquo;s dive into the code and explore how to configure PostgreSQL in our Go application.</p>
+<p>First, we&rsquo;ll create a <code>.env</code> file to securely store our database credentials.</p>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-.env" data-lang=".env"><span style="display:flex;"><span><span style="color:#737994;font-style:italic"># Database Management</span>
+</span></span><span style="display:flex;"><span><span style="color:#f2d5cf">DB_HOST</span><span style="color:#99d1db;font-weight:bold">=</span>localhost
+</span></span><span style="display:flex;"><span><span style="color:#f2d5cf">DB_PORT</span><span style="color:#99d1db;font-weight:bold">=</span><span style="color:#ef9f76">5432</span>
+</span></span><span style="display:flex;"><span><span style="color:#f2d5cf">DB_USERNAME</span><span style="color:#99d1db;font-weight:bold">=</span>postgres
+</span></span><span style="display:flex;"><span><span style="color:#f2d5cf">DB_PASSWORD</span><span style="color:#99d1db;font-weight:bold">=</span><span style="color:#ef9f76">123</span>
+</span></span><span style="display:flex;"><span><span style="color:#f2d5cf">DB_NAME</span><span style="color:#99d1db;font-weight:bold">=</span>pg_go
+</span></span></code></pre></div><p>Ensure that the credentials match your own database credentials.</p>
+<p>We&rsquo;ll need to install an additional dependency to load our <code>.env</code> file into our Go program. We&rsquo;ll use <code>godotenv</code> for this purpose. To install the dependency, run the following command:</p>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span> $ go get github.com/joho/godotenv
+</span></span></code></pre></div><p>Let&rsquo;s create a folder named <code>database</code> to store our configuration file, which we&rsquo;ll call <code>config.go</code>.</p>
+<p>Inside <code>config.go</code>, define a struct to represent your database credentials, specifying the appropriate data types for each field.</p>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#81c8be">package</span> database
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e78284">type</span> DBConfig <span style="color:#e78284">struct</span> {
+</span></span><span style="display:flex;"><span>   host     <span style="color:#e78284">string</span>
+</span></span><span style="display:flex;"><span>   port     <span style="color:#e78284">string</span>
+</span></span><span style="display:flex;"><span>   username <span style="color:#e78284">string</span>
+</span></span><span style="display:flex;"><span>   password <span style="color:#e78284">string</span>
+</span></span><span style="display:flex;"><span>   name     <span style="color:#e78284">string</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>You might be wondering why we use a string for the <code>port</code> field when it’s clearly a number. Shouldn&rsquo;t it be an <code>int</code>?</p>
+<p>While it is true that ports are numerical values, the <code>port</code> field is defined as a string because <strong>environment variables</strong>, where these values are often stored, are typically in string format. Keeping <code>port</code> as a string simplifies the process of reading configuration data from environment variables, eliminating the need for conversion from a string to an integer.</p>
+<p>To manage our database configuration efficiently, we need to create two functions: a constructor for loading the configuration and a method to generate the database <a href="https://stackoverflow.com/questions/3582552/what-is-the-format-for-the-postgresql-connection-string-url">connection URI</a>.</p>
+<p>The <code>NewDBConfig</code> function is responsible for loading environment variables and creating a new instance of <code>DBConfig</code> struct. Here’s how it works:</p>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#e78284">func</span> <span style="color:#8caaee">NewDBConfig</span>() <span style="color:#99d1db;font-weight:bold">*</span>DBConfig {
+</span></span><span style="display:flex;"><span>   err <span style="color:#99d1db;font-weight:bold">:=</span> godotenv.<span style="color:#8caaee">Load</span>()
+</span></span><span style="display:flex;"><span>   <span style="color:#ca9ee6">if</span> err <span style="color:#99d1db;font-weight:bold">!=</span> <span style="color:#ef9f76">nil</span> {
+</span></span><span style="display:flex;"><span>      log.<span style="color:#8caaee">Printf</span>(<span style="color:#a6d189">&#34;Error when reading .env file: %v\n&#34;</span>, err)
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   <span style="color:#ca9ee6">return</span> <span style="color:#99d1db;font-weight:bold">&amp;</span>DBConfig{
+</span></span><span style="display:flex;"><span>      host:     os.<span style="color:#8caaee">Getenv</span>(<span style="color:#a6d189">&#34;DB_HOST&#34;</span>),
+</span></span><span style="display:flex;"><span>      port:     os.<span style="color:#8caaee">Getenv</span>(<span style="color:#a6d189">&#34;DB_PORT&#34;</span>),
+</span></span><span style="display:flex;"><span>      username: os.<span style="color:#8caaee">Getenv</span>(<span style="color:#a6d189">&#34;DB_USERNAME&#34;</span>),
+</span></span><span style="display:flex;"><span>      password: os.<span style="color:#8caaee">Getenv</span>(<span style="color:#a6d189">&#34;DB_PASSWORD&#34;</span>),
+</span></span><span style="display:flex;"><span>      name:     os.<span style="color:#8caaee">Getenv</span>(<span style="color:#a6d189">&#34;DB_NAME&#34;</span>),
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ul>
+<li>
+<p>It loads environment variables from a <code>.env</code> file, which is a common practice for managing configuration settings outside the codebase.</p>
+</li>
+<li>
+<p>It logs an error message if the <code>.env</code> file cannot be read, allowing the application to handle configuration issues gracefully.</p>
+</li>
+<li>
+<p>It returns a new <code>DBConfig</code> instance with values obtained from the environment variables, centralizing configuration management.</p>
+</li>
+</ul>
+<p>The <code>GetDBURI</code> method constructs and returns a formatted database <a href="https://stackoverflow.com/questions/3582552/what-is-the-format-for-the-postgresql-connection-string-url">connection URI</a>. Here’s the method:</p>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#e78284">func</span> (config <span style="color:#99d1db;font-weight:bold">*</span>DBConfig) <span style="color:#8caaee">GetDBURI</span>() <span style="color:#e78284">string</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#ca9ee6">return</span> fmt.<span style="color:#8caaee">Sprintf</span>(<span style="color:#a6d189">&#34;postgres://%s:%s@%s:%s/%s&#34;</span>,
+</span></span><span style="display:flex;"><span>   config.username, config.password, config.host, config.port, config.name)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ul>
+<li>
+<p>It creates a <a href="https://stackoverflow.com/questions/3582552/what-is-the-format-for-the-postgresql-connection-string-url">connection URI</a> in the format <strong>&ldquo;postgres://username:password@host:port/dbname&rdquo;</strong>, which is <a href="https://github.com/jackc/pgx?tab=readme-ov-file#example-usage">required for connecting to the PostgreSQL database</a>.</p>
+</li>
+<li>
+<p>This method simplifies the process of constructing the URI, ensuring consistent and error-free string formatting throughout your application.</p>
+</li>
+</ul>
+<p>Alright, we’ve completed setting up our PostgreSQL configuration in Go.</p>
+<h2 id="code-to-connect">Code to Connect</h2>
+<p>Next, let&rsquo;s write the code to establish a connection to the database in Go.</p>
+<p>First, create a <code>main.go</code> file in the root directory. Inside it, define a main function, and within that function, call the <code>NewDBConfig</code> function from your <code>database</code> package. Here&rsquo;s how it should look:</p>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>dbConfig <span style="color:#99d1db;font-weight:bold">:=</span> database.<span style="color:#8caaee">NewDBConfig</span>()
+</span></span></code></pre></div><p>Before we dive deeper, you&rsquo;ll need to import the following packages: <code>database/sql</code> and <code>github.com/jackc/pgx/v5/stdlib</code>. I’m using the <code>pgx</code> standard library wrapper <code>(stdlib)</code> because I encountered some issues without using <code>stdlib</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#81c8be">import</span> (
+</span></span><span style="display:flex;"><span>   <span style="color:#a6d189">&#34;database/sql&#34;</span>
+</span></span><span style="display:flex;"><span>   
+</span></span><span style="display:flex;"><span>   <span style="color:#a6d189">&#34;github.com/ezrantn/pg_go/database&#34;</span>
+</span></span><span style="display:flex;"><span>   _ <span style="color:#a6d189">&#34;github.com/jackc/pgx/v5/stdlib&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div><p>Now, you might notice the underscore <code>_</code> before the <code>pgx</code> import. Why do we do this? The underscore is used to import the package solely for its side effects, meaning we’re not using the package <strong>directly</strong> in our code. Instead, we rely on it <strong>indirectly</strong>.</p>
+<p>This might sound confusing, but in Go, some packages register themselves with the <code>database/sql</code> package when imported. The <code>pgx</code> package does this through an init function, so even though we don’t call <code>pgx</code> directly, importing it with <code>_</code> ensures that it still runs its initialization code and registers the driver with <code>database/sql</code>.</p>
+<p>Alright, if that sounds good to you, let&rsquo;s continue with our code. Next, we&rsquo;ll connect to our PostgreSQL database using the <code>sql.Open</code> method. We&rsquo;ll pass the <code>pgx</code> driver as a string along with our database URI.</p>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>db, err <span style="color:#99d1db;font-weight:bold">:=</span> sql.<span style="color:#8caaee">Open</span>(<span style="color:#a6d189">&#34;pgx&#34;</span>, dbConfig.<span style="color:#8caaee">GetDBURI</span>())
+</span></span><span style="display:flex;"><span><span style="color:#ca9ee6">if</span> err <span style="color:#99d1db;font-weight:bold">!=</span> <span style="color:#ef9f76">nil</span> {
+</span></span><span style="display:flex;"><span>   log.<span style="color:#8caaee">Printf</span>(<span style="color:#a6d189">&#34;Failed to connect database: %v\n&#34;</span>, err)
+</span></span><span style="display:flex;"><span>   <span style="color:#ca9ee6">return</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ca9ee6">defer</span> db.<span style="color:#8caaee">Close</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ca9ee6">if</span> err <span style="color:#99d1db;font-weight:bold">:=</span> db.<span style="color:#8caaee">Ping</span>(); err <span style="color:#99d1db;font-weight:bold">!=</span> <span style="color:#ef9f76">nil</span> {
+</span></span><span style="display:flex;"><span>   log.<span style="color:#8caaee">Printf</span>(<span style="color:#a6d189">&#34;Failed to connect database: %v\n&#34;</span>, err)
+</span></span><span style="display:flex;"><span>   <span style="color:#ca9ee6">return</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>fmt.<span style="color:#8caaee">Println</span>(<span style="color:#a6d189">&#34;Database is successfully connected&#34;</span>)
+</span></span></code></pre></div><p>A lot is happening here, so let&rsquo;s break it down:</p>
+<ul>
+<li>
+<p>The defer <code>db.Close()</code> statement ensures that the database connection is properly closed when the surrounding function completes, freeing up any resources.</p>
+</li>
+<li>
+<p>The code then checks if the database connection is valid by sending a ping using <code>db.Ping()</code>.</p>
+</li>
+<li>
+<p>If the ping fails, error message is logged, and the function returns early, indicating that the database connection was unsuccessful.</p>
+</li>
+<li>
+<p>If all previous steps succeed, a message is printed to the console confirming that the database connection has been successfully established.</p>
+</li>
+</ul>
+<p>Now, when you run this program, cross your fingers, and hopefully, you&rsquo;ll see the message <code>Database is successfully connected</code>. If you do, it means our code is working, and PostgreSQL is officially connected in Go.</p>
+<p>If you encounter an error, ensure that your PostgreSQL instance is up and running in Docker and that your credentials match those in your <code>.env</code> file.</p>
+<p>From here you can perform a query to PostgreSQL but in Go, we&rsquo;re going to look that later.</p>
+<h2 id="connection-pool">Connection Pool</h2>
+<p>Let&rsquo;s discuss connection pooling and its importance for setting up database connections in your application.</p>
+<p>A connection pool is a collection of reusable database connections that your application can use to interact with the database. Instead of opening and closing a new connection every time your application needs to interact with the database, it borrows a connection from the pool, uses it, and then returns it to the pool for future use.</p>
+<p>Opening a new database connection is resource-intensive and can take time. If your application is handling many requests simultaneously, opening and closing connections for each request could slow things down significantly. A connection pool helps by maintaining a set of open connections that can be reused, which improves the performance and scalability of your application.</p>
+<p>Imagine a coffee shop with only one barista. Every time a customer arrives, the barista starts making coffee from scratch, one cup at a time. If 10 customers show up at once, each has to wait for the barista to finish with the previous customer before their coffee is made. This is like opening and closing a database connection for each request—slow and inefficient.</p>
+<p>Now, imagine the coffee shop hires more baristas. When customers arrive, they are assigned to the next available barista. The baristas keep working until they finish, and when they&rsquo;re done, they’re ready to help the next customer. This is like a connection pool—multiple connections (baristas) are available to handle requests (customers) simultaneously, speeding up the process.</p>
+<p>Here’s how you can set up a connection pool in your application:</p>
+<ol>
+<li>
+<p>Setting the maximum number of open connections</p>
+<ul>
+<li><code>DB.SetMaxOpenConns</code>: The database limit sets a threshold for open connections, allowing new operations to wait for an existing one to finish before creating a new one. By default, all existing connections are used when needed, but setting a limit can cause deadlock in the application.</li>
+</ul>
+</li>
+<li>
+<p>Setting the maximum number of idle connections</p>
+<ul>
+<li><code>DB.SetMaxIdleConns</code>: The limit on idle connections <code>sql.DB</code> maintains can be adjusted to prevent frequent reconnects in programs with significant parallelism. By default, the database keeps two idle connections, but raising the limit can prevent frequent connections when an SQL operation finishes.</li>
+</ul>
+</li>
+<li>
+<p>Setting the maximum amount a time a connection can be idle</p>
+<ul>
+<li><code>DB.SetConnMaxIdleTime</code>: Sets the maximum idle time a connection can be before being closed, allowing <code>sql.DB</code> to close idle connections. By default, idle connections remain in the pool until needed. Using <code>DB.SetConnMaxIdleTime</code> can increase idle connections during parallel activity bursts and release them later when the system is quiet.</li>
+</ul>
+</li>
+<li>
+<p>Setting the maximum lifetime of connections</p>
+<ul>
+<li><code>DB.SetConnMaxLifetime</code>: The connection&rsquo;s maximum open time before closure is set, allowing for arbitrary reuse. However, in load-balanced database servers, it&rsquo;s crucial to prevent applications from using a connection for too long without reconnecting, ensuring proper connection management.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>db.<span style="color:#8caaee">SetMaxOpenConns</span>(<span style="color:#ef9f76">10</span>) <span style="color:#737994;font-style:italic">// maximum 10 open connections
+</span></span></span><span style="display:flex;"><span><span style="color:#737994;font-style:italic"></span>db.<span style="color:#8caaee">SetMaxIdleConns</span>(<span style="color:#ef9f76">5</span>) <span style="color:#737994;font-style:italic">// maximum number of idle connections in the pool
+</span></span></span><span style="display:flex;"><span><span style="color:#737994;font-style:italic"></span>db.<span style="color:#8caaee">SetConnMaxIdleTime</span>(<span style="color:#ef9f76">15</span> <span style="color:#99d1db;font-weight:bold">*</span> time.Minute) <span style="color:#737994;font-style:italic">// maximum idle time a connection can be before being closed
+</span></span></span><span style="display:flex;"><span><span style="color:#737994;font-style:italic"></span>db.<span style="color:#8caaee">SetConnMaxLifetime</span>(<span style="color:#ef9f76">1</span> <span style="color:#99d1db;font-weight:bold">*</span> time.Hour) <span style="color:#737994;font-style:italic">// connection&#39;s maximum lifetime before closure
+</span></span></span></code></pre></div></li>
+</ol>
+<p>While there&rsquo;s no exact formula for determining the ideal number of connections and idle time, it depends on your specific application and environment. It&rsquo;s essential to monitor your application&rsquo;s performance and adjust your connection pool settings as needed.</p>
+<p>But here are some general guidelines, or &ldquo;rules of thumb,&rdquo; that you can follow:</p>
+<ol>
+<li>
+<p>Number of Connections</p>
+<ul>
+<li>
+<p>As a general rule, it&rsquo;s a good idea to start with a small number of connections (e.g., 10-20) and adjust based on your application&rsquo;s performance and load.</p>
+</li>
+<li>
+<p>Consider the number of concurrent requests your application can handle and the average duration of each request.</p>
+</li>
+<li>
+<p>If your application is highly concurrent, you may want to start with a higher number of connections.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Idle Time</p>
+<ul>
+<li>
+<p>The idle time should be long enough to allow for efficient connection reuse, but not so long that it wastes resources.</p>
+</li>
+<li>
+<p>A good starting point is 5-30 minutes. This allows for a reasonable amount of connection reuse while still allowing for efficient connection management.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Connection Lifetime</p>
+<ul>
+<li>
+<p>The connection lifetime should be long enough to allow for efficient connection reuse, but not so long that it wastes resources or causes issues with connection pooling.</p>
+</li>
+<li>
+<p>A good starting point is 1-2 hours. This allows for a reasonable amount of connection reuse while still allowing for efficient connection management.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Monitoring and Adjustment</p>
+<ul>
+<li>Pay attention to metrics such as request latency, request throughput, and connection pool utilization to determine the optimal settings for your application.</li>
+</ul>
+</li>
+<li>
+<p>Database Connection Pooling</p>
+<ul>
+<li>
+<p>Consider the specific database you&rsquo;re using and its connection pooling capabilities.</p>
+</li>
+<li>
+<p>For example, PostgreSQL has its own connection pooling mechanism, and you may want to use that instead of creating your own connection pool.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Testing and Iteration</p>
+<ul>
+<li>
+<p>Test your application under different loads and scenarios to determine the optimal connection pool settings.</p>
+</li>
+<li>
+<p>Iterate on your settings based on the results of your testing and monitoring.</p>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="database-migration">Database Migration</h2>
+<p>Database migrations in Go are surprisingly straightforward. In fact, you can simply write SQL queries as you&rsquo;re used to doing. I&rsquo;ll demonstrate this.</p>
+<p>Within the <code>database</code> package we created earlier, let&rsquo;s create a new file called <code>migrate.go</code>. Inside this file, we&rsquo;ll define a function that handles database migrations.</p>
+<p>Although we&rsquo;re not relying on any external dependencies, we still need to craft a SQL query to create our tables.</p>
+<p>Here&rsquo;s an example of how to achieve this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#e78284">func</span> <span style="color:#8caaee">Migrate</span>(db <span style="color:#99d1db;font-weight:bold">*</span>sql.DB) (sql.Result, <span style="color:#e78284">error</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#ca9ee6">if</span> db <span style="color:#99d1db;font-weight:bold">==</span> <span style="color:#ef9f76">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#ca9ee6">return</span> <span style="color:#ef9f76">nil</span>, errors.<span style="color:#8caaee">New</span>(<span style="color:#a6d189">&#34;internal server error&#34;</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ca9ee6">return</span> db.<span style="color:#8caaee">Exec</span>(<span style="color:#a6d189">`
+</span></span></span><span style="display:flex;"><span><span style="color:#a6d189">	CREATE TABLE IF NOT EXISTS products (
+</span></span></span><span style="display:flex;"><span><span style="color:#a6d189">			id VARCHAR(36) PRIMARY KEY,
+</span></span></span><span style="display:flex;"><span><span style="color:#a6d189">			name VARCHAR(255) NOT NULL,
+</span></span></span><span style="display:flex;"><span><span style="color:#a6d189">			price BIGINT NOT NULL,
+</span></span></span><span style="display:flex;"><span><span style="color:#a6d189">			is_deleted BOOLEAN NOT NULL DEFAULT FALSE
+</span></span></span><span style="display:flex;"><span><span style="color:#a6d189">	);
+</span></span></span><span style="display:flex;"><span><span style="color:#a6d189">   `</span>) 
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ul>
+<li>
+<p>The <code>Migrate</code> function ensures that the database structure is properly set up by executing a <code>CREATE TABLE</code> SQL statement. At its core, this function utilizes <code>db.Exec</code>, which is designed to execute SQL statements that don&rsquo;t return rows (like CREATE, INSERT, UPDATE, DELETE).</p>
+</li>
+<li>
+<p>The <code>IF NOT EXISTS</code> clause prevents errors by ensuring that the table is only created if it doesn&rsquo;t already exist in the database.</p>
+</li>
+<li>
+<p>When executing the query, <code>db.Exec</code> returns two values: <code>sql.Result</code>, which provides information about the execution result, such as the number of rows affected; and an <code>error</code>, which is returned if the SQL command fails (e.g., due to syntax errors or database connection issues).</p>
+</li>
+</ul>
+<p>The next step is to execute the <code>Migrate</code> function from our <code>main</code> method, as shown below:</p>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#ca9ee6">if</span> _, err = database.<span style="color:#8caaee">Migrate</span>(db); err <span style="color:#99d1db;font-weight:bold">!=</span> <span style="color:#ef9f76">nil</span> {
+</span></span><span style="display:flex;"><span>	fmt.<span style="color:#8caaee">Printf</span>(<span style="color:#a6d189">&#34;Migration failed to complete: %v\n&#34;</span>, err)
+</span></span><span style="display:flex;"><span>	os.<span style="color:#8caaee">Exit</span>(<span style="color:#ef9f76">1</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>If no errors occur, the migration is successful, and you can now view the products table in your database.</p>
+<p>Congratulations on completing your first Go database migration!</p>
+<h2 id="executing-queries">Executing Queries</h2>
+<p>When executing an SQL statement that returns data, use one of the <code>Query</code> methods provided in the <code>database/sql</code> package. These methods return a <code>Row</code> or <code>Rows</code> object, which can be scanned to extract data using the <code>Scan</code> method. For example, you can use these methods to execute <code>SELECT</code> statements.</p>
+<p>In contrast, when performing database actions that don&rsquo;t return data, such as inserting, deleting, or updating records, use the <code>Exec</code> or <code>ExecContext</code> methods from the <code>database/sql</code> package. These methods execute SQL statements without returning data.</p>
+<p>Let&rsquo;s take a closer look at an example of using the <code>QueryRow</code> method to retrieve data.</p>
+<p>This following function returns a single row:</p>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#e78284">func</span> <span style="color:#8caaee">SelectProductByID</span>(db <span style="color:#99d1db;font-weight:bold">*</span>sql.DB, id <span style="color:#e78284">string</span>) (Product, <span style="color:#e78284">error</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#ca9ee6">if</span> db <span style="color:#99d1db;font-weight:bold">==</span> <span style="color:#ef9f76">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#ca9ee6">return</span> Product{}, ErrDBNil
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	query <span style="color:#99d1db;font-weight:bold">:=</span> <span style="color:#a6d189">`SELECT id, name, price FROM products WHERE is_deleted = false AND id = $1;`</span>
+</span></span><span style="display:flex;"><span>	row <span style="color:#99d1db;font-weight:bold">:=</span> db.<span style="color:#8caaee">QueryRow</span>(query, id)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e78284">var</span> product Product
+</span></span><span style="display:flex;"><span>	<span style="color:#ca9ee6">if</span> err <span style="color:#99d1db;font-weight:bold">:=</span> row.<span style="color:#8caaee">Scan</span>(<span style="color:#99d1db;font-weight:bold">&amp;</span>product.ID, <span style="color:#99d1db;font-weight:bold">&amp;</span>product.Name, <span style="color:#99d1db;font-weight:bold">&amp;</span>product.Price); err <span style="color:#99d1db;font-weight:bold">!=</span> <span style="color:#ef9f76">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#ca9ee6">return</span> Product{}, err
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ca9ee6">return</span> product, <span style="color:#ef9f76">nil</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>A lot is going on, so let&rsquo;s break it down to make it more manageable:</p>
+<ul>
+<li>
+<p>The <code>QueryRow</code> method is used to execute a SQL query that is expected to return <strong>only a single row</strong>. It retrieves the first row from the result set and discards the rest.</p>
+</li>
+<li>
+<p><code>$1</code> is a placeholder for a parameterized query. This means the query will be securely parameterized with the id variable, helping <strong>prevent SQL injection attacks</strong>.</p>
+</li>
+<li>
+<p>After <code>QueryRow</code> is called, the result is stored in row. To extract the values from the row, the <code>Scan</code> method is used. This method scans the values from the result into the specified variables for this example (<code>&amp;product.ID, &amp;product.Name, &amp;product.Price</code>).</p>
+</li>
+<li>
+<p>The <code>Scan</code> method must have arguments that correspond to the number, type, and order of columns returned by the query. In this case, the query selects three columns: id, name, and price. The order of variables passed to <code>Scan</code> <strong>must exactly match</strong> the order of columns in the SQL query.</p>
+</li>
+</ul>
+<blockquote>
+<p><strong>NOTE</strong>: Parameter placeholders in prepared statements vary depending on the DBMS and driver you’re using. For example, the <code>go-sql-driver</code> for MySQL requires a placeholder like ? instead of $1.</p>
+</blockquote>
+<p>Next, we&rsquo;ll explore how to retrieve all the data using the <code>Query</code> method.</p>
+<p>Specifically, this method returns a slice of <code>[]Product</code> objects, which contains all the data from your database.</p>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#e78284">func</span> <span style="color:#8caaee">SelectProducts</span>(db <span style="color:#99d1db;font-weight:bold">*</span>sql.DB) ([]Product, <span style="color:#e78284">error</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#ca9ee6">if</span> db <span style="color:#99d1db;font-weight:bold">==</span> <span style="color:#ef9f76">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#ca9ee6">return</span> <span style="color:#ef9f76">nil</span>, ErrDBNil
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	query <span style="color:#99d1db;font-weight:bold">:=</span> <span style="color:#a6d189">`SELECT id, name, price FROM products WHERE is_deleted = false;`</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	rows, err <span style="color:#99d1db;font-weight:bold">:=</span> db.<span style="color:#8caaee">Query</span>(query)
+</span></span><span style="display:flex;"><span>	<span style="color:#ca9ee6">if</span> err <span style="color:#99d1db;font-weight:bold">!=</span> <span style="color:#ef9f76">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#ca9ee6">return</span> <span style="color:#ef9f76">nil</span>, err
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	products <span style="color:#99d1db;font-weight:bold">:=</span> []Product{}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ca9ee6">for</span> rows.<span style="color:#8caaee">Next</span>() {
+</span></span><span style="display:flex;"><span>		<span style="color:#e78284">var</span> product Product
+</span></span><span style="display:flex;"><span>		err <span style="color:#99d1db;font-weight:bold">:=</span> rows.<span style="color:#8caaee">Scan</span>(<span style="color:#99d1db;font-weight:bold">&amp;</span>product.ID, <span style="color:#99d1db;font-weight:bold">&amp;</span>product.Name, <span style="color:#99d1db;font-weight:bold">&amp;</span>product.Price)
+</span></span><span style="display:flex;"><span>		<span style="color:#ca9ee6">if</span> err <span style="color:#99d1db;font-weight:bold">!=</span> <span style="color:#ef9f76">nil</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#ca9ee6">return</span> <span style="color:#ef9f76">nil</span>, err
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		products = <span style="color:#99d1db">append</span>(products, product)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ca9ee6">return</span> products, <span style="color:#ef9f76">nil</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Upon closer inspection, you&rsquo;ll notice that <code>Query</code> method behaves similarly to <code>QueryRow</code>, with the key difference being that it returns a <strong>collection of rows</strong> instead of a single row.</p>
+<p>Let&rsquo;s dive deeper into the specifics of each function to better understand their differences:</p>
+<ul>
+<li>
+<p>This query selects three columns: id, name, and price from the products table, filtering for rows where <code>is_deleted = false</code>. It retrieves multiple rows since we are using <code>db.Query</code>, which is meant for queries that return <strong>multiple rows</strong>.</p>
+</li>
+<li>
+<p>Since <code>db.Query</code> is used to fetch multiple rows, <code>rows.Next</code> is used to iterate over each row in the result set.</p>
+</li>
+<li>
+<p>In each iteration of the loop, <code>rows.Scan</code> extracts values from the current row of the result set and assigns them to the fields of a <code>Product</code> struct.</p>
+</li>
+<li>
+<p>Just like with <code>QueryRow</code>, the order of variables passed to <code>Scan</code> in each iteration must exactly match the order of columns in the SQL query.</p>
+</li>
+</ul>
+<p>Let&rsquo;s take a coffee break for a moment&hellip; ☕</p>
+<p>Now, let&rsquo;s dive into executing queries to insert, update, or delete data from our database.</p>
+<p>A great place to start is with an example of inserting data, which is demonstrated below:</p>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#e78284">func</span> <span style="color:#8caaee">InsertProduct</span>(db <span style="color:#99d1db;font-weight:bold">*</span>sql.DB, product Product) <span style="color:#e78284">error</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#ca9ee6">if</span> db <span style="color:#99d1db;font-weight:bold">==</span> <span style="color:#ef9f76">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#ca9ee6">return</span> ErrDBNil
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	query <span style="color:#99d1db;font-weight:bold">:=</span> <span style="color:#a6d189">`INSERT INTO products (id, name, price) VALUES ($1, $2, $3);`</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	_, err <span style="color:#99d1db;font-weight:bold">:=</span> db.<span style="color:#8caaee">Exec</span>(query, product.ID, product.Name, product.Price)
+</span></span><span style="display:flex;"><span>	<span style="color:#ca9ee6">if</span> err <span style="color:#99d1db;font-weight:bold">!=</span> <span style="color:#ef9f76">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#ca9ee6">return</span> err
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ca9ee6">return</span> <span style="color:#ef9f76">nil</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ul>
+<li>
+<p>Unlike <code>Query</code> or <code>QueryRow</code>, which are used for SQL statements that return rows of data, <code>Exec</code> is used for executing SQL statements that <strong>do not return rows</strong> (e.g., INSERT, UPDATE, DELETE).</p>
+</li>
+<li>
+<p>The query uses placeholders $1, $2, and $3, which correspond to the parameters <code>product.ID, product.Name</code>, and <code>product.Price</code>. This helps prevent SQL injection by securely parameterizing the query.</p>
+</li>
+<li>
+<p>The arguments passed after the query (<code>product.ID, product.Name, product.Price</code>) are used to fill in the placeholders $1, $2, and $3, respectively.</p>
+</li>
+<li>
+<p>The <code>Exec</code> method returns two values, each with a specific purpose. The first value, result, is typically discarded (as seen in this case with the _ placeholder), but it represents the outcome of the SQL execution, including information about the number of rows affected by the operation. The second value, error (or err), is returned if the execution fails for any reason, such as constraint violations or connection issues. It is essential to properly handle this error to ensure robust and reliable database interactions.</p>
+</li>
+</ul>
+<blockquote>
+<p><strong>NOTE</strong>: While we&rsquo;ve covered inserting data, I&rsquo;ll skip discussing deletion and update operations for now, as the underlying <code>Exec</code> method remains the same. Instead, the differences lie in the query and logic used.</p>
+</blockquote>
+<p>That&rsquo;s a it! We&rsquo;ve now explored how to execute queries in Go using the <code>sql</code> package.</p>
+<p>And that&rsquo;s a wrap! I hope you&rsquo;ve learned something new about integrating PostgreSQL with Go. If you have any feedback or suggestions for this article, please don&rsquo;t hesitate to reach out. I appreciate you taking the time to read this. Happy hacking! 👋</p>
+
+    
+  </div>
+
+  
+
+  
+  
+
+<div class="single-pagination">
+    <hr />
+
+    <div class="flex">
+
+        <div class="single-pagination-prev">
+            
+            <div class="single-pagination-container-prev">
+                <div class="single-pagination-text">←</div>
+                <div class="single-pagination-text">
+                    <a href="/posts/understanding-preventing-nil-pointer-dereference-in-go/">
+                        Understanding and Preventing Nil Pointer Dereference Panics in Go
+                    </a>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="single-pagination-next">
+            
+        </div>
+
+    </div>
+
+    <hr />
+</div>
+
+
+
+  
+
+  
+
+  
+  <div class="back-to-top">
+    <a href="#top">
+      back to top
+    </a>
+  </div>
+  
+
+</div>
+
+
+      </main>
+    </div>
+
+    <footer>
+      <p>Powered by
+    <a href="https://gohugo.io/">Hugo</a>
+    and
+    <a href="https://github.com/tomfran/typo">tomfran/typo</a>
+</p>
+
+
+<link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css">
+<script defer
+  src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script>
+
+<script defer
+  src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body);"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false }
+      ]
+    });
+  });
+</script>
+
+    </footer>
+
+  </body>
+
+  <script>
+
+  function isAuto() {
+    return document.body.classList.contains("auto");
+  }
+
+  function setTheme() {
+    if (!isAuto()) {
+      return
+    }
+
+    document.body.classList.remove("auto");
+    let cls = "light";
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      cls = "dark";
+    }
+
+    document.body.classList.add(cls);
+  }
+
+  function invertBody() {
+    document.body.classList.toggle("dark");
+    document.body.classList.toggle("light");
+  }
+
+  if (isAuto()) {
+    window.matchMedia('(prefers-color-scheme: dark)').addListener(invertBody);
+  }
+
+  setTheme();
+
+</script>
+
+</html>
