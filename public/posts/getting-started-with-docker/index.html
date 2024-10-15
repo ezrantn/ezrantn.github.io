@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en-us"
+  dir="ltr">
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+
+
+
+<link rel="icon" type="image/ico" href="https://ezrantn.github.io//favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://ezrantn.github.io//favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://ezrantn.github.io//favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="https://ezrantn.github.io//android-chrome-192x192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://ezrantn.github.io//apple-touch-icon.png">
+
+<meta name="description" content="Introduction to Docker"/>
+
+<title>
+    
+    Getting Started with Docker | Ezra Natanael
+    
+</title>
+
+<link rel="canonical" href="https://ezrantn.github.io/posts/getting-started-with-docker/"/>
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/assets/combined.min.a6824bbee0d90d5af09fed9b70395ce7076b615e315037455d903314e96ef91b.css" media="all">
+
+
+
+
+  
+
+
+
+
+
+
+  </head>
+
+  
+
+  
+  
+  
+
+  <body class="dark">
+
+    <div class="content">
+      <header>
+        
+
+<div class="header">
+
+    
+
+    <h1 class="header-title">Ezra Natanael</h1>
+
+    <div class="flex">
+        
+
+        
+        
+      
+        <p class="small ">
+            <a href="/" >
+                /home
+            </a>
+        </p>
+        
+      
+        <p class="small ">
+            <a href="/posts" >
+                /posts
+            </a>
+        </p>
+        
+        
+    </div>
+
+    
+
+</div>
+
+      </header>
+
+      <main class="main">
+        
+
+
+
+
+
+<div class="breadcrumbs">
+    
+    <a href="/">Home</a>
+    <span class="breadcrumbs-separator"> > </span>
+    
+    <a href="/posts/">Posts</a>
+    <span class="breadcrumbs-separator"> > </span>
+    
+    <a class="breadcrumbs-current" href="/posts/getting-started-with-docker/">Getting Started with Docker</a>
+</div>
+
+
+
+<div  class="autonumber" >
+
+  <div class="single-intro-container">
+
+    
+
+    <h1 class="single-title">Getting Started with Docker</h1>
+    
+    <p class="single-summary">Introduction to Docker</p>
+    
+
+    
+
+    <p class="single-readtime">
+      
+      
+      
+      <time datetime="2024-09-07T00:00:00&#43;00:00">September 7, 2024</time>
+      
+
+      
+      &nbsp; · &nbsp;
+      5 min read
+      
+    </p>
+
+  </div>
+
+  
+
+  
+
+  
+  <aside class="toc">
+    <p><strong>Table of Contents</strong></p>
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#installation">Installation</a>
+      <ul>
+        <li><a href="#windows">Windows</a></li>
+        <li><a href="#macos">MacOS</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </aside>
+  
+
+  
+
+  <div class="single-content">
+    <h2 id="introduction">Introduction</h2>
+<p>Improving scalability, consistency, and streamlining procedures are critical in today&rsquo;s fast-paced development environment. Docker, a platform that enables developers to bundle apps and their dependencies into lightweight, portable containers, can help with this. Docker makes it easier to set up environments and deploy apps across several computers, whether you&rsquo;re working on a personal project or managing an advanced enterprise program.</p>
+<p>Software may be executed in isolated settings thanks to Docker containers, so what functions on your computer can function anywhere. This method puts an end to the &ldquo;it works on my machine&rdquo; dilemma by putting all the resources your application requires-from system tools to libraries into a single container. Furthermore, the strong Docker ecosystem which includes Docker Compose and Docker Hub—offers orchestration and sharing capabilities, facilitating collaboration and large-scale deployment more easily than before.</p>
+<p>From installation to launching your first container, we&rsquo;ll walk you through the fundamentals of Docker in this tutorial, assisting you in taking the initial steps towards containerization and contemporary application development. This guide might serve as a good starting point for anyone interested in learning how Docker can streamline their workflow, be they a developer, system administrator, or just inquisitive.</p>
+<h2 id="installation">Installation</h2>
+<p>Installing Docker can feel a bit overwhelming at first, especially if you&rsquo;re not used to using a terminal. It might even stress you out. But don&rsquo;t worry! Docker offers a user friendly interface called Docker Desktop. The best part? Docker Desktop is cross-platform, meaning you can download it on any operating system Windows, Mac, or even Linux.</p>
+<p>In this article, I’ll walk you through both methods of creating and running a container, as well as how to configure the environment using both the terminal and Docker Desktop. So, if you&rsquo;re not familiar with the terminal yet, I&rsquo;ve got you covered!</p>
+<h3 id="windows">Windows</h3>
+<p>If you&rsquo;re using Windows, it&rsquo;s recommended to install WSL (Windows Subsystem for Linux), a feature of Windows that enables users to run Linux directly on Windows without requiring a separate virtual machine or dual booting.</p>
+<p>This integration makes it easier to work with Docker, as it streamlines the process of building, deploying, updating, and shutting down systems using Docker containers.</p>
+<ol>
+<li>
+<p>Install Ubuntu from the Microsoft Store</p>
+<p>Why do we need this? Imagine you&rsquo;re on your Windows machine but be able to have a Linux terminal. WSL can also manage your Docker containers with improved performance and startup times.</p>
+<p>Here&rsquo;s the link to download <a href="https://www.microsoft.com/store/productId/9PDXGNCFSCZV?ocid=pdpshare">Ubuntu</a>.</p>
+</li>
+<li>
+<p>Install Docker Desktop for a GUI Experience</p>
+<p>Once Ubuntu is installed, the next step is to install Docker Desktop. You can download it by clicking  <a href="https://www.docker.com/products/docker-desktop/">this link</a>.</p>
+<p>Docker Desktop is available for multiple platforms!</p>
+<blockquote>
+<blockquote>
+<p><strong>Note:</strong> Ensure you select the version compatible with your chipset—AMD64 for better software compatibility and performance, or ARM64 for improved power efficiency and lightweight tasks.</p>
+</blockquote>
+</blockquote>
+</li>
+<li>
+<p>Create Your Docker Hub Account</p>
+<p>After installing Docker Desktop, it’s recommended to sign up if you don’t already have an account. When you deploy a Docker image, it can be pushed to Docker Hub, with your account name associated with the image, as long as you&rsquo;re logged in. We’ll explore this process later.</p>
+</li>
+<li>
+<p>Enable WSL 2 in Docker Desktop</p>
+<p>Docker Desktop utilizes WSL 2&rsquo;s memory management to optimize resource usage, using only the necessary CPU and memory. This enhances performance, especially for resource-intensive tasks like building containers, which is a significant advantage!</p>
+<p>Since we&rsquo;ve already installed WSL, here’s how to enable WSL 2:</p>
+<ol>
+<li>Open Docker Desktop and navigate to Settings.</li>
+<li>In the General tab, check the box for <strong>Use the WSL 2 based engine</strong>. If you installed Docker Desktop on a system that supports WSL 2, this option is enabled by default.</li>
+<li>Click Apply &amp; Restart.</li>
+</ol>
+<p>Now, you can run <code>docker</code> commands from Windows using the WSL 2 engine!</p>
+</li>
+<li>
+<p>Test Your Installation</p>
+<p>To ensure everything runs smoothly, we should check the version of Docker we have installed. You can do this easily by entering the following command in the WSL terminal:</p>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>docker version
+</span></span></code></pre></div><p>If everything is functioning correctly, you should see output similar to this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>Client:
+</span></span><span style="display:flex;"><span>Version:           27.0.3
+</span></span><span style="display:flex;"><span>API version:       1.46
+</span></span><span style="display:flex;"><span>Go version:        go1.21.11
+</span></span><span style="display:flex;"><span>Git commit:        7d4bcd8
+</span></span><span style="display:flex;"><span>Built:             Sat Jun <span style="color:#ef9f76">29</span> 00:01:25 <span style="color:#ef9f76">2024</span>
+</span></span><span style="display:flex;"><span>OS/Arch:           linux/amd64
+</span></span><span style="display:flex;"><span>Context:           default
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Server: Docker Desktop
+</span></span><span style="display:flex;"><span>Engine:
+</span></span><span style="display:flex;"><span>Version:          27.0.3
+</span></span><span style="display:flex;"><span>API version:      1.46 <span style="color:#99d1db;font-weight:bold">(</span>minimum version 1.24<span style="color:#99d1db;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>Go version:       go1.21.11
+</span></span><span style="display:flex;"><span>Git commit:       662f78c
+</span></span><span style="display:flex;"><span>Built:            Sat Jun <span style="color:#ef9f76">29</span> 00:02:50 <span style="color:#ef9f76">2024</span>
+</span></span><span style="display:flex;"><span>OS/Arch:          linux/amd64
+</span></span><span style="display:flex;"><span>Experimental:     <span style="color:#99d1db">false</span>
+</span></span><span style="display:flex;"><span>containerd:
+</span></span><span style="display:flex;"><span>Version:          1.7.18
+</span></span><span style="display:flex;"><span>GitCommit:        ae71819c4f5e67bb4d5ae76a6b735f29cc25774e
+</span></span><span style="display:flex;"><span>runc:
+</span></span><span style="display:flex;"><span>Version:          1.7.18
+</span></span><span style="display:flex;"><span>GitCommit:        v1.1.13-0-g58aa920
+</span></span><span style="display:flex;"><span>docker-init:
+</span></span><span style="display:flex;"><span>Version:          0.19.0
+</span></span><span style="display:flex;"><span>GitCommit:        de40ad0
+</span></span></code></pre></div></li>
+</ol>
+<h3 id="macos">MacOS</h3>
+<p>There are system requirements that vary depending on whether you have an Intel chip or Apple Silicon in your iOS device.</p>
+<blockquote>
+<blockquote>
+<p><strong>Important!</strong> Docker supports Docker Desktop on the most recent versions of macOS. That is, the current release of macOS and the previous two releases. As new major versions of macOS are made generally available, Docker stops supporting the oldest version and supports the newest version of macOS (in addition to the previous two releases).</p>
+</blockquote>
+</blockquote>
+<h4 id="intel-chip">Intel Chip</h4>
+<ul>
+<li>A supported version of macOS.</li>
+<li>At least 4 GB of RAM.</li>
+</ul>
+<h4 id="apple-silicon">Apple Silicon</h4>
+<ul>
+<li>
+<p>A supported version of macOS.</p>
+</li>
+<li>
+<p>At least 4 GB of RAM.</p>
+</li>
+<li>
+<p>For the best experience, it is recommended to install Rosetta 2. Although it’s no longer a strict requirement, some optional command line tools still depend on it when using Darwin/AMD64. For more information, see the <a href="https://docs.docker.com/desktop/troubleshoot/known-issues/">known issues</a>. You can install Rosetta 2 manually by running the following command in the terminal:</p>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>softwareupdate --install-rosetta
+</span></span></code></pre></div></li>
+</ul>
+<p>Great! If you’ve confirmed that your Mac is compatible with Docker, let’s go ahead and download it.</p>
+<ol>
+<li>
+<p>Download the Installer</p>
+<p>Download the installer by clicking the appropriate download button on <a href="https://www.docker.com/products/docker-desktop/">this link</a>. Be sure to select the version that matches your Mac&rsquo;s chipset.</p>
+</li>
+</ol>
+
+    
+  </div>
+
+  
+
+  
+  
+
+<div class="single-pagination">
+    <hr />
+
+    <div class="flex">
+
+        <div class="single-pagination-prev">
+            
+            <div class="single-pagination-container-prev">
+                <div class="single-pagination-text">←</div>
+                <div class="single-pagination-text">
+                    <a href="/posts/how-to-integrate-postgresql-in-go/">
+                        Integrating PostgreSQL with Go
+                    </a>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="single-pagination-next">
+            
+        </div>
+
+    </div>
+
+    <hr />
+</div>
+
+
+
+  
+
+  
+
+  
+  <div class="back-to-top">
+    <a href="#top">
+      back to top
+    </a>
+  </div>
+  
+
+</div>
+
+
+      </main>
+    </div>
+
+    <footer>
+      <p>Powered by
+    <a href="https://gohugo.io/">Hugo</a>
+    and
+    <a href="https://github.com/tomfran/typo">tomfran/typo</a>
+</p>
+
+
+<link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css">
+<script defer
+  src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script>
+
+<script defer
+  src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body);"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false }
+      ]
+    });
+  });
+</script>
+
+    </footer>
+
+  </body>
+
+  <script>
+
+  function isAuto() {
+    return document.body.classList.contains("auto");
+  }
+
+  function setTheme() {
+    if (!isAuto()) {
+      return
+    }
+
+    document.body.classList.remove("auto");
+    let cls = "light";
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      cls = "dark";
+    }
+
+    document.body.classList.add(cls);
+  }
+
+  function invertBody() {
+    document.body.classList.toggle("dark");
+    document.body.classList.toggle("light");
+  }
+
+  if (isAuto()) {
+    window.matchMedia('(prefers-color-scheme: dark)').addListener(invertBody);
+  }
+
+  setTheme();
+
+</script>
+
+</html>

@@ -15,19 +15,19 @@ description = "A Personal Blog"
 
 # Appearance settings
 theme = 'dark'
-colorPalette = 'catpuccin'
+colorPalette = 'default'
 hideHeader = false
 
 # Intro on main page, content is markdown
 homeIntroTitle = '¡Hola!'
 homeIntroContent = """
-I'm a Software Engineer based in Indonesia, with a strong interest in distributed systems, databases, cloud computing, and machine learning. Currently, I'm pursuing a Bachelor's degree in Computer Science at Soegijapranata Catholic University. My primary programming language is Go, but I'm also proficient in several others. 
+I'm a Software Engineer based in Indonesia, with a strong interest in distributed systems, databases, cloud computing, and machine learning. Currently, I'm pursuing a Bachelor's degree in Computer Science at Soegijapranata Catholic University. My primary programming language is Go, but I'm also proficient in several others.
 
-I enjoy building open-source software and have authored articles on topics related to my field—you should check them out. Outside of coding, I enjoy hitting the gym and playing basketball with friends.
+I enjoy building open-source software and have authored articles on topics related to my field. Outside of coding, I enjoy hitting the gym and playing basketball with friends.
 
 Don't hesitate to reach out for questions, collaborations, or just a chat. I'd be happy to connect:
 
-✉️ ezrantn.dev@gmail.com
+✉️ ezrantn@proton.me
 """
 
 # Collection to display on home
