@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Books on Ezra Natanael</title>
-    <link>https://ezrantn.github.io/books/</link>
+    <link>http://localhost:1313/books/</link>
     <description>Recent content in Books on Ezra Natanael</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <atom:link href="https://ezrantn.github.io/books/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/books/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title></title>
-      <link>https://ezrantn.github.io/books/books/</link>
+      <link>http://localhost:1313/books/books/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://ezrantn.github.io/books/books/</guid>
-      <description>Books Suggestion </description>
+      <guid>http://localhost:1313/books/books/</guid>
+      <description>Here&amp;rsquo;s a list of books that I recommend:</description>
     </item>
   </channel>
 </rss>

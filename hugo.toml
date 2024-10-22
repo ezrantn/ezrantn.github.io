@@ -31,8 +31,8 @@ Don't hesitate to reach out for questions, collaborations, or just a chat. I'd b
 """
 
 # Collection to display on home
-homeCollectionTitle = 'Posts'
-homeCollection = 'posts'
+# homeCollectionTitle = 'Posts'
+# homeCollection = 'posts'
 
 # Lists parameters
 paginationSize = 100
@@ -63,6 +63,10 @@ url = "/"
 [[params.menu]]
 name = "posts"
 url = "/posts"
+
+[[params.menu]]
+name = "books"
+url = "/books"
 
 # Syntax highligth on code blocks
 [markup]

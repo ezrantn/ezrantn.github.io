@@ -2,17 +2,17 @@
 <html lang="en-us"
   dir="ltr">
 
-  <head>
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width">
 
 
 
-<link rel="icon" type="image/ico" href="https://ezrantn.github.io//favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="https://ezrantn.github.io//favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="https://ezrantn.github.io//favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="192x192" href="https://ezrantn.github.io//android-chrome-192x192.png">
-<link rel="apple-touch-icon" sizes="180x180" href="https://ezrantn.github.io//apple-touch-icon.png">
+<link rel="icon" type="image/ico" href="http://localhost:1313//favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313//favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313//favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="http://localhost:1313//android-chrome-192x192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="http://localhost:1313//apple-touch-icon.png">
 
 <meta name="description" content="Introduction to Docker"/>
 
@@ -22,7 +22,7 @@
     
 </title>
 
-<link rel="canonical" href="https://ezrantn.github.io/posts/getting-started-with-docker/"/>
+<link rel="canonical" href="http://localhost:1313/posts/getting-started-with-docker/"/>
 
 
 
@@ -36,11 +36,6 @@
 
 
 <link rel="stylesheet" href="/assets/combined.min.a6824bbee0d90d5af09fed9b70395ce7076b615e315037455d903314e96ef91b.css" media="all">
-
-
-
-
-  
 
 
 
@@ -83,6 +78,13 @@
         <p class="small ">
             <a href="/posts" >
                 /posts
+            </a>
+        </p>
+        
+      
+        <p class="small ">
+            <a href="/books" >
+                /books
             </a>
         </p>
         
@@ -137,7 +139,7 @@
 
       
       &nbsp; · &nbsp;
-      5 min read
+      9 min read
       
     </p>
 
@@ -157,6 +159,15 @@
       <ul>
         <li><a href="#windows">Windows</a></li>
         <li><a href="#macos">MacOS</a></li>
+        <li><a href="#linux">Linux</a></li>
+      </ul>
+    </li>
+    <li><a href="#creating-a-container">Creating a Container</a>
+      <ul>
+        <li><a href="#what-is-a-container">What is a Container?</a></li>
+        <li><a href="#why-use-containers">Why Use Containers?</a></li>
+        <li><a href="#creating-your-first-container">Creating Your First Container</a></li>
+        <li><a href="#basic-container-management">Basic Container Management</a></li>
       </ul>
     </li>
   </ul>
@@ -170,7 +181,7 @@
     <h2 id="introduction">Introduction</h2>
 <p>Improving scalability, consistency, and streamlining procedures are critical in today&rsquo;s fast-paced development environment. Docker, a platform that enables developers to bundle apps and their dependencies into lightweight, portable containers, can help with this. Docker makes it easier to set up environments and deploy apps across several computers, whether you&rsquo;re working on a personal project or managing an advanced enterprise program.</p>
 <p>Software may be executed in isolated settings thanks to Docker containers, so what functions on your computer can function anywhere. This method puts an end to the &ldquo;it works on my machine&rdquo; dilemma by putting all the resources your application requires-from system tools to libraries into a single container. Furthermore, the strong Docker ecosystem which includes Docker Compose and Docker Hub—offers orchestration and sharing capabilities, facilitating collaboration and large-scale deployment more easily than before.</p>
-<p>From installation to launching your first container, we&rsquo;ll walk you through the fundamentals of Docker in this tutorial, assisting you in taking the initial steps towards containerization and contemporary application development. This guide might serve as a good starting point for anyone interested in learning how Docker can streamline their workflow, be they a developer, system administrator, or just inquisitive.</p>
+<p>From installation to launching your first container, I&rsquo;ll walk you through the fundamentals of Docker in this tutorial, assisting you in taking the initial steps towards containerization and contemporary application development. This guide might serve as a good starting point for anyone interested in learning how Docker can streamline their workflow, be they a developer, system administrator, or just inquisitive.</p>
 <h2 id="installation">Installation</h2>
 <p>Installing Docker can feel a bit overwhelming at first, especially if you&rsquo;re not used to using a terminal. It might even stress you out. But don&rsquo;t worry! Docker offers a user friendly interface called Docker Desktop. The best part? Docker Desktop is cross-platform, meaning you can download it on any operating system Windows, Mac, or even Linux.</p>
 <p>In this article, I’ll walk you through both methods of creating and running a container, as well as how to configure the environment using both the terminal and Docker Desktop. So, if you&rsquo;re not familiar with the terminal yet, I&rsquo;ve got you covered!</p>
@@ -273,6 +284,213 @@
 <p>Download the Installer</p>
 <p>Download the installer by clicking the appropriate download button on <a href="https://www.docker.com/products/docker-desktop/">this link</a>. Be sure to select the version that matches your Mac&rsquo;s chipset.</p>
 </li>
+<li>
+<p>The Installation Directory</p>
+<p>Double-click <code>Docker.dmg</code> to launch the installer, then drag the Docker icon into the <strong>Applications</strong> folder. By default,
+Docker Desktop will be installed in <code>/Applications/Docker.app</code>.</p>
+</li>
+<li>
+<p>Open Up the Docker Application</p>
+<p>Double-click <code>Docker.app</code> in the <strong>Applications</strong> folder to start Docker.</p>
+</li>
+<li>
+<p>Review the Docker Subscription Service Agreement in the Docker menu.</p>
+</li>
+<li>
+<p>Click &ldquo;Accept&rdquo; to proceed.</p>
+</li>
+<li>
+<p>In the installation window, choose one of the following options:</p>
+<p><strong>a) Use recommended settings (requires password):</strong></p>
+<p>This allows Docker Desktop to automatically configure the necessary settings.</p>
+<p><strong>b) Use advanced settings:</strong></p>
+<p>This enables you to customize the following:</p>
+<ul>
+<li>
+<p>Location of Docker CLI tools (system or user directory)</p>
+</li>
+<li>
+<p>Enabling the default Docker socket</p>
+</li>
+<li>
+<p>Enabling privileged port mapping</p>
+</li>
+</ul>
+<p>For more information on these settings, refer to the Docker Desktop <a href="https://docs.docker.com/desktop/settings/#advanced">documentation</a>.</p>
+</li>
+<li>
+<p>Click &ldquo;Finish&rdquo; to complete the installation.</p>
+<p>If you selected any options requiring a password in step 6, enter your system password when prompted to confirm your choices.</p>
+</li>
+</ol>
+<h3 id="linux">Linux</h3>
+<p>While Docker has been available on Linux for years through the command line, Docker Desktop provides a user-friendly graphical interface and additional features that make container management more accessible and efficient.</p>
+<p><strong>Prerequisites</strong>:</p>
+<ul>
+<li>A 64-bit version of either Ubuntu, Debian, Fedora, or Red Hat Linux</li>
+<li>KVM virtualization support</li>
+<li>systemd init system</li>
+<li>Gnome or KDE desktop environment</li>
+<li>At least 4GB of RAM</li>
+</ul>
+<p><strong>Important Notes Before Installation</strong>:</p>
+<ul>
+<li><strong>Backup Your Data</strong>: While the installation process is generally safe, it&rsquo;s always good practice to backup important data before making significant system changes.</li>
+<li><strong>Previous Docker Installations</strong>: If you have an existing Docker Engine installation, you don&rsquo;t need to remove it. Docker Desktop can coexist with the existing Docker Engine installation.</li>
+<li><strong>Root Access</strong>: You&rsquo;ll need sudo privileges to install Docker Desktop. Ensure your user account has sudo access before proceeding.</li>
+</ul>
+<ol>
+<li>
+<p>Update System Packages</p>
+<p>First, ensure your system is up to date:</p>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo apt-get update
+</span></span><span style="display:flex;"><span>sudo apt-get upgrade -y
+</span></span></code></pre></div></li>
+<li>
+<p>Install Required Dependencies</p>
+<p>Install necessary dependencies:</p>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo apt-get install -y <span style="color:#8caaee">\
+</span></span></span><span style="display:flex;"><span><span style="color:#8caaee"></span> ca-certificates <span style="color:#8caaee">\
+</span></span></span><span style="display:flex;"><span><span style="color:#8caaee"></span> curl <span style="color:#8caaee">\
+</span></span></span><span style="display:flex;"><span><span style="color:#8caaee"></span> gnupg <span style="color:#8caaee">\
+</span></span></span><span style="display:flex;"><span><span style="color:#8caaee"></span> lsb-release
+</span></span></code></pre></div></li>
+<li>
+<p>Add Docker&rsquo;s Official GPG Key</p>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo mkdir -m <span style="color:#ef9f76">0755</span> -p /etc/apt/keyrings
+</span></span><span style="display:flex;"><span>curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+</span></span></code></pre></div></li>
+<li>
+<p>Download Docker Desktop</p>
+<p>Visit the official Docker Desktop page and download the appropriate package for your distribution:</p>
+<ul>
+<li>For Ubuntu/Debian: Download the <code>.deb</code> package</li>
+<li>For Fedora/Red Hat: Download the <code>.rpm</code> package</li>
+</ul>
+<p>Or use wget (example for Ubuntu):</p>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>wget https://desktop.docker.com/linux/main/amd64/docker-desktop-4.25.0-amd64.deb
+</span></span></code></pre></div></li>
+<li>
+<p>Install Docker Desktop</p>
+<p>For Ubuntu/Debian:</p>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo apt-get update
+</span></span><span style="display:flex;"><span>sudo apt-get install ./docker-desktop-&lt;version&gt;-amd64.deb
+</span></span></code></pre></div><p>For Fedora/Red Hat:</p>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo dnf install ./docker-desktop-&lt;version&gt;-x86_64.rpm
+</span></span></code></pre></div></li>
+<li>
+<p>Start Docker Desktop</p>
+<p>You can start Docker Desktop in two ways:</p>
+<ol>
+<li>Search for <strong>&ldquo;Docker Desktop&rdquo;</strong> and click on it</li>
+<li>From the terminal</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>systemctl --user start docker-desktop
+</span></span></code></pre></div></li>
+<li>
+<p>Verify Installation</p>
+<p>Check if Docker Desktop is running properly:</p>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker version
+</span></span><span style="display:flex;"><span>docker compose version
+</span></span></code></pre></div></li>
+</ol>
+<h2 id="creating-a-container">Creating a Container</h2>
+<h3 id="what-is-a-container">What is a Container?</h3>
+<p>A container is like a lightweight, standalone package that contains everything needed to run a piece of software. Think of it as a complete box that includes the application code, runtime, system tools, libraries, and settings. This means you can run your application anywhere - on your laptop, a server, or in the cloud - and it will work exactly the same way.</p>
+<h3 id="why-use-containers">Why Use Containers?</h3>
+<p>
+
+
+
+
+
+
+
+
+
+
+<figure class="">
+
+    <div>
+        <img loading="lazy" alt="Docker Container" src=" https://media.licdn.com/dms/image/v2/D4E12AQGWRz7lUifYVQ/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1699216771994?e=1735171200&amp;v=beta&amp;t=PdP6uOAQlZYupNkIKQuDFu2Wxir2DxubsqLvZ7kVYhQ">
+    </div>
+
+    
+</figure>
+<em>Source: <a href="https://www.linkedin.com/pulse/docker-containers-virtual-machines-explained-mesut-oezdil-shsfe/">Mesut Oezdil on LinkedIn</a></em></p>
+<p>Containers solve the common problem &ldquo;But it works on my machine!&rdquo; since they package everything the application needs. They&rsquo;re:</p>
+<ul>
+<li>Quick to start and stop</li>
+<li>Use fewer resources than virtual machines</li>
+<li>Easy to share with others</li>
+<li>Perfect for testing and development</li>
+</ul>
+<h3 id="creating-your-first-container">Creating Your First Container</h3>
+<p>Let&rsquo;s create a simple container that runs a &ldquo;Hello World&rdquo; web server. I&rsquo;ll show both CLI and Docker Desktop methods.</p>
+<p><strong>Using the Command Line (CLI)</strong>:</p>
+<ol>
+<li>
+<p>Pull an Official Image</p>
+<p>A Docker image is a lightweight, standalone package that includes everything needed to run a piece of software, including the code, runtime, libraries, and system tools. It&rsquo;s used to create containers, which are isolated environments for running applications.</p>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker pull nginx
+</span></span></code></pre></div></li>
+<li>
+<p>Create and Run a Container</p>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker run --name my-first-container -p 80:80 -d nginx
+</span></span></code></pre></div><p>Let&rsquo;s break down this command:</p>
+<ul>
+<li><code>--name my-first-container</code>: Names your container</li>
+<li><code>-p 80:80</code>: Maps port 80 on your computer to port 80 in the container</li>
+<li><code>-d</code>: Runs the container in the background</li>
+<li><code>nginx</code>: The image to use</li>
+</ul>
+</li>
+<li>
+<p>Check If it&rsquo;s Running</p>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker ps
+</span></span></code></pre></div></li>
+<li>
+<p>Visit <code>http://localhost</code> in your web browser to see the nginx welcome page.</p>
+</li>
+</ol>
+<p><strong>Using Docker Desktop</strong>:</p>
+<ol>
+<li>Open Docker Desktop</li>
+<li>Click the <strong>&ldquo;Images&rdquo;</strong> tab on the left</li>
+<li>Click the <strong>&ldquo;Run&rdquo;</strong> button next to the nginx image (or click <strong>&ldquo;Pull an image&rdquo;</strong> if you don&rsquo;t see it)</li>
+<li>In the dialog that appears:
+<ul>
+<li>Enter a name (e.g., &ldquo;my-first-container&rdquo;)</li>
+<li>Set port mapping: Host port 80 → Container port 80</li>
+<li>Click <strong>&ldquo;Run&rdquo;</strong></li>
+</ul>
+</li>
+</ol>
+<p>That&rsquo;s it! Your container is now running and you can manage it through Docker Desktop&rsquo;s interface.</p>
+<h3 id="basic-container-management">Basic Container Management</h3>
+<p><strong>Using CLI</strong></p>
+<p>Stop a Container:</p>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker stop my-first-container
+</span></span></code></pre></div><p>Start it Again:</p>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker start my-first-container
+</span></span></code></pre></div><p>Remove a Container:</p>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker rm my-first-container
+</span></span></code></pre></div><p><strong>Using Docker Desktop</strong></p>
+<p>In Docker Desktop:</p>
+<ol>
+<li>Go to the <strong>&ldquo;Containers&rdquo;</strong> tab</li>
+<li>Find your container in the list</li>
+<li>Use the <strong>play/stop</strong> buttons to control it</li>
+<li>Click the <strong>delete</strong> icon to remove it</li>
+</ol>
+<h4 id="viewing-container-logs">Viewing Container Logs</h4>
+<p><strong>Using CLI</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#c6d0f5;background-color:#303446;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker logs my-first-container
+</span></span></code></pre></div><p><strong>Using Docker Desktop</strong></p>
+<ol>
+<li>Go to the <strong>&ldquo;Containers&rdquo;</strong> tab</li>
+<li>Click on your container</li>
+<li>Click the <strong>&ldquo;Logs&rdquo;</strong> tab to see the output</li>
 </ol>
 
     

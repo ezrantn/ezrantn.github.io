@@ -2,24 +2,24 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Programming on Ezra Natanael</title>
-    <link>https://ezrantn.github.io/tags/programming/</link>
+    <link>http://localhost:1313/tags/programming/</link>
     <description>Recent content in Programming on Ezra Natanael</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 29 Aug 2024 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://ezrantn.github.io/tags/programming/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/programming/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Integrating PostgreSQL with Go</title>
-      <link>https://ezrantn.github.io/posts/how-to-integrate-postgresql-in-go/</link>
+      <link>http://localhost:1313/posts/how-to-integrate-postgresql-in-go/</link>
       <pubDate>Thu, 29 Aug 2024 00:00:00 +0000</pubDate>
-      <guid>https://ezrantn.github.io/posts/how-to-integrate-postgresql-in-go/</guid>
+      <guid>http://localhost:1313/posts/how-to-integrate-postgresql-in-go/</guid>
       <description>PostgreSQL Integration in Go</description>
     </item>
     <item>
       <title>Understanding and Preventing Nil Pointer Dereference Panics in Go</title>
-      <link>https://ezrantn.github.io/posts/understanding-preventing-nil-pointer-dereference-in-go/</link>
+      <link>http://localhost:1313/posts/understanding-preventing-nil-pointer-dereference-in-go/</link>
       <pubDate>Sat, 25 May 2024 00:00:00 +0000</pubDate>
-      <guid>https://ezrantn.github.io/posts/understanding-preventing-nil-pointer-dereference-in-go/</guid>
+      <guid>http://localhost:1313/posts/understanding-preventing-nil-pointer-dereference-in-go/</guid>
       <description>Preventing Pointer to Panic in Go</description>
     </item>
   </channel>
