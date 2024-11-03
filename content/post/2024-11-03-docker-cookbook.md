@@ -21,7 +21,7 @@ Installing Docker can feel a bit overwhelming at first, especially if you’re n
 
 In this article, I’ll walk you through both methods of creating and running a container, as well as how to configure the environment using both the terminal and Docker Desktop. So, if you’re not familiar with the terminal yet, I’ve got you covered!
 
-## Windows
+### Windows
 
 If you’re using Windows, it’s recommended to install WSL (Windows Subsystem for Linux), a feature of Windows that enables users to run Linux directly on Windows without requiring a separate virtual machine or dual booting.
 
@@ -97,18 +97,18 @@ This integration makes it easier to work with Docker, as it streamlines the proc
     GitCommit:        de40ad0
     ```
    
-## MacOS
+### MacOS
 
 There are system requirements that vary depending on whether you have an Intel chip or Apple Silicon in your iOS device.
 
 > **Important**! Docker supports Docker Desktop on the most recent versions of macOS. That is, the current release of macOS and the previous two releases. As new major versions of macOS are made generally available, Docker stops supporting the oldest version and supports the newest version of macOS (in addition to the previous two releases).
 
-### Intel Chip
+#### Intel Chip
 
 - A supported version of macOS
 - At least 4 GB of RAM.
 
-### Apple Silicon
+#### Apple Silicon
 
 - A supported version of macOS.
 - At least 4 GB of RAM.
@@ -158,11 +158,11 @@ Great! If you’ve confirmed that your Mac is compatible with Docker, let’s go
 
    If you selected any options requiring a password in step 6, enter your system password when prompted to confirm your choices.
 
-## Linux
+### Linux
 
 While Docker has been available on Linux for years through the command line, Docker Desktop provides a user-friendly graphical interface and additional features that make container management more accessible and efficient.
 
-### Prerequisites
+#### Prerequisites
 
 - A 64-bit version of either Ubuntu, Debian, Fedora, or Red Hat Linux
 - KVM virtualization support
@@ -170,13 +170,13 @@ While Docker has been available on Linux for years through the command line, Doc
 - Gnome or KDE desktop environment
 - At least 4GB of RAM
 
-### Important Notes Before Installation
+#### Important Notes Before Installation
 
 - **Backup Your Data**: While the installation process is generally safe, it’s always good practice to backup important data before making significant system changes.
 - **Previous Docker Installations**: If you have an existing Docker Engine installation, you don’t need to remove it. Docker Desktop can coexist with the existing Docker Engine installation.
 - **Root Access**: You’ll need sudo privileges to install Docker Desktop. Ensure your user account has sudo access before proceeding.
 
-If you already aware of this, let’s go ahead and download it!
+If you're already aware of this, let’s go ahead and download it!
 
 1. Update System Package
 
@@ -328,3 +328,322 @@ Docker provides several commands to manage images:
 You may need to stop any running containers using the image before deleting it.
 
 In the next section, we’ll explore Docker Containers and how to create and manage them based on the images you’ve learned to build.
+
+## Docker Containers
+
+Docker containers allow applications to run in isolated environments, encapsulating code, dependencies, and configurations into a single package. By building and running containers, you can ensure that your applications behave consistently across various environments, making deployment seamless.
+
+### Key Components:
+
+Container building involves creating a Docker image, which acts as a blueprint for your application, packaging all necessary resources. Let’s dive into the essential parts that make up this process:
+
+1. **Dockerfile**
+
+   The **Dockerfile** is a core component of containerization. It’s a simple text file containing instructions that tell Docker how to assemble your application image.
+
+   - Each instruction in a **Dockerfile**, like adding files or setting configurations, creates a “layer” in the image.
+   - Layers are cached, meaning Docker can reuse unchanged layers, speeding up the build process. 
+   - Using fewer instructions or combining steps where possible reduces the number of layers, optimizing the image size.
+
+   Here is the example of a **Dockerfile** that you might see:
+
+     ```dockerfile
+     # Sample Dockerfile
+     # Using an official base image
+     FROM python:3.9-slim
+      
+     # Set the working directory in the container
+     WORKDIR /app
+      
+     # Copy the current directory contents into the container at /app
+     COPY . /app
+      
+     # Install any necessary dependencies specified in requirements.txt
+     RUN pip install --no-cache-dir -r requirements.txt
+      
+     # Expose the application on port 5000
+     EXPOSE 5000
+      
+     # Run the application
+     CMD ["python", "app.py"]
+     ```
+
+     This **Dockerfile** creates a lightweight Python application container:
+   
+     It starts from the **python:3.9-slim** base image. Sets the working directory, copies files, installs dependencies, and runs the application.
+
+2. **Build Context**
+
+   The build context consists of all the files Docker needs to access while building the image.
+
+   - Typically, it includes the directory containing the **Dockerfile** along with other resources such as source code and configuration files.
+   - A `.dockerignore` file can be used to exclude unnecessary files, keeping builds streamlined and secure by excluding sensitive or redundant files.
+
+3. **Base Image**
+
+   The base image acts as the starting layer, providing a foundational operating system for your container.
+
+   - Official images, such as those from Docker Hub, are prebuilt and regularly scanned for security, ensuring a safer starting point.
+   - Lightweight images like Alpine reduce size but may lack some essential tools.
+   - Distroless images are minimal, providing only essential libraries, which reduces the attack surface and enhances security.
+
+### Build Process Explained:
+
+Now, let's walk through creating and running a container using the **Dockerfile** defined earlier.
+
+1. **Build the Docker Image**
+
+   Use the **Dockerfile** to build your Docker image. Open your terminal, navigate to the directory containing your **Dockerfile**, and run:
+
+   ```shell
+   docker build -t my-python-app .
+   ```
+
+   - `-t my-python-app`: Tags the image as "my-python-app."
+   - `.` (dot): Refers to the current directory as the build context, which includes the **Dockerfile** and other necessary files.
+
+2. **Run the Docker Container**
+
+   With the image created, you can start a container using the following command:
+
+   ```shell
+   docker run -d -p 5000:5000 --name my-running-app my-python-app
+   ```
+
+   - `-d`: Runs the container in detached mode.
+   - `-p 5000:5000`: Maps port 5000 on the host to port 5000 on the container.
+   - `--name my-running-app`: Names the container.
+   - `my-python-app`: Refers to the image you built.
+
+3. **Verify the Container**
+
+   Use `docker ps` to check that the container is running:
+
+   ```shell
+   docker ps
+   ```
+
+   This will list active containers, showing you details such as the container ID, status, and port mappings.
+
+4. **Stop and Remove the Container**
+
+   When you’re finished, you can stop and remove the container with:
+
+   ```shell
+   docker stop my-running-app
+   docker rm my-running-app
+   ```
+
+### Container Runtime Concepts
+
+Once you have your Docker image, it can be used to create and manage containers. Here are some fundamental concepts of container runtime:
+
+1. **Container Lifecycle**
+
+   Containers progress through different states in their lifecycle:
+
+   - **Created → Running → Paused/Stopped → Removed**
+   - Containers can be restarted or stopped, but if explicitly removed, they cannot be restarted.
+   - Each container operates within its own isolated environment, enabling multiple instances without conflicts.
+
+2. **Resource Isolation**
+
+   Containers share the host OS kernel but maintain isolated resources.
+
+   - Each container has its own file system, network interfaces, process tree, and can be assigned specific resource limits.
+   - This isolation ensures that containers won’t interfere with each other or the host system.
+
+3. **Container Networking**
+
+   Docker provides several networking options:
+
+   - Bridge: Default option that allows container-to-container communication.
+   - Host: Directly links the container’s network to the host, providing full access to the host’s network.
+   - None: Disables network access, suitable for highly secure setups.
+   - Custom: User-defined networks enable grouping and controlling communication between related containers.
+
+### Important Runtime Concepts
+
+1. **Port Mapping**
+
+   Containers are isolated from the host machine by default, but port mapping allows external access.
+
+   - This is done using the `-p host_port:container_port` format.
+   - You can map multiple ports for different services within the same container.
+
+2. **Volumes**
+
+   Volumes provide persistent storage, essential for maintaining data across container restarts.
+
+   - Volumes can be shared across containers and come in different types:
+     - Named volumes: Managed by Docker and easy to set up.
+     - Bind mounts: Map directly to a host folder, giving more control.
+     - tmpfs: Temporary storage in memory, ideal for sensitive data that doesn’t need to persist.
+
+3. **Environment Variables**
+
+   These configure how your application behaves without hard-coding values into the codebase.
+
+   - Environment variables can be passed securely to containers and set through:
+     - **Dockerfile** ENV instructions,
+     - -e flag during runtime,
+     - or environment files for managing multiple variables.
+
+### Container Management Concepts
+
+Efficiently managing containers involves understanding their states, allocating resources, and monitoring health:
+
+1. **Container States**
+
+   Containers can exist in various states:
+
+   - Created: Exists but hasn't started running.
+   - Running: Actively executing.
+   - Paused: Temporarily halted.
+   - Stopped: Halted but can be restarted.
+   - Deleted: Completely removed
+
+2. **Resource Management**
+
+   Proper resource management ensures that containers don’t exhaust the host’s resources.
+
+   - Set CPU limits to control processing power.
+   - Assign memory limits to prevent excessive memory usage.
+   - Control disk usage and network bandwidth to manage data consumption.
+
+3. **Health Monitoring**
+
+   Monitoring container health ensures reliable operation:
+
+   - Logs: Track application output for troubleshooting.
+   - Stats: Monitor real-time resource usage.
+   - Health checks: Regularly assess if the application is running as expected.
+   - Events: Track changes in the container’s state, like start, stop, and restart events.
+
+### Best Practices for Container Management
+
+Adhering to best practices can streamline container management and improve reliability:
+
+1. **Container Naming** 
+
+   Using meaningful names helps with organization and identification:
+
+   - Include environment identifiers like “dev” or “prod” in names.
+   - Consider automated naming conventions for consistency.
+
+2. **Resource Allocation**
+
+   Managing resources helps avoid overconsumption and enhances performance:
+
+   - Always set memory limits to prevent container crashes.
+   - Monitor CPU usage for optimal performance.
+   - Use restart policies and implement health checks to ensure stability.
+
+3. **Maintenance**
+
+   Regular maintenance keeps containers up-to-date and secure:
+
+   - Keep images updated to patch vulnerabilities.
+   - Set up log rotation to manage storage.
+   - Schedule data backups and security scans.
+
+Here is the script to automates some routine container tasks, such as starting, stopping, and removing containers. This helps demonstrate efficient management practices:
+
+```shell
+#!/bin/bash
+# A script to automate Docker container management
+
+IMAGE_NAME="my-python-app"
+CONTAINER_NAME="my-running-app"
+
+# Build the Docker image
+echo "Building Docker image..."
+docker build -t $IMAGE_NAME .
+
+# Start the container
+echo "Starting Docker container..."
+docker run -d -p 5000:5000 --name $CONTAINER_NAME $IMAGE_NAME
+
+# Check container status
+echo "Checking container status..."
+docker ps -f name=$CONTAINER_NAME
+
+# Stop the container
+echo "Stopping Docker container..."
+docker stop $CONTAINER_NAME
+
+# Remove the container
+echo "Removing Docker container..."
+docker rm $CONTAINER_NAME
+```
+
+Docker containers provide a powerful way to package applications along with all their dependencies, ensuring consistency across different environments. By understanding key concepts like **Dockerfiles**, container lifecycles, resource isolation, and networking, you’re well-equipped to start building and deploying containerized applications.
+
+The next step in containerization involves managing multiple services and components that your application may depend on. For instance, you might need to orchestrate a database, an API, and a web server together. This is where **Docker Compose** comes in. **Docker Compose** lets you define and manage multi-container applications effortlessly, all within a single configuration file.
+
+In the next section, we’ll dive into **Docker Compose**, exploring how to create and manage a multi-container application setup. This will allow you to simulate production environments and set up complex application stacks with ease.
+
+## Docker Compose
+
+Docker Compose is a tool for defining and running multi-container Docker applications. Using a simple YAML configuration file, you can specify services, networks, and volumes for your app, enabling you to manage everything with a single command.
+
+Docker Compose is perfect for:
+
+- **Microservices architectures**, where each service can be a separate container.
+- **Simplified Management**, allowing you to start up or tear down the entire stack with a single command.
+- **Development Environments**, enabling easy setup of databases, caches, or other dependencies locally.
+
+### Basic Structure of docker-compose.yml
+
+A basic `docker-compose.yml` file typically includes:
+
+- **Version**: Specifies the Compose file format version.
+- **Services**: Lists each container (or service) and its configurations.
+- **Networks and Volumes**: Optional but useful for defining network settings and persistent data storage.
+
+### Docker Compose Example for a Web App with PostgreSQL Database
+
+```yaml
+version: '3'
+services:
+  web:
+    build: .
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: example
+      POSTGRES_PASSWORD: example
+      POSTGRES_DB: example_db
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+volumes:
+  db-data:
+```
+
+In this example:
+
+- The `web` service is built from a local Dockerfile and exposed on port 8000.
+- The `db` service uses a PostgreSQL image and sets environment variables for database credentials.
+- `volumes` are specified to persist the database data outside the container lifecycle.
+
+### Key Docker Compose Commands
+
+- `docker-compose up`: Builds, (re)creates, starts, and attaches to containers.
+- `docker-compose down`: Stops and removes containers, networks, and volumes.
+- `docker-compose ps`: Lists the running containers.
+- `docker-compose logs`: Fetches logs of all services.
+
+### Using Docker Compose in Development and Testing
+
+Docker Compose is invaluable for local development, as it allows you to:
+
+- **Test Multi-Service Configurations** locally.
+- **Isolate Development Environments** so each project can have its own dependencies.
+- **Easily Scale Services** using `docker-compose up --scale <service>=N`.
+
+Docker Compose makes managing complex applications much simpler by providing a single configuration file to handle multiple services, networking, and volumes. This setup is invaluable for both development and production environments, particularly for microservices.
