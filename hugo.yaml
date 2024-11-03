@@ -1,4 +1,4 @@
-baseurl: "http://localhost:1313/"  # please update this to your actual URL
+baseurl: "https://ezrantn.github.io"  # please update this to your actual URL
 languageCode: "en-us"
 title: "Ezra Natanael"
 theme: "hugo-xmin"
