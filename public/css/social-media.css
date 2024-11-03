@@ -1,0 +1,15 @@
+.social-links {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.social-icon {
+    color: #4a5568;
+    transition: color 0.2s ease;
+}
+
+.social-icon:hover {
+    color: #2d3748;
+}

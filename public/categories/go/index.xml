@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Go on Ezra Natanael</title>
+    <link>http://localhost:1313/categories/go/</link>
+    <description>Recent content in Go on Ezra Natanael</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 03 Nov 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/categories/go/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Understanding Pointer in Go</title>
+      <link>http://localhost:1313/post/understanding-pointer-in-go/</link>
+      <pubDate>Sun, 03 Nov 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/understanding-pointer-in-go/</guid>
+      <description>Introduction Pointers are fundamental to Go programming, serving as a way to directly work with memory addresses. While they might seem intimidating at first, understanding pointers is crucial for writing efficient Go code. This guide balances theory and practice to help you master pointer concepts.&#xA;What is a Pointer? A pointer is a variable that stores the memory address of another variable. Think of it like a house address - instead of containing the house itself, it contains directions to find the house.</description>
+    </item>
+  </channel>
+</rss>

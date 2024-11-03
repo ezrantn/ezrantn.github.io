@@ -1,0 +1,52 @@
+baseurl: "http://localhost:1313/"  # please update this to your actual URL
+languageCode: "en-us"
+title: "Ezra Natanael"
+theme: "hugo-xmin"
+googleAnalytics: ""
+disqusShortname: ""
+ignoreFiles: ["\\.Rmd$", "\\.Rmarkdown$", "_cache$"]
+footnotereturnlinkcontents: "↩"
+
+permalinks:
+  post: "/post/:slug/"
+
+menu:
+  main:
+    - name: Home
+      url: ""
+      weight: 1
+    - name: About
+      url: "about/"
+      weight: 2
+    - name: Library
+      url: "library/"
+      weight: 2
+    - name: Posts
+      url: "post/"
+      weight: 2
+    - name: Categories
+      url: "categories/"
+      weight: 3
+
+params:
+  description: "A website built through Hugo and blogdown."
+  footer: "&copy; [Ezra Natanael](https://ezrantn.org) 2022 -- {Year} | [GitHub](https://github.com/ezrantn) | [Twitter](https://x.com/EzraNatanael6)"
+
+markup:
+  highlight:
+    codeFences: false
+  goldmark:
+    renderer:
+      unsafe: true
+    extensions:
+      passthrough:
+        enable: true
+        delimiters:
+          block:
+            - - \[
+              - \]
+            - - $$
+              - $$
+          inline:
+            - - \(
+              - \)

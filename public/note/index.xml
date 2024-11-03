@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Notes on Ezra Natanael</title>
+    <link>http://localhost:1313/note/</link>
+    <description>Recent content in Notes on Ezra Natanael</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 03 Nov 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/note/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Surviving Bangkit While Staying Sane</title>
+      <link>http://localhost:1313/note/surviving-bangkit/</link>
+      <pubDate>Sun, 03 Nov 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/note/surviving-bangkit/</guid>
+      <description>If I had to describe my experience during the Bangkit program in one word, it would be&#xA;Resilience.&#xA;Bangkit is not for everyone. I know this sounds intimidating, but trust me - the amount of assignments, meetings, Instructor-Led Training (ILT), and other activities can be pretty overwhelming for people who aren&amp;rsquo;t used to it.&#xA;It&amp;rsquo;s very fast-paced, and most of the time you have to learn by yourself, which I suppose is the point of online learning.</description>
+    </item>
+    <item>
+      <title>Who Am I</title>
+      <link>http://localhost:1313/note/who-am-i/</link>
+      <pubDate>Sat, 02 Nov 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/note/who-am-i/</guid>
+      <description>Who Am I Hey there! I&amp;rsquo;m Ezra, a software engineer crafting digital solutions in the vibrant tech landscape of Indonesia. While my days are filled with writing code and solving complex problems, there&amp;rsquo;s more to my story than just bits and bytes.&#xA;Think of this website as my digital garden - a space where I cultivate ideas, share experiences, and maybe even help fellow developers along the way. Why create this space?</description>
+    </item>
+  </channel>
+</rss>

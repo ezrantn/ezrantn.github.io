@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Home on Ezra Natanael</title>
+    <link>http://localhost:1313/</link>
+    <description>Recent content in Home on Ezra Natanael</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 03 Nov 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Understanding Pointer in Go</title>
+      <link>http://localhost:1313/post/understanding-pointer-in-go/</link>
+      <pubDate>Sun, 03 Nov 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/understanding-pointer-in-go/</guid>
+      <description>Introduction Pointers are fundamental to Go programming, serving as a way to directly work with memory addresses. While they might seem intimidating at first, understanding pointers is crucial for writing efficient Go code. This guide balances theory and practice to help you master pointer concepts.&#xA;What is a Pointer? A pointer is a variable that stores the memory address of another variable. Think of it like a house address - instead of containing the house itself, it contains directions to find the house.</description>
+    </item>
+    <item>
+      <title>Surviving Bangkit</title>
+      <link>http://localhost:1313/post/surviving-bangkit/</link>
+      <pubDate>Sat, 02 Nov 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/surviving-bangkit/</guid>
+      <description>If I had to describe my experience during the Bangkit program in one word, it would be&#xA;Resilience.&#xA;Bangkit is not for everyone. I know this sounds intimidating, but trust me - the amount of assignments, meetings, Instructor-Led Training (ILT), and other activities can be pretty overwhelming for people who aren&amp;rsquo;t used to it.&#xA;It&amp;rsquo;s very fast-paced, and most of the time you have to learn by yourself, which I suppose is the point of online learning.</description>
+    </item>
+    <item>
+      <title>Who Am I</title>
+      <link>http://localhost:1313/post/who-am-i/</link>
+      <pubDate>Fri, 01 Nov 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/who-am-i/</guid>
+      <description>Who Am I Hey there! I&amp;rsquo;m Ezra, a software engineer crafting digital solutions in the vibrant tech landscape of Indonesia. While my days are filled with writing code and solving complex problems, there&amp;rsquo;s more to my story than just bits and bytes.&#xA;Think of this website as my digital garden - a space where I cultivate ideas, share experiences, and maybe even help fellow developers along the way. Why create this space?</description>
+    </item>
+    <item>
+      <title>Autobiography</title>
+      <link>http://localhost:1313/about/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/about/</guid>
+      <description>Finding My Path Growing up in Indonesia, I wasn&amp;rsquo;t the typical &amp;ldquo;future programmer&amp;rdquo; you might imagine. Far from being the smartest kid in class, I was actually known as the class clown - a role that came with its share of dismissal from others. But as life would prove, those early academic labels don&amp;rsquo;t define your future.&#xA;&amp;ldquo;七転び八起き&amp;rdquo; (Nana korobi ya oki) - &amp;ldquo;Fall seven times, rise eight.&amp;rdquo; This Japanese proverb has become my life&amp;rsquo;s motto, embodying my journey from an unlikely beginning to finding my true calling in technology.</description>
+    </item>
+    <item>
+      <title>Library</title>
+      <link>http://localhost:1313/library/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/library/</guid>
+      <description>Welcome to my personal collection of books and resources.&#xA;If you&amp;rsquo;re a software engineer, these are must-reads!&#xA;Designing Data-Intensive Applications&#xA;An excellent book that covers core concepts in distributed systems, databases, and big data processing.&#xA;Database Internals&#xA;A deep dive into database structures and operations, exploring topics like data organization, log-structured databases, and distributed systems. Perfect for expanding on concepts introduced in the first book.&#xA;100 Go Mistakes and How to Avoid Them</description>
+    </item>
+  </channel>
+</rss>
