@@ -1,6 +1,7 @@
 ---
 title: Autobiography
 author: Ezra Natanael
+toc: true
 ---
 
 ## Finding My Path

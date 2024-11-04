@@ -49,6 +49,52 @@
     <h2 class="date">2024/11/03</h2>
 </div>
 
+
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#installation">Installation</a>
+      <ul>
+        <li><a href="#windows">Windows</a></li>
+        <li><a href="#macos">MacOS</a></li>
+        <li><a href="#linux">Linux</a></li>
+      </ul>
+    </li>
+    <li><a href="#docker-images">Docker Images</a>
+      <ul>
+        <li><a href="#what-is-docker-images">What is Docker Images?</a></li>
+        <li><a href="#understanding-docker-image-layers">Understanding Docker Image Layers</a></li>
+        <li><a href="#docker-hub-a-source-of-pre-built-images">Docker Hub: A Source of Pre-Built Images</a></li>
+      </ul>
+    </li>
+    <li><a href="#docker-containers">Docker Containers</a>
+      <ul>
+        <li><a href="#key-components">Key Components</a></li>
+        <li><a href="#build-process-explained">Build Process Explained</a></li>
+        <li><a href="#container-runtime-concepts">Container Runtime Concepts</a></li>
+        <li><a href="#important-runtime-concepts">Important Runtime Concepts</a></li>
+        <li><a href="#container-management-concepts">Container Management Concepts</a></li>
+        <li><a href="#best-practices-for-container-management">Best Practices for Container Management</a></li>
+      </ul>
+    </li>
+    <li><a href="#docker-compose">Docker Compose</a>
+      <ul>
+        <li><a href="#basic-structure-of-docker-composeyml">Basic Structure of docker-compose.yml</a></li>
+        <li><a href="#docker-compose-example-for-a-web-app-with-postgresql-database">Docker Compose Example for a Web App with PostgreSQL Database</a></li>
+        <li><a href="#key-docker-compose-commands">Key Docker Compose Commands</a></li>
+        <li><a href="#using-docker-compose-in-development-and-testing">Using Docker Compose in Development and Testing</a></li>
+      </ul>
+    </li>
+    <li><a href="#closing">Closing</a>
+      <ul>
+        <li><a href="#key-takeaways">Key Takeaways</a></li>
+        <li><a href="#looking-forward">Looking Forward</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
 <main>
     <h2 id="introduction">Introduction</h2>
 <p>Improving scalability, consistency, and streamlining procedures are critical in today’s fast-paced development environment. Docker, a platform that enables developers to bundle apps and their dependencies into lightweight, portable containers, can help with this. Docker makes it easier to set up environments and deploy apps across several computers, whether you’re working on a personal project or managing an advanced enterprise program.</p>
@@ -319,7 +365,7 @@ docker compose version
 <p>In the next section, we’ll explore Docker Containers and how to create and manage them based on the images you’ve learned to build.</p>
 <h2 id="docker-containers">Docker Containers</h2>
 <p>Docker containers allow applications to run in isolated environments, encapsulating code, dependencies, and configurations into a single package. By building and running containers, you can ensure that your applications behave consistently across various environments, making deployment seamless.</p>
-<h3 id="key-components">Key Components:</h3>
+<h3 id="key-components">Key Components</h3>
 <p>Container building involves creating a Docker image, which acts as a blueprint for your application, packaging all necessary resources. Let’s dive into the essential parts that make up this process:</p>
 <ol>
 <li>
@@ -371,7 +417,7 @@ CMD [&quot;python&quot;, &quot;app.py&quot;]
 </ul>
 </li>
 </ol>
-<h3 id="build-process-explained">Build Process Explained:</h3>
+<h3 id="build-process-explained">Build Process Explained</h3>
 <p>Now, let&rsquo;s walk through creating and running a container using the <strong>Dockerfile</strong> defined earlier.</p>
 <ol>
 <li>
@@ -630,6 +676,20 @@ volumes:
 <li><strong>Easily Scale Services</strong> using <code>docker-compose up --scale &lt;service&gt;=N</code>.</li>
 </ul>
 <p>Docker Compose makes managing complex applications much simpler by providing a single configuration file to handle multiple services, networking, and volumes. This setup is invaluable for both development and production environments, particularly for microservices.</p>
+<h2 id="closing">Closing</h2>
+<p>Docker has transformed how we build and deploy applications, making it easier than ever to create consistent, portable, and scalable software. Through this guide, we&rsquo;ve explored the fundamentals of containerization, from basic Docker commands to orchestrating multiple services with Docker Compose.</p>
+<h3 id="key-takeaways">Key Takeaways</h3>
+<ul>
+<li><strong>Start Simple</strong>: Begin with single containers and gradually move to more complex multi-container applications</li>
+<li><strong>Think Security</strong>: Always consider security implications when building and deploying containers</li>
+<li><strong>Optimize Resources</strong>: Keep images small, manage resources effectively, and follow best practices</li>
+<li><strong>Stay Consistent</strong>: Use Docker Compose to ensure development and production environments remain as similar as possible</li>
+</ul>
+<h3 id="looking-forward">Looking Forward</h3>
+<p>As you continue your Docker journey, remember that containerization is not just a technology but a mindset. It&rsquo;s about creating reproducible, maintainable, and scalable applications. Whether you&rsquo;re deploying a simple web application or a complex microservices architecture, the principles you&rsquo;ve learned here will serve as a solid foundation.</p>
+<p>Keep learning, keep experimenting, and most importantly, keep containerizing!</p>
+<p>さようなら (Sayōnara),</p>
+<p>Ezra</p>
 
 </main>
 
@@ -641,6 +701,27 @@ volumes:
     hljs.configure({languages: []});
     hljs.initHighlightingOnLoad();
 </script>
+
+<div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "ezrantn" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
   
   <hr/>
   © <a href="https://ezrantn.org">Ezra Natanael</a> 2022 &ndash; 2024 | <a href="https://github.com/ezrantn">GitHub</a> | <a href="https://x.com/EzraNatanael6">Twitter</a>

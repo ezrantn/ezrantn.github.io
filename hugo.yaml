@@ -3,7 +3,7 @@ languageCode: "en-us"
 title: "Ezra Natanael"
 theme: "hugo-xmin"
 googleAnalytics: ""
-disqusShortname: ""
+disqusShortname: "ezrantn"
 ignoreFiles: ["\\.Rmd$", "\\.Rmarkdown$", "_cache$"]
 footnotereturnlinkcontents: "↩"
 

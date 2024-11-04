@@ -5,6 +5,7 @@ author: Ezra Natanael
 categories:
     - Docker
 slug: the-docker-cookbook
+toc: true
 ---
 
 ## Introduction
@@ -333,7 +334,7 @@ In the next section, we’ll explore Docker Containers and how to create and man
 
 Docker containers allow applications to run in isolated environments, encapsulating code, dependencies, and configurations into a single package. By building and running containers, you can ensure that your applications behave consistently across various environments, making deployment seamless.
 
-### Key Components:
+### Key Components
 
 Container building involves creating a Docker image, which acts as a blueprint for your application, packaging all necessary resources. Let’s dive into the essential parts that make up this process:
 
@@ -387,7 +388,7 @@ Container building involves creating a Docker image, which acts as a blueprint f
    - Lightweight images like Alpine reduce size but may lack some essential tools.
    - Distroless images are minimal, providing only essential libraries, which reduces the attack surface and enhances security.
 
-### Build Process Explained:
+### Build Process Explained
 
 Now, let's walk through creating and running a container using the **Dockerfile** defined earlier.
 
@@ -647,3 +648,23 @@ Docker Compose is invaluable for local development, as it allows you to:
 - **Easily Scale Services** using `docker-compose up --scale <service>=N`.
 
 Docker Compose makes managing complex applications much simpler by providing a single configuration file to handle multiple services, networking, and volumes. This setup is invaluable for both development and production environments, particularly for microservices.
+
+## Closing
+
+Docker has transformed how we build and deploy applications, making it easier than ever to create consistent, portable, and scalable software. Through this guide, we've explored the fundamentals of containerization, from basic Docker commands to orchestrating multiple services with Docker Compose.
+
+### Key Takeaways
+
+- **Start Simple**: Begin with single containers and gradually move to more complex multi-container applications
+- **Think Security**: Always consider security implications when building and deploying containers
+- **Optimize Resources**: Keep images small, manage resources effectively, and follow best practices
+- **Stay Consistent**: Use Docker Compose to ensure development and production environments remain as similar as possible
+
+### Looking Forward
+As you continue your Docker journey, remember that containerization is not just a technology but a mindset. It's about creating reproducible, maintainable, and scalable applications. Whether you're deploying a simple web application or a complex microservices architecture, the principles you've learned here will serve as a solid foundation.
+
+Keep learning, keep experimenting, and most importantly, keep containerizing!
+
+さようなら (Sayōnara),
+
+Ezra
