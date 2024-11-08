@@ -10,9 +10,9 @@
     <atom:link href="http://localhost:1313/categories/docker/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>The Docker Cookbook</title>
-      <link>http://localhost:1313/post/the-docker-cookbook/</link>
+      <link>http://localhost:1313/posts/the-docker-cookbook/</link>
       <pubDate>Sun, 03 Nov 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/post/the-docker-cookbook/</guid>
+      <guid>http://localhost:1313/posts/the-docker-cookbook/</guid>
       <description>Introduction Improving scalability, consistency, and streamlining procedures are critical in today’s fast-paced development environment. Docker, a platform that enables developers to bundle apps and their dependencies into lightweight, portable containers, can help with this. Docker makes it easier to set up environments and deploy apps across several computers, whether you’re working on a personal project or managing an advanced enterprise program.&#xA;Software may be executed in isolated settings thanks to Docker containers, so what functions on your computer can function anywhere.</description>
     </item>
   </channel>

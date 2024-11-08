@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>LaTeX on Ezra Natanael</title>
+    <link>http://localhost:1313/categories/latex/</link>
+    <description>Recent content in LaTeX on Ezra Natanael</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 06 Nov 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/categories/latex/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>LaTeX Crash Course</title>
+      <link>http://localhost:1313/posts/latex-crash-course/</link>
+      <pubDate>Wed, 06 Nov 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/latex-crash-course/</guid>
+      <description>Introduction LaTeX is a typesetting system widely used for academic and scientific documents. Its popularity comes from its powerful control over document layout, especially for complex structures like mathematical formulas, tables, and references. In this crash course, we’ll explore the essentials of LaTeX, from basic setup to creating professional documents.&#xA;Why Use LaTeX? LaTeX is ideal for anyone working on:&#xA;Academic papers, theses, or dissertations Mathematical or scientific documents Professional presentations and reports Documents with precise formatting needs LaTeX shines with complex documents due to:</description>
+    </item>
+  </channel>
+</rss>

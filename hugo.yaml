@@ -8,7 +8,7 @@ ignoreFiles: ["\\.Rmd$", "\\.Rmarkdown$", "_cache$"]
 footnotereturnlinkcontents: "↩"
 
 permalinks:
-  post: "/post/:slug/"
+  post: "/posts/:slug/"
 
 menu:
   main:
@@ -22,7 +22,7 @@ menu:
       url: "library/"
       weight: 2
     - name: Posts
-      url: "post/"
+      url: "posts/"
       weight: 2
     - name: Categories
       url: "categories/"

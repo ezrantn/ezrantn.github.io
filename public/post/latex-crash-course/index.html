@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>LaTeX Crash Course | Ezra Natanael</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <link rel="stylesheet" href="/css/social-media.css">
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
+<link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/github.min.css" rel="stylesheet">
+<script>
+    MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']],
+            processEscapes: true,
+            processEnvironments: true
+        },
+        options: {
+            skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+        }
+    };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+  </head>
+
+  <body>
+    <nav>
+      <ul class="menu">
+        
+        <li><a href="/">Home</a></li>
+        
+        <li><a href="/about/">About</a></li>
+        
+        <li><a href="/library/">Library</a></li>
+        
+        <li><a href="/post/">Posts</a></li>
+        
+        <li><a href="/categories/">Categories</a></li>
+        
+      </ul>
+      <hr/>
+    </nav>
+
+<div class="article-meta">
+    <h1><span class="title">LaTeX Crash Course</span></h1>
+    <h2 class="author">Ezra Natanael</h2>
+    <h2 class="date">2024/11/06</h2>
+</div>
+
+
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#why-use-latex">Why Use LaTeX?</a></li>
+    <li><a href="#getting-started-with-latex">Getting Started with LaTeX</a>
+      <ul>
+        <li><a href="#installation">Installation</a></li>
+        <li><a href="#writing-your-first-piece-of-latex">Writing Your First Piece of LaTeX</a></li>
+      </ul>
+    </li>
+    <li><a href="#the-preamble">The Preamble</a></li>
+  </ul>
+</nav>
+
+
+<main>
+    <h2 id="introduction">Introduction</h2>
+<p>LaTeX is a typesetting system widely used for academic and scientific documents. Its popularity comes from its powerful control over document layout, especially for complex structures like mathematical formulas, tables, and references. In this crash course, we’ll explore the essentials of LaTeX, from basic setup to creating professional documents.</p>
+<h2 id="why-use-latex">Why Use LaTeX?</h2>
+<p>LaTeX is ideal for anyone working on:</p>
+<ul>
+<li>Academic papers, theses, or dissertations</li>
+<li>Mathematical or scientific documents</li>
+<li>Professional presentations and reports</li>
+<li>Documents with precise formatting needs</li>
+</ul>
+<p>LaTeX shines with complex documents due to:</p>
+<ul>
+<li>High-quality typesetting</li>
+<li>Automatic numbering and referencing</li>
+<li>Consistent formatting</li>
+<li>Extensive package support for customization</li>
+</ul>
+<h2 id="getting-started-with-latex">Getting Started with LaTeX</h2>
+<h3 id="installation">Installation</h3>
+<p>To start with LaTeX, you need a LaTeX distribution and an editor.</p>
+<ul>
+<li>
+<p>Distribution: Install a LaTeX distribution like <a href="https://www.tug.org/texlive/acquire-netinstall.html">TeX Live</a> (cross-platform) or <a href="https://miktex.org/download">MikTeX</a> (Windows)</p>
+</li>
+<li>
+<p>Editor: Use an editor with LaTeX support. Popular choices include:</p>
+<ul>
+<li><a href="https://www.overleaf.com/">Overleaf</a>: An online LaTeX editor with collaboration features.</li>
+<li><a href="https://www.xm1math.net/texmaker/download.html">TeXmaker</a>: Free and cross-platform.</li>
+<li><a href="https://code.visualstudio.com/Download">VS Code</a>: Install the LaTeX Workshop extension.</li>
+</ul>
+</li>
+</ul>
+<p>For the sake of simplicity, we&rsquo;ll be using <a href="https://www.overleaf.com/">Overleaf</a> for this course. Head over to their website and sign up for a free account!</p>
+<h3 id="writing-your-first-piece-of-latex">Writing Your First Piece of LaTeX</h3>
+<p>Create a new project, then choose <strong>Blank Project</strong> and enter your project name. In this course, I&rsquo;ll name it &ldquo;Tutorial&rdquo;. Once you create the project, you&rsquo;ll see that several lines of LaTeX code are automatically generated for you. We&rsquo;ll delete that and start from scratch.</p>
+<p>Copy this code and paste it into your Overleaf editor:</p>
+<pre><code class="language-latex">\documentclass{article}
+\begin{document}
+First document. This is a simple example, with no 
+extra parameters or packages included.
+\end{document}
+</code></pre>
+<p>Once that&rsquo;s done, click the &ldquo;Recompile&rdquo; button at the top. You&rsquo;ll see the result on the document on the right.</p>
+<p>The code above produces the following output:</p>
+<p><img src="/images/first-document.png" alt="First Document"></p>
+<p>You can observe that LaTeX has automatically indented the first line of the paragraph, handling that formatting for you. Now, let’s examine what each component of our code does in more detail.</p>
+<p>The line of code <code>\documentclass{article}</code> specifies the document class, determining its overall appearance. Different documents, such as a CV or a scientific paper, require different classes (e.g., book or report). For a comprehensive list of available LaTeX classes, refer to the <a href="https://www.ctan.org/topic/class">CTAN (Comprehensive TeX Archive Network)</a>.</p>
+<p>After specifying the document class, the content of the document is placed between the <code>\begin{document}</code> and <code>\end{document}</code> commands. You can edit the text within this section and <strong>recompile</strong> the document to view the typeset PDF.</p>
+<p><strong>Mini Task!</strong></p>
+<blockquote>
+<p>Try displaying your name, where you are from, and why you want to learn LaTeX!</p>
+</blockquote>
+<p>That&rsquo;s a wrap! Congratulations on writing your first LaTeX document!</p>
+<h2 id="the-preamble">The Preamble</h2>
+
+</main>
+
+<footer>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.10.0/languages/go.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.10.0/languages/dockerfile.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.10.0/es/languages/shell.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.10.0/languages/yaml.min.js"></script>
+
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/center-img.min.js" defer></script>
+
+<script>
+    hljs.configure({languages: []});
+    hljs.initHighlightingOnLoad();
+</script>
+  
+  <hr/>
+  © <a href="https://ezrantn.org">Ezra Natanael</a> 2022 &ndash; 2024 | <a href="https://github.com/ezrantn">GitHub</a> | <a href="https://x.com/EzraNatanael6">Twitter</a>
+  
+</footer>
+</body>
+</html>
+

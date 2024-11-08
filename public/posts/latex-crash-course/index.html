@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>LaTeX Crash Course | Ezra Natanael</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <link rel="stylesheet" href="/css/social-media.css">
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
+<link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/github.min.css" rel="stylesheet">
+<script>
+    MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']],
+            processEscapes: true,
+            processEnvironments: true
+        },
+        options: {
+            skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+        }
+    };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+  </head>
+
+  <body>
+    <nav>
+      <ul class="menu">
+        
+        <li><a href="/">Home</a></li>
+        
+        <li><a href="/about/">About</a></li>
+        
+        <li><a href="/library/">Library</a></li>
+        
+        <li><a href="/posts/">Posts</a></li>
+        
+        <li><a href="/categories/">Categories</a></li>
+        
+      </ul>
+      <hr/>
+    </nav>
+
+<div class="article-meta">
+    <h1><span class="title">LaTeX Crash Course</span></h1>
+    <h2 class="author">Ezra Natanael</h2>
+    <h2 class="date">2024/11/06</h2>
+</div>
+
+
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#why-use-latex">Why Use LaTeX?</a></li>
+    <li><a href="#getting-started-with-latex">Getting Started with LaTeX</a>
+      <ul>
+        <li><a href="#installation">Installation</a></li>
+        <li><a href="#writing-your-first-piece-of-latex">Writing Your First Piece of LaTeX</a></li>
+      </ul>
+    </li>
+    <li><a href="#the-preamble">The Preamble</a></li>
+    <li><a href="#including-the-title-author-and-date">Including the Title, Author, and Date</a></li>
+    <li><a href="#adding-comments">Adding Comments</a></li>
+    <li><a href="#bolds-italic-and-underlining">Bolds, Italic, and Underlining</a></li>
+    <li><a href="#adding-images">Adding Images</a></li>
+  </ul>
+</nav>
+
+
+<main>
+    <h2 id="introduction">Introduction</h2>
+<p>LaTeX is a typesetting system widely used for academic and scientific documents. Its popularity comes from its powerful control over document layout, especially for complex structures like mathematical formulas, tables, and references. In this crash course, we’ll explore the essentials of LaTeX, from basic setup to creating professional documents.</p>
+<h2 id="why-use-latex">Why Use LaTeX?</h2>
+<p>LaTeX is ideal for anyone working on:</p>
+<ul>
+<li>Academic papers, theses, or dissertations</li>
+<li>Mathematical or scientific documents</li>
+<li>Professional presentations and reports</li>
+<li>Documents with precise formatting needs</li>
+</ul>
+<p>LaTeX shines with complex documents due to:</p>
+<ul>
+<li>High-quality typesetting</li>
+<li>Automatic numbering and referencing</li>
+<li>Consistent formatting</li>
+<li>Extensive package support for customization</li>
+</ul>
+<h2 id="getting-started-with-latex">Getting Started with LaTeX</h2>
+<h3 id="installation">Installation</h3>
+<p>To start with LaTeX, you need a LaTeX distribution and an editor.</p>
+<ul>
+<li>
+<p>Distribution: Install a LaTeX distribution like <a href="https://www.tug.org/texlive/acquire-netinstall.html">TeX Live</a> (cross-platform) or <a href="https://miktex.org/download">MikTeX</a> (Windows)</p>
+</li>
+<li>
+<p>Editor: Use an editor with LaTeX support. Popular choices include:</p>
+<ul>
+<li><a href="https://www.overleaf.com/">Overleaf</a>: An online LaTeX editor with collaboration features.</li>
+<li><a href="https://www.xm1math.net/texmaker/download.html">TeXmaker</a>: Free and cross-platform.</li>
+<li><a href="https://code.visualstudio.com/Download">VS Code</a>: Install the LaTeX Workshop extension.</li>
+</ul>
+</li>
+</ul>
+<p>For the sake of simplicity, we&rsquo;ll be using <a href="https://www.overleaf.com/">Overleaf</a> for this course. Head over to their website and sign up for a free account!</p>
+<h3 id="writing-your-first-piece-of-latex">Writing Your First Piece of LaTeX</h3>
+<p>Create a new project, then choose <strong>Blank Project</strong> and enter your project name. In this course, I&rsquo;ll name it &ldquo;Tutorial&rdquo;. Once you create the project, you&rsquo;ll see that several lines of LaTeX code are automatically generated for you. We&rsquo;ll delete that and start from scratch.</p>
+<p>Copy this code and paste it into your Overleaf editor:</p>
+<pre><code class="language-latex">\documentclass{article}
+\begin{document}
+First document. This is a simple example, with no 
+extra parameters or packages included.
+\end{document}
+</code></pre>
+<p>Once that&rsquo;s done, click the &ldquo;Recompile&rdquo; button at the top. You&rsquo;ll see the result on the document on the right.</p>
+<p>The code above produces the following output:</p>
+<p><img src="/images/first-document.png" alt="First Document"></p>
+<p>You can observe that LaTeX has automatically indented the first line of the paragraph, handling that formatting for you. Now, let’s examine what each component of our code does in more detail.</p>
+<p>The line of code <code>\documentclass{article}</code> specifies the document class, determining its overall appearance. Different documents, such as a CV or a scientific paper, require different classes (e.g., book or report). For a comprehensive list of available LaTeX classes, refer to the <a href="https://www.ctan.org/topic/class">CTAN (Comprehensive TeX Archive Network)</a>.</p>
+<p>After specifying the document class, the content of the document is placed between the <code>\begin{document}</code> and <code>\end{document}</code> commands. You can edit the text within this section and <strong>recompile</strong> the document to view the typeset PDF.</p>
+<p><strong>Mini Task!</strong></p>
+<blockquote>
+<p>Try displaying your name, where you are from, and why you want to learn LaTeX!</p>
+</blockquote>
+<p>That&rsquo;s a wrap! Congratulations on writing your first LaTeX document!</p>
+<h2 id="the-preamble">The Preamble</h2>
+<p>A LaTeX document is stored by Overleaf as a file named <code>main.tex</code>. Files containing your document&rsquo;s LaTeX code are often named with the <code>.tex</code> file extension.</p>
+<p>The preamble is the portion of your <code>.tex</code> file that appears <strong>before</strong> the <code>\begin{document}</code> command; it serves as the document&rsquo;s &ldquo;setup&rdquo; section. The preceding example demonstrated how document content was entered after that point. Define the document class (type) in the preamble, along with details like the languages to be used for authoring the document, the packages you want to load (more on this later), and other configuration kinds.</p>
+<p>A minimal document preamble might look like this:</p>
+<pre><code class="language-latex">\documentclass[12pt, letterpaper]{article}
+\usepackage{graphicx}
+</code></pre>
+<p>Where <code>\documentclass[12pt, letterpaper]{article}</code> specifies the document&rsquo;s general class (type). Square brackets <code>([...])</code> include additional parameters that are used to customize this instance of the article class, i.e., settings we want to apply for this specific <em>article-class-based</em> document. These parameters must be separated by commas.</p>
+<p>In this example, the two parameters do the following:</p>
+<ul>
+<li>12pt sets the font size</li>
+<li><code>letterpaper</code> sets the paper size</li>
+</ul>
+<p>Other font sizes, such as 9pt, 11pt, or 12pt, can be used, of course, but 10pt is the <strong>default</strong> if none is given. A4 paper and legal paper are additional options for the paper size.</p>
+<p>The preamble line</p>
+<pre><code class="language-latex">\usepackage{graphicx}
+</code></pre>
+<p>is an example of loading an external package (here, <code>graphicx</code>) to extend LaTeX capabilities, enabling it to import external graphics files. LaTeX packages are discussed in the section <a href="">Finding and using LaTeX packages</a>.</p>
+<h2 id="including-the-title-author-and-date">Including the Title, Author, and Date</h2>
+<p>Three extra lines must be added to the <strong>preamble</strong> (not the body of the document) in order to include the title, author, and date. These are the lines:</p>
+<pre><code class="language-latex">\documentclass[12pt, letterpaper]{article}
+\title{My first LaTeX document}
+\author{Hubert Farnsworth\thanks{Funded by the Overleaf team.}}
+\date{August 2022}
+</code></pre>
+<p>Let&rsquo;s explore the code more briefly.</p>
+<ol>
+<li><code>\title{My first LaTeX document}</code>
+<ul>
+<li>Defines the document title</li>
+</ul>
+</li>
+<li><code>\author{Hubert Farnsworth}</code>
+<ul>
+<li>Specifies the author&rsquo;s name</li>
+<li>Can include the <code>\thanks</code> command within curly braces:
+<ul>
+<li><code>\thanks{Funded by the Overleaf team.}</code>: Adds a superscript and footnote containing acknowledgment text. Useful for crediting supporting institutions.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>\date{August 2022}</code>
+<ul>
+<li>Manually enters the date</li>
+<li>Alternatively, use the <code>\today</code> command to display the current date when the document is compiled</li>
+</ul>
+</li>
+</ol>
+<p>To typeset the title, author and date use the <code>\maketitle</code> command within the <em>body</em> of the document:</p>
+<pre><code class="language-latex">\begin{document}
+\maketitle
+We have now added a title, author and date to our first \LaTeX{} document!
+\end{document}
+</code></pre>
+<p>The preamble and body can now be combined to produce a complete document which can be opened in Overleaf:</p>
+<pre><code class="language-latex">\documentclass[12pt, letterpaper]{article}
+\title{My first LaTeX document}
+\author{Hubert Farnsworth\thanks{Funded by the Overleaf team.}}
+\date{August 2022}
+\begin{document}
+\maketitle
+We have now added a title, author and date to our first \LaTeX{} document!
+\end{document}
+</code></pre>
+<p>Run this code and compile it into your own document! Make sure to change the title, author, and date according to your own preferences.'</p>
+<h2 id="adding-comments">Adding Comments</h2>
+<p>LaTeX is a typesetting program code that can be useful for document typesetting. It allows for the inclusion of comments, which are non-typeset sections of text, which can be used to add notes, provide explanations, or debug code.</p>
+<p>To make a comment in LaTeX, use the <code>%</code> symbol at the beginning of the line, as demonstrated in the code example provided.</p>
+<pre><code class="language-latex">```latex
+\documentclass[12pt, letterpaper]{article}
+\title{My first LaTeX document}
+\author{Hubert Farnsworth\thanks{Funded by the Overleaf team.}}
+\date{August 2022}
+\begin{document}
+\maketitle
+
+% This is a comment! It will not be typeset in your document.
+\end{document}
+</code></pre>
+<p>The example generates the same output as the previous LaTeX code, which did not include the comment.</p>
+<h2 id="bolds-italic-and-underlining">Bolds, Italic, and Underlining</h2>
+<p>We&rsquo;ll now examine a few text formatting commands:</p>
+<ul>
+<li><strong>Bold</strong>: The <code>\textbf{...}</code> command is used to typeset bold text in LaTeX.</li>
+<li><em>Italics</em>: the <code>\textit{...}</code> command is used to create italicized text.</li>
+<li><u>Underline</u>: Use the <code>\underline{...}</code> command to underline text.</li>
+</ul>
+<p>The next example demonstrates these commands:</p>
+<pre><code class="language-latex">Some of the \textbf{greatest}
+discoveries in \underline{science} 
+were made by \textbf{\textit{accident}}.
+</code></pre>
+<p>This example produces the following output:</p>
+<p><img src="/images/bold_italic_underline.png" alt="Bold Italic Underline"></p>
+<p><code>\emph{argument}</code> is another very helpful command whose effect on its argument depends on the context. The emphasized text is italicized when it is inside regular text, while the opposite occurs when it is inside italicized content (see the following example):</p>
+<pre><code class="language-latex">Some of the greatest \emph{discoveries} in science 
+were made by accident.
+
+\textit{Some of the greatest \emph{discoveries} 
+in science were made by accident.}
+
+\textbf{Some of the greatest \emph{discoveries} 
+in science were made by accident.}
+</code></pre>
+<p>This example produces the following output:</p>
+<p><img src="/images/emph.png" alt="Emphasis"></p>
+<h2 id="adding-images">Adding Images</h2>
+<p>We will examine the process of adding images to a LaTeX document in this section. There are three methods for adding photos to Overleaf:</p>
+<ol>
+<li>Use the <a href="https://learn.overleaf.com/learn/Kb/How_to_insert_figures_in_Overleaf#Using_Insert_Figure_to_add_a_figure_to_your_project"><strong>Insert Figure</strong> button</a>(<img src="https://sharelatex-wiki-cdn-671420.c.cdn77.org/learn-scripts/images/a/a8/InsertFigureButton.png" alt="The Insert Figure button on the editor toolbar">), located on the editor toolbar, to insert an image into <strong>Visual Editor</strong> or <strong>Code Editor</strong>.</li>
+<li><a href="https://www.overleaf.com/learn/how-to/How_to_paste_formatted_content_into_Overleaf%23Pasting_images_into_your_Overleaf_project" title="Kb/How to paste formatted content into Overleaf">Copy and paste an image</a> into <strong>Visual Editor</strong> or <strong>Code Editor</strong>.</li>
+<li>Use <strong>Code Editor</strong> to write LaTeX code that inserts a graphic.</li>
+</ol>
+<p>Option 3 is introduced here; keep in mind that you will need to add those images to your Overleaf project. Options 1 and 2 automatically generate the LaTeX code needed to include images. The example that follows shows how to add a picture:</p>
+<pre><code class="language-latex">\documentclass{article}
+\usepackage{graphicx} %LaTeX package to import graphics
+\graphicspath{{images/}} %configuring the graphicx package
+ 
+\begin{document}
+The universe is immense and it seems to be homogeneous, 
+on a large scale, everywhere we look.
+
+% The \includegraphcs command is 
+% provided (implemented) by the 
+% graphicx package
+\includegraphics{universe}  
+ 
+There's a picture of a galaxy above.
+\end{document}
+</code></pre>
+<p>This example produces the following output:</p>
+<p><img src="/images/images.png" alt="Image"></p>
+<p>An add-on package that offers the functionality and commands necessary to incorporate external graphics files is required when importing graphics into a LaTeX document. The aforementioned example loads the <code>graphicx</code> package, which among many other commands, offers <code>\graphicspath{...}</code> to tell LaTeX where the graphics are located and <code>\includegraphics{...}</code> to import graphics.</p>
+<p>Add the following line to the preamble of your Overleaf document in order to use the <code>graphicx</code> package:</p>
+<pre><code class="language-latex">\usepackage{graphicx}
+</code></pre>
+<p>The command <code>\graphicspath{{images/}}</code> in our example tells LaTeX that images are stored in the current directory&rsquo;s images folder:</p>
+<p>The image is really inserted into the page with the <code>\includegraphics{universe}</code> command. In this case, the image file&rsquo;s name is universe, but it does not have an extension.</p>
+<p>Take note:</p>
+<blockquote>
+<ul>
+<li>Although the <code>\includegraphics</code> command allows the complete file name, including its extension, it is often advised to leave the file extension out  as this will cause LaTeX to look for all acceptable formats.</li>
+<li>When uploading picture files to Overleaf, it is generally advised to use lowercase letters for the file extension and to avoid using white spaces or multiple dots in the graphic&rsquo;s file name.</li>
+</ul>
+</blockquote>
+
+</main>
+
+<footer>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.10.0/languages/go.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.10.0/languages/dockerfile.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.10.0/es/languages/shell.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.10.0/languages/yaml.min.js"></script>
+
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/center-img.min.js" defer></script>
+
+<script>
+    hljs.configure({languages: []});
+    hljs.initHighlightingOnLoad();
+</script>
+  
+  <hr/>
+  © <a href="https://ezrantn.org">Ezra Natanael</a> 2022 &ndash; 2024 | <a href="https://github.com/ezrantn">GitHub</a> | <a href="https://x.com/EzraNatanael6">Twitter</a>
+  
+</footer>
+</body>
+</html>
+

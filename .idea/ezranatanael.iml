@@ -9,5 +9,6 @@
     <orderEntry type="library" name="github" level="application" />
     <orderEntry type="library" name="highlight" level="application" />
     <orderEntry type="library" name="highlight.js" level="application" />
+    <orderEntry type="library" name="center-img" level="application" />
   </component>
 </module>

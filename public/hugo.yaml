@@ -8,8 +8,8 @@ ignoreFiles: ["\\.Rmd$", "\\.Rmarkdown$", "_cache$"]
 footnotereturnlinkcontents: "↩"
 
 permalinks:
-  note: "/post/:year/:month/:day/:slug/"
-  post: "/post/:year/:month/:day/:slug/"
+  note: "/posts/:year/:month/:day/:slug/"
+  post: "/posts/:year/:month/:day/:slug/"
 
 menu:
   main:
