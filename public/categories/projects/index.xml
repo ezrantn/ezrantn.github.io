@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Projects on Ezra Natanael</title>
+    <link>https://ezrantn.github.io/categories/projects/</link>
+    <description>Recent content in Projects on Ezra Natanael</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 14 Nov 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://ezrantn.github.io/categories/projects/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Introducing Macshift</title>
+      <link>https://ezrantn.github.io/posts/introducing-macshift/</link>
+      <pubDate>Thu, 14 Nov 2024 00:00:00 +0000</pubDate>
+      <guid>https://ezrantn.github.io/posts/introducing-macshift/</guid>
+      <description>I created Macshift as a fun project to help people quickly change their MAC addresses on Windows. It’s a command-line tool written in Go, designed to give users better control over their network adapters without getting too technical. Here’s a simple rundown of how it works and why it might be useful!&#xA;What is a MAC Address? A MAC address (short for Media Access Control address) is like a unique ID for each device that connects to a network.</description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Introducing Macshift | Ezra Natanael</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <link rel="stylesheet" href="/css/social-media.css">
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
+<link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/github.min.css" rel="stylesheet">
+<script>
+    MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']],
+            processEscapes: true,
+            processEnvironments: true
+        },
+        options: {
+            skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+        }
+    };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+  </head>
+
+  <body>
+    <nav>
+      <ul class="menu">
+        
+        <li><a href="/">Home</a></li>
+        
+        <li><a href="/posts/">Posts</a></li>
+        
+        <li><a href="/library/">Library</a></li>
+        
+        <li><a href="/categories/">Categories</a></li>
+        
+      </ul>
+      <hr/>
+    </nav>
+
+<div class="article-meta">
+    <h1><span class="title">Introducing Macshift</span></h1>
+    <h2 class="author">Ezra Natanael</h2>
+    <h2 class="date">2024/11/14</h2>
+</div>
+
+
+
+<main>
+    <p>I created Macshift as a fun project to help people quickly change their MAC addresses on Windows. It’s a command-line tool written in Go, designed to give users better control over their network adapters without getting too technical. Here’s a simple rundown of how it works and why it might be useful!</p>
+<hr>
+<h2 id="what-is-a-mac-address">What is a MAC Address?</h2>
+<p>A <strong>MAC address</strong> (short for Media Access Control address) is like a unique ID for each device that connects to a network. It’s made up of 6 bytes (or 48 bits) and is often shown as six pairs of characters, like <code>00:1A:2B:3C:4D:5E</code>.</p>
+<h3 id="how-a-mac-address-works">How a MAC Address Works</h3>
+<ul>
+<li><strong>First 3 bytes</strong>: These identify the manufacturer of the device (like Intel or Dell).</li>
+<li><strong>Last 3 bytes</strong>: These are unique to each device from that manufacturer.</li>
+</ul>
+<p>So, a MAC address helps identify who made the device and makes sure each device is unique.</p>
+<h3 id="why-is-a-mac-address-useful">Why is a MAC Address Useful?</h3>
+<ol>
+<li>
+<p><strong>Device Identification</strong>: It’s how devices on the same network (like in your home or office) know who’s who. The router can tell your laptop from your phone by their MAC addresses.</p>
+</li>
+<li>
+<p><strong>Network Data Delivery</strong>: When you send data (like loading a website), the MAC address helps make sure it goes to the right device on your network.</p>
+</li>
+<li>
+<p><strong>Network Access Control</strong>: Some networks only let devices with certain MAC addresses connect, so changing a MAC address can sometimes help with network access or troubleshooting.</p>
+</li>
+<li>
+<p><strong>Privacy on Public Networks</strong>: If you’re using public Wi-Fi, changing your MAC address can make it harder to track your device as you connect to different networks.</p>
+</li>
+</ol>
+<p>In short, a MAC address is an important part of how networks identify and send data to devices, and Macshift gives you the power to change it when needed.</p>
+<hr>
+<h2 id="what-macshift-does">What Macshift Does</h2>
+<p>Macshift allows you to change the MAC (Media Access Control) address of your network adapters with just a few commands. There are various reasons someone might want to alter their MAC address, from improving privacy on public networks to troubleshooting connectivity issues. Sometimes, networks use MAC filtering, so changing yours can even help you bypass certain restrictions.</p>
+<hr>
+<h2 id="how-macshift-works">How Macshift Works</h2>
+<p>Macshift operates by interacting directly with your network adapter’s settings in the Windows registry, which stores configuration data for Windows. When you choose to change your MAC address, Macshift generates a new, random address. It then saves this new MAC in the registry, replacing the original, and disables and re-enables the adapter to apply the change. If you want to return to the original MAC, Macshift has a command to restore it, removing the custom address and re-enabling the adapter with the original one.</p>
+<p>Macshift has three main commands:</p>
+<ol>
+<li><strong>List Adapters</strong>:  Displays all your network adapters with their names and current MAC addresses.</li>
+<li><strong>Change MAC Address</strong>: Generates a random MAC address for a selected adapter and updates the system.</li>
+<li><strong>Restore Original MAC</strong>: Brings back the original MAC address if you need to undo the change.</li>
+</ol>
+<hr>
+<h2 id="built-for-simplicity">Built for Simplicity</h2>
+<p>To make Macshift easy to use, I built it with an interactive command system using <a href="https://cobra.dev/">Cobra</a>, so each command feels straightforward and natural. You just pick an adapter, run a command, and Macshift handles the rest!</p>
+<p>So, if you ever need to change a MAC address on Windows, give Macshift a try. It was a fun project to work on, and it’s open-source, so feel free to check it out or suggest improvements!</p>
+<hr>
+<h2 id="try-macshift-on-github">Try Macshift on GitHub</h2>
+<p>You can find Macshift on <a href="https://github.com/ezrantn/macshift">GitHub</a>, where it&rsquo;s available for easy installation. Just run a simple command to get started, and you&rsquo;ll be able to manage your MAC addresses in no time. Contributions are welcome, so if you have ideas for improvements or new features, feel free to jump in and submit a pull request!</p>
+
+</main>
+
+<footer>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.10.0/languages/go.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.10.0/languages/dockerfile.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.10.0/es/languages/shell.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.10.0/languages/yaml.min.js"></script>
+
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/center-img.min.js" defer></script>
+
+<script>
+    hljs.configure({languages: []});
+    hljs.initHighlightingOnLoad();
+</script>
+  
+  <hr/>
+  © <a href="https://ezrantn.org">Ezra Natanael</a> 2022 &ndash; 2024 | <a href="https://github.com/ezrantn">GitHub</a> | <a href="https://x.com/EzraNatanael6">Twitter</a>
+  
+</footer>
+</body>
+</html>
+

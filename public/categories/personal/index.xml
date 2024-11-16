@@ -2,25 +2,25 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Personal on Ezra Natanael</title>
-    <link>http://localhost:1313/categories/personal/</link>
+    <link>https://ezrantn.github.io/categories/personal/</link>
     <description>Recent content in Personal on Ezra Natanael</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 02 Nov 2024 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/categories/personal/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 04 Nov 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://ezrantn.github.io/categories/personal/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Surviving Bangkit</title>
-      <link>http://localhost:1313/posts/surviving-bangkit/</link>
-      <pubDate>Sat, 02 Nov 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/surviving-bangkit/</guid>
-      <description>If I had to describe my experience during the Bangkit program in one word, it would be&#xA;Resilience.&#xA;Bangkit is not for everyone. I know this sounds intimidating, but trust me - the amount of assignments, meetings, Instructor-Led Training (ILT), and other activities can be pretty overwhelming for people who aren&amp;rsquo;t used to it.&#xA;It&amp;rsquo;s very fast-paced, and most of the time you have to learn by yourself, which I suppose is the point of online learning.</description>
+      <link>https://ezrantn.github.io/posts/surviving-bangkit/</link>
+      <pubDate>Mon, 04 Nov 2024 00:00:00 +0000</pubDate>
+      <guid>https://ezrantn.github.io/posts/surviving-bangkit/</guid>
+      <description>If someone asked me to sum up my Bangkit experience in one word, I’d say:&#xA;Resilience (fancy way of saying “not giving up when things get crazy”)&#xA;Picture this: Google teamed up with Indonesia’s tech giants (you know, Gojek, Tokopedia, Traveloka) and our Ministry of Education to create this intense tech bootcamp. They offer three flavors: Cloud Computing, Machine Learning, and Mobile Development.&#xA;Not gonna lie - this program isn’t a walk in the park.</description>
     </item>
     <item>
-      <title>Who Am I</title>
-      <link>http://localhost:1313/posts/who-am-i/</link>
+      <title>A Glimpse Into My Life</title>
+      <link>https://ezrantn.github.io/posts/who-am-i/</link>
       <pubDate>Fri, 01 Nov 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/who-am-i/</guid>
-      <description>Who Am I Hey there! I&amp;rsquo;m Ezra, a software engineer crafting digital solutions in the vibrant tech landscape of Indonesia. While my days are filled with writing code and solving complex problems, there&amp;rsquo;s more to my story than just bits and bytes.&#xA;Think of this website as my digital garden - a space where I cultivate ideas, share experiences, and maybe even help fellow developers along the way. Why create this space?</description>
+      <guid>https://ezrantn.github.io/posts/who-am-i/</guid>
+      <description>Hey! I’m Ezra, and I spend my days building cool stuff as a software engineer here in Indonesia. While I’m pretty much glued to my keyboard writing code, there’s definitely more to me than just staring at screens all day.&#xA;This website? It’s basically my little corner of the internet where I dump my thoughts, share what I’m learning, and hopefully help out other devs along the way. I got tired of the whole polished, perfect-looking tech persona thing, so I decided to just be real here.</description>
     </item>
   </channel>
 </rss>

@@ -2,40 +2,38 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://localhost:1313/categories/</loc>
-    <lastmod>2024-11-06T00:00:00+00:00</lastmod>
+    <loc>https://ezrantn.github.io/categories/</loc>
+    <lastmod>2024-11-14T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/</loc>
-    <lastmod>2024-11-06T00:00:00+00:00</lastmod>
+    <loc>https://ezrantn.github.io/</loc>
+    <lastmod>2024-11-14T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/categories/latex/</loc>
-    <lastmod>2024-11-06T00:00:00+00:00</lastmod>
+    <loc>https://ezrantn.github.io/posts/introducing-macshift/</loc>
+    <lastmod>2024-11-14T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/latex-crash-course/</loc>
-    <lastmod>2024-11-06T00:00:00+00:00</lastmod>
+    <loc>https://ezrantn.github.io/posts/</loc>
+    <lastmod>2024-11-14T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/</loc>
-    <lastmod>2024-11-06T00:00:00+00:00</lastmod>
+    <loc>https://ezrantn.github.io/categories/projects/</loc>
+    <lastmod>2024-11-14T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/categories/docker/</loc>
-    <lastmod>2024-11-03T00:00:00+00:00</lastmod>
+    <loc>https://ezrantn.github.io/categories/go/</loc>
+    <lastmod>2024-11-07T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/the-docker-cookbook/</loc>
-    <lastmod>2024-11-03T00:00:00+00:00</lastmod>
+    <loc>https://ezrantn.github.io/posts/understanding-and-preventing-nil-pointer-error-in-go/</loc>
+    <lastmod>2024-11-07T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/categories/personal/</loc>
-    <lastmod>2024-11-02T00:00:00+00:00</lastmod>
+    <loc>https://ezrantn.github.io/categories/personal/</loc>
+    <lastmod>2024-11-04T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/surviving-bangkit/</loc>
-    <lastmod>2024-11-02T00:00:00+00:00</lastmod>
+    <loc>https://ezrantn.github.io/posts/surviving-bangkit/</loc>
+    <lastmod>2024-11-04T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/who-am-i/</loc>
+    <loc>https://ezrantn.github.io/posts/who-am-i/</loc>
     <lastmod>2024-11-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/about/</loc>
+    <loc>https://ezrantn.github.io/library/</loc>
   </url><url>
-    <loc>http://localhost:1313/library/</loc>
-  </url><url>
-    <loc>http://localhost:1313/tags/</loc>
+    <loc>https://ezrantn.github.io/tags/</loc>
   </url>
 </urlset>

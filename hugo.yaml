@@ -15,18 +15,15 @@ menu:
     - name: Home
       url: ""
       weight: 1
-    - name: About
-      url: "about/"
-      weight: 2
-    - name: Library
-      url: "library/"
-      weight: 2
     - name: Posts
       url: "posts/"
       weight: 2
+    - name: Library
+      url: "library/"
+      weight: 3
     - name: Categories
       url: "categories/"
-      weight: 3
+      weight: 4
 
 params:
   description: "A website built through Hugo and blogdown."

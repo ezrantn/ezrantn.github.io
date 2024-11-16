@@ -4,15 +4,15 @@ title: Home
 
 # Hello! 👋
 
-I'm Ezra, a Software Engineer from Indonesia passionate about crafting robust backend systems. My expertise spans API development, Cloud Computing, and System Design, with a particular focus on distributed systems and scalable architectures.
+I’m Ezra, a Software Engineer from Indonesia focused on building resilient backend systems. My skills include API development, Cloud Computing, and System Design, with a focus on distributed and scalable architectures.
 
-Currently pursuing my Bachelor's degree in Computer Science at Soegijapranata Catholic University, I'm dedicated to pushing the boundaries of what's possible in software engineering. While Go is my primary programming language, I'm well-versed in several other technologies that help bring solutions to life.
+I’m pursuing a Bachelor’s in Computer Science at Soegijapranata Catholic University, with Go as my primary language and experience across various technologies.
 
-I'm an active contributor to open-source projects and enjoy sharing knowledge through technical writing. My research interests include cryptography, cloud computing, and cybersecurity.
+I contribute to open-source projects and enjoy sharing knowledge through technical writing. My interests span cryptography, cloud computing, and cybersecurity.
 
-When I'm not immersed in code, you'll find me at the gym or on the basketball court with friends. My life philosophy follows the Japanese proverb "七転び八起き" (Nana korobi ya oki) - "Fall seven times, rise eight."
+Outside of coding, I’m often at the gym or playing basketball. I live by the Japanese proverb “七転び八起き” (Nana korobi ya oki) – “Fall seven times, rise eight.”
 
-Let's connect! Whether you have questions, want to collaborate, or just chat about tech, feel free to reach out:
+Let’s connect! Whether you have questions, want to collaborate, or just chat about tech, feel free to reach out:
 
 <div class="social-links">
   <a href="mailto:ezrantn@proton.me" class="social-icon">
@@ -39,7 +39,3 @@ Let's connect! Whether you have questions, want to collaborate, or just chat abo
     </svg>
   </a>
 </div>
-
-<style>
-
-</style>
