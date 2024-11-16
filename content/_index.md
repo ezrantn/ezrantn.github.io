@@ -2,7 +2,7 @@
 title: Home
 ---
 
-# Hello! 👋
+# Hello!
 
 I’m Ezra, a Software Engineer from Indonesia focused on building resilient backend systems. My skills include API development, Cloud Computing, and System Design, with a focus on distributed and scalable architectures.
 
