@@ -51,3 +51,5 @@ As a Cloud Computing cohort, it was time for me to create the backend and deploy
 For the cloud services, we deployed it on Cloud Run because it's easy, Cloud SQL with a PostgreSQL database, and Cloud Storage for machine learning model deployment. I encountered some confusion when our credits ran out due to a mistake in setting up these cloud services. But thankfully, Bangkit provided additional credits for my project. If you experience the same issue of running out of credits, you can certainly request additional credits from the Bangkit team. However, I can't promise you'll receive them, as I believe the credits are limited.
 
 As for the other learning paths, I don't know the details, but they did what they needed to do. The Machine Learning team created the image recognition model, and the Mobile team developed the frontend and connected it with our APIs.
+
+As we worked on the project, after several meetings and rounds of trial and error, we reached the point where everything was ready to be presented.
