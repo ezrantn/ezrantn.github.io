@@ -2,18 +2,25 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Projects on Ezra Natanael</title>
-    <link>https://ezrantn.github.io/categories/projects/</link>
+    <link>http://localhost:1313/categories/projects/</link>
     <description>Recent content in Projects on Ezra Natanael</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 14 Nov 2024 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://ezrantn.github.io/categories/projects/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 20 Nov 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/categories/projects/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Writing a Microkernel in Zig (Phase 1)</title>
+      <link>http://localhost:1313/posts/writing-a-microkernel-in-zig-phase-1/</link>
+      <pubDate>Wed, 20 Nov 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/writing-a-microkernel-in-zig-phase-1/</guid>
+      <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;&#xA;&lt;p&gt;For the past two months, I&amp;rsquo;ve been dangling with Zig and kinda fell in love with it. Zig reminds me of good old C but have a safer memory management like Rust.&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Introducing Macshift</title>
-      <link>https://ezrantn.github.io/posts/introducing-macshift/</link>
+      <link>http://localhost:1313/posts/introducing-macshift/</link>
       <pubDate>Thu, 14 Nov 2024 00:00:00 +0000</pubDate>
-      <guid>https://ezrantn.github.io/posts/introducing-macshift/</guid>
-      <description>I created Macshift as a fun project to help people quickly change their MAC addresses on Windows. It’s a command-line tool written in Go, designed to give users better control over their network adapters without getting too technical. Here’s a simple rundown of how it works and why it might be useful!&#xA;What is a MAC Address? A MAC address (short for Media Access Control address) is like a unique ID for each device that connects to a network.</description>
+      <guid>http://localhost:1313/posts/introducing-macshift/</guid>
+      <description>&lt;p&gt;I created Macshift as a fun project to help people quickly change their MAC addresses on Windows. It’s a command-line tool written in Go, designed to give users better control over their network adapters without getting too technical. Here’s a simple rundown of how it works and why it might be useful!&lt;/p&gt;&#xA;&lt;hr&gt;&#xA;&lt;h2 id=&#34;what-is-a-mac-address&#34;&gt;What is a MAC Address?&lt;/h2&gt;&#xA;&lt;p&gt;A &lt;strong&gt;MAC address&lt;/strong&gt; (short for Media Access Control address) is like a unique ID for each device that connects to a network. It’s made up of 6 bytes (or 48 bits) and is often shown as six pairs of characters, like &lt;code&gt;00:1A:2B:3C:4D:5E&lt;/code&gt;.&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>

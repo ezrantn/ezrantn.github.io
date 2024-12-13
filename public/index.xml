@@ -6,42 +6,42 @@
     <description>Recent content in Home on Ezra Natanael</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 14 Nov 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 12 Dec 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://ezrantn.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Introducing Macshift</title>
-      <link>https://ezrantn.github.io/posts/introducing-macshift/</link>
-      <pubDate>Thu, 14 Nov 2024 00:00:00 +0000</pubDate>
-      <guid>https://ezrantn.github.io/posts/introducing-macshift/</guid>
-      <description>I created Macshift as a fun project to help people quickly change their MAC addresses on Windows. It’s a command-line tool written in Go, designed to give users better control over their network adapters without getting too technical. Here’s a simple rundown of how it works and why it might be useful!&#xA;What is a MAC Address? A MAC address (short for Media Access Control address) is like a unique ID for each device that connects to a network.</description>
+      <title>Bangkit Has Come to an End</title>
+      <link>https://ezrantn.github.io/posts/bangkit-has-come-to-an-end/</link>
+      <pubDate>Thu, 12 Dec 2024 00:00:00 +0000</pubDate>
+      <guid>https://ezrantn.github.io/posts/bangkit-has-come-to-an-end/</guid>
+      <description>&lt;p&gt;My nearly four-month journey in Bangkit has finally come to an end. It all started when I was 19 years old and saw my senior join the Bangkit program. At first, I had no idea what it was, but after looking it up, it instantly caught my attention.&lt;/p&gt;&#xA;&lt;p&gt;Like I mentioned in my previous article, Bangkit is a program by major companies like Google and Tokopedia that provides training in specific topics. At the time of writing this, there are three learning paths: Cloud Computing, which I chose, Mobile Development, and Machine Learning.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Understanding and Preventing Nil Pointer Error in Go</title>
       <link>https://ezrantn.github.io/posts/understanding-and-preventing-nil-pointer-error-in-go/</link>
       <pubDate>Thu, 07 Nov 2024 00:00:00 +0000</pubDate>
       <guid>https://ezrantn.github.io/posts/understanding-and-preventing-nil-pointer-error-in-go/</guid>
-      <description>Introduction If you’re coding in Go, there’s one error that’s bound to trip you up at some point: the nil pointer error. It can throw you off, whether you’re a beginner or have some experience. But no need to stress - let me break it down for you.&#xA;Think of your computer’s memory as a big storage unit with lots of compartments, each with its own unique address. A pointer is like a sticky note with one of those addresses written on it, so you can easily find that compartment later.</description>
+      <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;&#xA;&lt;p&gt;If you’re coding in Go, there’s one error that’s bound to trip you up at some point: the nil pointer error. It can throw you off, whether you’re a beginner or have some experience. But no need to stress - let me break it down for you.&lt;/p&gt;&#xA;&lt;p&gt;Think of your computer’s memory as a big storage unit with lots of compartments, each with its own unique address. A pointer is like a sticky note with one of those addresses written on it, so you can easily find that compartment later.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Surviving Bangkit</title>
       <link>https://ezrantn.github.io/posts/surviving-bangkit/</link>
       <pubDate>Mon, 04 Nov 2024 00:00:00 +0000</pubDate>
       <guid>https://ezrantn.github.io/posts/surviving-bangkit/</guid>
-      <description>If someone asked me to sum up my Bangkit experience in one word, I’d say:&#xA;Resilience (fancy way of saying “not giving up when things get crazy”)&#xA;Picture this: Google teamed up with Indonesia’s tech giants (you know, Gojek, Tokopedia, Traveloka) and our Ministry of Education to create this intense tech bootcamp. They offer three flavors: Cloud Computing, Machine Learning, and Mobile Development.&#xA;Not gonna lie - this program isn’t a walk in the park.</description>
+      <description>&lt;p&gt;If someone asked me to sum up my Bangkit experience in one word, I’d say:&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;Resilience&lt;/strong&gt; (fancy way of saying “not giving up when things get crazy”)&lt;/p&gt;&#xA;&lt;p&gt;Picture this: Google teamed up with Indonesia’s tech giants (you know, Gojek, Tokopedia, Traveloka) and our Ministry of Education to create this intense tech bootcamp. They offer three flavors: &lt;strong&gt;Cloud Computing, Machine Learning, and Mobile Development.&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;p&gt;Not gonna lie - this program isn’t a walk in the park. Between drowning in assignments, jumping from one meeting to another, sitting through Instructor-Led Training (ILT), and trying to keep up with college… let’s just say coffee became my best friend.&lt;/p&gt;</description>
     </item>
     <item>
       <title>A Glimpse Into My Life</title>
       <link>https://ezrantn.github.io/posts/who-am-i/</link>
       <pubDate>Fri, 01 Nov 2024 00:00:00 +0000</pubDate>
       <guid>https://ezrantn.github.io/posts/who-am-i/</guid>
-      <description>Hey! I’m Ezra, and I spend my days building cool stuff as a software engineer here in Indonesia. While I’m pretty much glued to my keyboard writing code, there’s definitely more to me than just staring at screens all day.&#xA;This website? It’s basically my little corner of the internet where I dump my thoughts, share what I’m learning, and hopefully help out other devs along the way. I got tired of the whole polished, perfect-looking tech persona thing, so I decided to just be real here.</description>
+      <description>&lt;p&gt;Hey! I’m Ezra, and I spend my days building cool stuff as a software engineer here in Indonesia. While I’m pretty much glued to my keyboard writing code, there’s definitely more to me than just staring at screens all day.&lt;/p&gt;&#xA;&lt;p&gt;This website? It’s basically my little corner of the internet where I dump my thoughts, share what I’m learning, and hopefully help out other devs along the way. I got tired of the whole polished, perfect-looking tech persona thing, so I decided to just be real here.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Library</title>
       <link>https://ezrantn.github.io/library/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>https://ezrantn.github.io/library/</guid>
-      <description>Here&amp;rsquo;s my stash of favorite tech books and resources that I keep coming back to.&#xA;These have been game-changers for me - check them out!&#xA;Clean Architecture: A Craftsman&amp;rsquo;s Guide to Software Structure and Design This book is packed with practical tips to make your software easier to build and maintain over the long run. Uncle Bob brings decades of experience to the table, giving you straightforward advice to make the right design choices that can make or break a project.</description>
+      <description>&lt;p&gt;Here&amp;rsquo;s my stash of favorite tech books and resources that I keep coming back to.&lt;/p&gt;&#xA;&lt;p&gt;These have been game-changers for me - check them out!&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://www.amazon.com/Clean-Architecture-Craftsmans-Software-Structure/dp/0134494164&#34;&gt;Clean Architecture: A Craftsman&amp;rsquo;s Guide to Software Structure and Design&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;This book is packed with practical tips to make your software easier to build and maintain over the long run. Uncle Bob brings decades of experience to the table, giving you straightforward advice to make the right design choices that can make or break a project.&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>

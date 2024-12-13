@@ -6,21 +6,28 @@
     <description>Recent content in Personal on Ezra Natanael</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 04 Nov 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 12 Dec 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://ezrantn.github.io/categories/personal/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Bangkit Has Come to an End</title>
+      <link>https://ezrantn.github.io/posts/bangkit-has-come-to-an-end/</link>
+      <pubDate>Thu, 12 Dec 2024 00:00:00 +0000</pubDate>
+      <guid>https://ezrantn.github.io/posts/bangkit-has-come-to-an-end/</guid>
+      <description>&lt;p&gt;My nearly four-month journey in Bangkit has finally come to an end. It all started when I was 19 years old and saw my senior join the Bangkit program. At first, I had no idea what it was, but after looking it up, it instantly caught my attention.&lt;/p&gt;&#xA;&lt;p&gt;Like I mentioned in my previous article, Bangkit is a program by major companies like Google and Tokopedia that provides training in specific topics. At the time of writing this, there are three learning paths: Cloud Computing, which I chose, Mobile Development, and Machine Learning.&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Surviving Bangkit</title>
       <link>https://ezrantn.github.io/posts/surviving-bangkit/</link>
       <pubDate>Mon, 04 Nov 2024 00:00:00 +0000</pubDate>
       <guid>https://ezrantn.github.io/posts/surviving-bangkit/</guid>
-      <description>If someone asked me to sum up my Bangkit experience in one word, I’d say:&#xA;Resilience (fancy way of saying “not giving up when things get crazy”)&#xA;Picture this: Google teamed up with Indonesia’s tech giants (you know, Gojek, Tokopedia, Traveloka) and our Ministry of Education to create this intense tech bootcamp. They offer three flavors: Cloud Computing, Machine Learning, and Mobile Development.&#xA;Not gonna lie - this program isn’t a walk in the park.</description>
+      <description>&lt;p&gt;If someone asked me to sum up my Bangkit experience in one word, I’d say:&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;Resilience&lt;/strong&gt; (fancy way of saying “not giving up when things get crazy”)&lt;/p&gt;&#xA;&lt;p&gt;Picture this: Google teamed up with Indonesia’s tech giants (you know, Gojek, Tokopedia, Traveloka) and our Ministry of Education to create this intense tech bootcamp. They offer three flavors: &lt;strong&gt;Cloud Computing, Machine Learning, and Mobile Development.&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;p&gt;Not gonna lie - this program isn’t a walk in the park. Between drowning in assignments, jumping from one meeting to another, sitting through Instructor-Led Training (ILT), and trying to keep up with college… let’s just say coffee became my best friend.&lt;/p&gt;</description>
     </item>
     <item>
       <title>A Glimpse Into My Life</title>
       <link>https://ezrantn.github.io/posts/who-am-i/</link>
       <pubDate>Fri, 01 Nov 2024 00:00:00 +0000</pubDate>
       <guid>https://ezrantn.github.io/posts/who-am-i/</guid>
-      <description>Hey! I’m Ezra, and I spend my days building cool stuff as a software engineer here in Indonesia. While I’m pretty much glued to my keyboard writing code, there’s definitely more to me than just staring at screens all day.&#xA;This website? It’s basically my little corner of the internet where I dump my thoughts, share what I’m learning, and hopefully help out other devs along the way. I got tired of the whole polished, perfect-looking tech persona thing, so I decided to just be real here.</description>
+      <description>&lt;p&gt;Hey! I’m Ezra, and I spend my days building cool stuff as a software engineer here in Indonesia. While I’m pretty much glued to my keyboard writing code, there’s definitely more to me than just staring at screens all day.&lt;/p&gt;&#xA;&lt;p&gt;This website? It’s basically my little corner of the internet where I dump my thoughts, share what I’m learning, and hopefully help out other devs along the way. I got tired of the whole polished, perfect-looking tech persona thing, so I decided to just be real here.&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>

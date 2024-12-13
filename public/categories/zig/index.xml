@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Zig on Ezra Natanael</title>
+    <link>http://localhost:1313/categories/zig/</link>
+    <description>Recent content in Zig on Ezra Natanael</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 20 Nov 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/categories/zig/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Writing a Microkernel in Zig (Phase 1)</title>
+      <link>http://localhost:1313/posts/writing-a-microkernel-in-zig-phase-1/</link>
+      <pubDate>Wed, 20 Nov 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/writing-a-microkernel-in-zig-phase-1/</guid>
+      <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;&#xA;&lt;p&gt;For the past two months, I&amp;rsquo;ve been dangling with Zig and kinda fell in love with it. Zig reminds me of good old C but have a safer memory management like Rust.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
