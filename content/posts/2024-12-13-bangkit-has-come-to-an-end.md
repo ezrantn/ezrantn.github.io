@@ -53,3 +53,5 @@ For the cloud services, we deployed it on Cloud Run because it's easy, Cloud SQL
 As for the other learning paths, I don't know the details, but they did what they needed to do. The Machine Learning team created the image recognition model, and the Mobile team developed the frontend and connected it with our APIs.
 
 As we worked on the project, after several meetings and rounds of trial and error, we reached the point where everything was ready to be presented.
+
+There are two presentations you need to complete. The first is a recorded application demo that you and your team will create and send to the Bangkit team. The second is a peer review presentation, where judges from Bangkit will evaluate your project live.
