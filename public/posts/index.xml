@@ -6,12 +6,19 @@
     <description>Recent content in Posts on Ezra Natanael</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 12 Dec 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 16 Dec 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://ezrantn.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Why Code Conventions Matter</title>
+      <link>https://ezrantn.github.io/posts/why-code-conventions-matter/</link>
+      <pubDate>Mon, 16 Dec 2024 00:00:00 +0000</pubDate>
+      <guid>https://ezrantn.github.io/posts/why-code-conventions-matter/</guid>
+      <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;&#xA;&lt;p&gt;In my learning journey over the past 2 years, after tackling various projects and internships, one lesson I’ve carried with me is this: &lt;strong&gt;consistency in code matters&lt;/strong&gt;. Whether I was building scalable RESTful APIs, integrating third-party services, or working with distributed systems, I realized that adhering to a code convention not only made my projects clean and readable but also improved collaboration with teammates.&lt;/p&gt;&#xA;&lt;p&gt;Early on, I didn’t pay much attention to coding style - what mattered to me was making it “work.” But as projects grew larger, bugs harder to track, and teammates more involved, I saw firsthand how inconsistent code slows you down. Naming confusion, messy formatting, or inconsistent structures caused hours of frustration.&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Bangkit Has Come to an End</title>
       <link>https://ezrantn.github.io/posts/bangkit-has-come-to-an-end/</link>
-      <pubDate>Thu, 12 Dec 2024 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 13 Dec 2024 00:00:00 +0000</pubDate>
       <guid>https://ezrantn.github.io/posts/bangkit-has-come-to-an-end/</guid>
       <description>&lt;p&gt;My nearly four-month journey in Bangkit has finally come to an end. It all started when I was 19 years old and saw my senior join the Bangkit program. At first, I had no idea what it was, but after looking it up, it instantly caught my attention.&lt;/p&gt;&#xA;&lt;p&gt;Like I mentioned in my previous article, Bangkit is a program by major companies like Google and Tokopedia that provides training in specific topics. At the time of writing this, there are three learning paths: Cloud Computing, which I chose, Mobile Development, and Machine Learning.&lt;/p&gt;</description>
     </item>

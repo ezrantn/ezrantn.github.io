@@ -1,6 +1,6 @@
 ---
 title: Bangkit Has Come to an End
-date: '2024-12-12'
+date: '2024-12-13'
 author: Ezra Natanael
 categories:
   - Personal

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Why Code Conventions Matter | Ezra Natanael</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <link rel="stylesheet" href="/css/social-media.css">
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
+<link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/github.min.css" rel="stylesheet">
+<script>
+    MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']],
+            processEscapes: true,
+            processEnvironments: true
+        },
+        options: {
+            skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+        }
+    };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+  </head>
+
+  <body>
+    <nav>
+      <ul class="menu">
+        
+        <li><a href="/">Home</a></li>
+        
+        <li><a href="/posts/">Posts</a></li>
+        
+        <li><a href="/library/">Library</a></li>
+        
+        <li><a href="/categories/">Categories</a></li>
+        
+      </ul>
+      <hr/>
+    </nav>
+
+<div class="article-meta">
+    <h1><span class="title">Why Code Conventions Matter</span></h1>
+    <h2 class="author">Ezra Natanael</h2>
+    <h2 class="date">2024/12/16</h2>
+</div>
+
+
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#why-do-we-need-code-convention">Why Do We Need Code Convention?</a></li>
+    <li><a href="#code-conventions-in-action-go-example">Code Conventions In Action (Go Example)</a>
+      <ul>
+        <li><a href="#key-improvements">Key Improvements</a></li>
+      </ul>
+    </li>
+    <li><a href="#industry-example-style-guides">Industry Example (Style Guides)</a></li>
+    <li><a href="#closing-thoughts">Closing Thoughts</a></li>
+  </ul>
+</nav>
+
+
+<main>
+    <h2 id="introduction">Introduction</h2>
+<p>In my learning journey over the past 2 years, after tackling various projects and internships, one lesson I’ve carried with me is this: <strong>consistency in code matters</strong>. Whether I was building scalable RESTful APIs, integrating third-party services, or working with distributed systems, I realized that adhering to a code convention not only made my projects clean and readable but also improved collaboration with teammates.</p>
+<p>Early on, I didn’t pay much attention to coding style - what mattered to me was making it “work.” But as projects grew larger, bugs harder to track, and teammates more involved, I saw firsthand how inconsistent code slows you down. Naming confusion, messy formatting, or inconsistent structures caused hours of frustration.</p>
+<p>This is why companies like <strong>Google</strong>, <strong>Uber</strong>, and <strong>Airbnb</strong> have published official <strong>style guides</strong> - their engineers rely on consistent conventions to maintain clean and reliable codebases. In this article, I’ll discuss why code conventions are critical and provide examples in Go, along with references to popular style guides.</p>
+<hr>
+<h2 id="why-do-we-need-code-convention">Why Do We Need Code Convention?</h2>
+<ol>
+<li>Improves Readability</li>
+</ol>
+<p>Code conventions ensure that the code remains clean and understandable, even if someone new joins the team. It allows developers to focus on the logic rather than figuring out inconsistent naming, indentations, or patterns.</p>
+<ol start="2">
+<li>Enhances Maintainability</li>
+</ol>
+<p>Projects grow over time. Code written without a standard often becomes a nightmare to maintain. Conventions ensure that returning to an old codebase (or passing it to someone else) remains straightforward and pain-free.</p>
+<ol start="3">
+<li>Facilitates Collaboration</li>
+</ol>
+<p>When multiple developers work on the same project, consistent conventions reduce friction. Everyone follows the same “rules,” making code reviews easier and encouraging a productive team dynamic.</p>
+<ol start="4">
+<li>Reduces Bug</li>
+</ol>
+<p>Inconsistent code structure can hide logical bugs. When conventions are applied, anomalies or typos stand out more clearly.</p>
+<ol start="5">
+<li>Aligned with Industry Practices</li>
+</ol>
+<p>Companies like <strong>Google</strong> and <strong>Airbnb</strong> enforce style guides for their teams. Adhering to these standards aligns your code with industry expectations, improving your professional coding habits.</p>
+<hr>
+<h2 id="code-conventions-in-action-go-example">Code Conventions In Action (Go Example)</h2>
+<p>Let’s see an example to illustrate how conventions impact code quality.</p>
+<p><strong>Messy Code (Without Conventions)</strong></p>
+<pre><code class="language-go">package main
+
+import (
+    &quot;fmt&quot;
+    &quot;net/http&quot;
+    &quot;encoding/json&quot;
+)
+
+type responseStruct struct {
+    Message string
+    CODE int
+}
+
+func apiHandler(w http.ResponseWriter, r *http.Request){
+    rs := responseStruct{
+        Message: &quot;Hello world&quot;,
+        CODE:200}
+    w.Header().Set(&quot;content-type&quot;, &quot;application/json&quot;)
+    json.NewEncoder(w).Encode(rs)
+    fmt.Println(&quot;API is hit&quot;)
+}
+
+func main(){
+    http.HandleFunc(&quot;/api&quot;, apiHandler)
+    fmt.Println(&quot;Server running&quot;)
+    http.ListenAndServe(&quot;:8080&quot;, nil)
+}
+</code></pre>
+<p><strong>Clean Code (Following Conventions)</strong></p>
+<pre><code class="language-go">package main
+
+import (
+    &quot;encoding/json&quot;
+    &quot;fmt&quot;
+    &quot;net/http&quot;
+)
+
+// Response defines the structure for API responses.
+type Response struct {
+    Message string `json:&quot;message&quot;`
+    Code    int    `json:&quot;code&quot;`
+}
+
+// APIHandler handles the /api endpoint.
+func APIHandler(w http.ResponseWriter, r *http.Request) {
+    response := Response{
+    	Message: &quot;Hello, World!&quot;,
+    	Code:    http.StatusOK,
+    }
+
+    w.Header().Set(&quot;Content-Type&quot;, &quot;application/json&quot;)
+    json.NewEncoder(w).Encode(response)
+
+    fmt.Println(&quot;INFO: /api endpoint was accessed successfully&quot;)
+}
+
+func main() {
+    http.HandleFunc(&quot;/api&quot;, APIHandler)
+
+    fmt.Println(&quot;Server is running on http://localhost:8080&quot;)
+    err := http.ListenAndServe(&quot;:8080&quot;, nil)
+    if err != nil {
+    	fmt.Println(&quot;ERROR:&quot;, err)
+    }
+}
+</code></pre>
+<h3 id="key-improvements">Key Improvements</h3>
+<ul>
+<li><strong>Consistent Naming:</strong>
+<ul>
+<li><code>APIHandler</code> follows <strong>PascalCase</strong> as per Go’s convention for exported functions.</li>
+<li><code>Response</code> struct fields are in <strong>camelCase</strong>.</li>
+</ul>
+</li>
+<li><strong>Readable Code:</strong>
+<ul>
+<li>Proper spacing and indentation improve readability.</li>
+</ul>
+</li>
+<li><strong>Header Consistency:</strong>
+<ul>
+<li><code>&quot;Content-Type&quot;</code> follows Go’s idiomatic style.</li>
+</ul>
+</li>
+<li><strong>Clear Logs:</strong>
+<ul>
+<li>Logs are informative (e.g., “INFO” and “ERROR”) instead of generic.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="industry-example-style-guides">Industry Example (Style Guides)</h2>
+<p>Major tech companies emphasize code conventions and publish style guides for their developers. Here are a few examples:</p>
+<ol>
+<li>
+<p><strong>Google Go Style Guide</strong>: Google follows strict conventions for naming, comments, error handling, and formatting. For instance:</p>
+<ul>
+<li>Use <strong>camelCase</strong> for variables and <strong>PascalCase</strong> for structs and exported functions.</li>
+<li>Avoid abbreviations and prefer meaningful names.</li>
+</ul>
+<p>References: <a href="https://google.github.io/styleguide/go/">Google Go Style Guide</a></p>
+</li>
+<li>
+<p><strong>Uber Go Style Guide</strong>:
+Uber’s guide focuses on idiomatic Go conventions to ensure clean, scalable code. Key rules include:</p>
+<ul>
+<li>Prefer <strong>explicitness</strong> over magic or clever tricks.</li>
+<li>Always handle errors explicitly.</li>
+</ul>
+<p>References: <a href="https://github.com/uber-go/guide/blob/master/style.md">Uber Go Style Guide</a></p>
+</li>
+<li>
+<p><strong>Airbnb JavaScript Style Guide</strong>:
+While not for Go, Airbnb&rsquo;s popular style guide has influenced coding conventions across languages, it stresses:</p>
+<ul>
+<li>Consistent naming.</li>
+<li>Proper whitespace and indentation.</li>
+<li>Avoiding global variables.</li>
+</ul>
+<p>References: <a href="https://github.com/airbnb/javascript">Airbnb JavaScript Style Guide</a></p>
+</li>
+</ol>
+<hr>
+<h2 id="closing-thoughts">Closing Thoughts</h2>
+<p>After working on multiple projects, I’ve learned that code conventions are not just about aesthetics - they’re about building clean, maintainable, and scalable systems. Whether you’re writing APIs in Go, managing complex systems, or collaborating with a team, consistent conventions help you write code that’s easy to understand, debug, and extend.</p>
+<p>Take a cue from industry giants like Google and Uber. They enforce style guides for a reason: consistency is key to success. Tools like <strong><code>gofmt</code></strong> and linters like <strong><code>golangci-lint</code></strong> can help enforce conventions in your Go projects automatically.</p>
+<p>So the next time you start a new project, establish a clear style guide early. Your teammates - and your future self - will thank you for it!</p>
+
+</main>
+
+<footer>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.10.0/languages/go.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.10.0/languages/dockerfile.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.10.0/es/languages/shell.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.10.0/languages/yaml.min.js"></script>
+
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/center-img.min.js" defer></script>
+
+<script>
+    hljs.configure({languages: []});
+    hljs.initHighlightingOnLoad();
+</script>
+  
+  <hr/>
+  © <a href="https://ezrantn.org">Ezra Natanael</a> 2022 &ndash; 2024 | <a href="https://github.com/ezrantn">GitHub</a> | <a href="https://x.com/EzraNatanael6">Twitter</a>
+  
+</footer>
+</body>
+</html>
+

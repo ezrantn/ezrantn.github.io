@@ -5,6 +5,7 @@ author: Ezra Natanael
 categories:
   - Go
 slug: understanding-and-preventing-nil-pointer-error-in-go
+toc: true
 ---
 
 ## Introduction
