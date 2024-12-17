@@ -27,7 +27,7 @@ menu:
 
 params:
   description: "A website built through Hugo and blogdown."
-  footer: "&copy; [Ezra Natanael](https://ezrantn.org) 2022 -- {Year} | [GitHub](https://github.com/ezrantn) | [Twitter](https://x.com/EzraNatanael6)"
+  footer: "&copy; [Ezra Natanael](https://ezrantn.github.io) 2022 -- {Year} | [GitHub](https://github.com/ezrantn) | [Twitter](https://x.com/EzraNatanael6)"
 
 markup:
   highlight:

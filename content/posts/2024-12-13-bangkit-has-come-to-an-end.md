@@ -55,3 +55,21 @@ As for the other learning paths, I don't know the details, but they did what the
 As we worked on the project, after several meetings and rounds of trial and error, we reached the point where everything was ready to be presented.
 
 There are two presentations you need to complete. The first is a recorded application demo that you and your team will create and send to the Bangkit team. The second is a peer review presentation, where judges from Bangkit will evaluate your project live.
+
+The first presentation was quite easy for us because we just recorded ourselves showcasing our project, including what we had done, the tech stack, the technical aspects, and the SWOT analysis. So, it wasn’t a big problem for us. However, when it came to peer review, we were completely stumped. 
+
+Let me first explain the situation during the peer review. There were approximately 10 teams in the Google Meet, each presenting their own project. Each team had 10 minutes to present what their project was about. Meanwhile, the other teams who weren’t presenting had to give a score to the team that was presenting. Holy cow...
+
+Long story short, it was our team's turn to give the presentation. We tried to stay as calm as possible and prepared scripts for each of us - yes, **scripts**. In reality, you shouldn’t use a script because it doesn’t look good when your camera is on, as you’ll be seen looking at the script instead of the camera. But in this case, we decided to stick to the script for convenience.
+
+After we finished giving our presentation, we were so happy because it went smoothly. It also meant we were one step closer to completing the Bangkit program.
+
+![Hyfit](/images/hyfit.jpeg)
+
+I’m incredibly grateful to be one step closer to completing the Bangkit program! A big shoutout to my amazing teammates - Renza, Adit, Alvien, Radit, Annaz, and Huda - for making this journey so memorable.
+
+Thank you for your hard work, dedication, and collaboration on our capstone project. It’s been an incredible experience working with such talented and supportive friends. I couldn’t have asked for a better team to share this milestone with. Let’s keep pushing forward and finish strong!
+
+Thank you, dear readers, for following along on this journey. If you’re considering joining Bangkit or are already part of it, remember to always appreciate your teammates and give them your full support. The capstone project can be a stressful time for your team, so showing gratitude and encouragement is key.
+
+Thanks again for reading this. Peace out! ✌️
