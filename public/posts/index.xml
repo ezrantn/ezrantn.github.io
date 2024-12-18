@@ -2,45 +2,52 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on Ezra Natanael</title>
-    <link>https://ezrantn.github.io/posts/</link>
+    <link>http://localhost:1313/posts/</link>
     <description>Recent content in Posts on Ezra Natanael</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 16 Dec 2024 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://ezrantn.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 18 Dec 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>How to Focus on One Programming Language</title>
+      <link>http://localhost:1313/posts/how-to-focus-on-one-programming-language/</link>
+      <pubDate>Wed, 18 Dec 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/how-to-focus-on-one-programming-language/</guid>
+      <description>&lt;p&gt;In the world of programming, it’s easy to feel overwhelmed by choices. Every few months, a new language makes headlines, promising to be faster, simpler, or better than everything else. If you’re like me, you’ve probably jumped on a few of these bandwagons, hoping to find the perfect language. I spent years dabbling in different languages - Java, Python, Ruby, C++, JavaScript - convinced that each one would be the key to unlocking my potential. But looking back, I realize I wasted so much time learning languages I barely touched again.&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Why Code Conventions Matter</title>
-      <link>https://ezrantn.github.io/posts/why-code-conventions-matter/</link>
+      <link>http://localhost:1313/posts/why-code-conventions-matter/</link>
       <pubDate>Mon, 16 Dec 2024 00:00:00 +0000</pubDate>
-      <guid>https://ezrantn.github.io/posts/why-code-conventions-matter/</guid>
+      <guid>http://localhost:1313/posts/why-code-conventions-matter/</guid>
       <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;&#xA;&lt;p&gt;In my learning journey over the past 2 years, after tackling various projects and internships, one lesson I’ve carried with me is this: &lt;strong&gt;consistency in code matters&lt;/strong&gt;. Whether I was building scalable RESTful APIs, integrating third-party services, or working with distributed systems, I realized that adhering to a code convention not only made my projects clean and readable but also improved collaboration with teammates.&lt;/p&gt;&#xA;&lt;p&gt;Early on, I didn’t pay much attention to coding style - what mattered to me was making it “work.” But as projects grew larger, bugs harder to track, and teammates more involved, I saw firsthand how inconsistent code slows you down. Naming confusion, messy formatting, or inconsistent structures caused hours of frustration.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Bangkit Has Come to an End</title>
-      <link>https://ezrantn.github.io/posts/bangkit-has-come-to-an-end/</link>
+      <link>http://localhost:1313/posts/bangkit-has-come-to-an-end/</link>
       <pubDate>Fri, 13 Dec 2024 00:00:00 +0000</pubDate>
-      <guid>https://ezrantn.github.io/posts/bangkit-has-come-to-an-end/</guid>
+      <guid>http://localhost:1313/posts/bangkit-has-come-to-an-end/</guid>
       <description>&lt;p&gt;My nearly four-month journey in Bangkit has finally come to an end. It all started when I was 19 years old and saw my senior join the Bangkit program. At first, I had no idea what it was, but after looking it up, it instantly caught my attention.&lt;/p&gt;&#xA;&lt;p&gt;Like I mentioned in my previous article, Bangkit is a program by major companies like Google and Tokopedia that provides training in specific topics. At the time of writing this, there are three learning paths: Cloud Computing, which I chose, Mobile Development, and Machine Learning.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Understanding and Preventing Nil Pointer Error in Go</title>
-      <link>https://ezrantn.github.io/posts/understanding-and-preventing-nil-pointer-error-in-go/</link>
+      <link>http://localhost:1313/posts/understanding-and-preventing-nil-pointer-error-in-go/</link>
       <pubDate>Thu, 07 Nov 2024 00:00:00 +0000</pubDate>
-      <guid>https://ezrantn.github.io/posts/understanding-and-preventing-nil-pointer-error-in-go/</guid>
+      <guid>http://localhost:1313/posts/understanding-and-preventing-nil-pointer-error-in-go/</guid>
       <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;&#xA;&lt;p&gt;If you’re coding in Go, there’s one error that’s bound to trip you up at some point: the nil pointer error. It can throw you off, whether you’re a beginner or have some experience. But no need to stress - let me break it down for you.&lt;/p&gt;&#xA;&lt;p&gt;Think of your computer’s memory as a big storage unit with lots of compartments, each with its own unique address. A pointer is like a sticky note with one of those addresses written on it, so you can easily find that compartment later.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Surviving Bangkit</title>
-      <link>https://ezrantn.github.io/posts/surviving-bangkit/</link>
+      <link>http://localhost:1313/posts/surviving-bangkit/</link>
       <pubDate>Mon, 04 Nov 2024 00:00:00 +0000</pubDate>
-      <guid>https://ezrantn.github.io/posts/surviving-bangkit/</guid>
+      <guid>http://localhost:1313/posts/surviving-bangkit/</guid>
       <description>&lt;p&gt;If someone asked me to sum up my Bangkit experience in one word, I’d say:&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;Resilience&lt;/strong&gt; (fancy way of saying “not giving up when things get crazy”)&lt;/p&gt;&#xA;&lt;p&gt;Picture this: Google teamed up with Indonesia’s tech giants (you know, Gojek, Tokopedia, Traveloka) and our Ministry of Education to create this intense tech bootcamp. They offer three flavors: &lt;strong&gt;Cloud Computing, Machine Learning, and Mobile Development.&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;p&gt;Not gonna lie - this program isn’t a walk in the park. Between drowning in assignments, jumping from one meeting to another, sitting through Instructor-Led Training (ILT), and trying to keep up with college… let’s just say coffee became my best friend.&lt;/p&gt;</description>
     </item>
     <item>
       <title>A Glimpse Into My Life</title>
-      <link>https://ezrantn.github.io/posts/who-am-i/</link>
+      <link>http://localhost:1313/posts/who-am-i/</link>
       <pubDate>Fri, 01 Nov 2024 00:00:00 +0000</pubDate>
-      <guid>https://ezrantn.github.io/posts/who-am-i/</guid>
+      <guid>http://localhost:1313/posts/who-am-i/</guid>
       <description>&lt;p&gt;Hey! I’m Ezra, and I spend my days building cool stuff as a software engineer here in Indonesia. While I’m pretty much glued to my keyboard writing code, there’s definitely more to me than just staring at screens all day.&lt;/p&gt;&#xA;&lt;p&gt;This website? It’s basically my little corner of the internet where I dump my thoughts, share what I’m learning, and hopefully help out other devs along the way. I got tired of the whole polished, perfect-looking tech persona thing, so I decided to just be real here.&lt;/p&gt;</description>
     </item>
   </channel>

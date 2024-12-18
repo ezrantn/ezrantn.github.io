@@ -2,41 +2,44 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://ezrantn.github.io/categories/</loc>
+    <loc>http://localhost:1313/categories/</loc>
+    <lastmod>2024-12-18T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/</loc>
+    <lastmod>2024-12-18T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/how-to-focus-on-one-programming-language/</loc>
+    <lastmod>2024-12-18T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/categories/misc/</loc>
+    <lastmod>2024-12-18T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/</loc>
+    <lastmod>2024-12-18T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/why-code-conventions-matter/</loc>
     <lastmod>2024-12-16T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://ezrantn.github.io/</loc>
-    <lastmod>2024-12-16T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://ezrantn.github.io/categories/misc/</loc>
-    <lastmod>2024-12-16T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://ezrantn.github.io/posts/</loc>
-    <lastmod>2024-12-16T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://ezrantn.github.io/posts/why-code-conventions-matter/</loc>
-    <lastmod>2024-12-16T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://ezrantn.github.io/posts/bangkit-has-come-to-an-end/</loc>
+    <loc>http://localhost:1313/posts/bangkit-has-come-to-an-end/</loc>
     <lastmod>2024-12-13T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://ezrantn.github.io/categories/personal/</loc>
+    <loc>http://localhost:1313/categories/personal/</loc>
     <lastmod>2024-12-13T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://ezrantn.github.io/categories/go/</loc>
+    <loc>http://localhost:1313/categories/go/</loc>
     <lastmod>2024-11-07T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://ezrantn.github.io/posts/understanding-and-preventing-nil-pointer-error-in-go/</loc>
+    <loc>http://localhost:1313/posts/understanding-and-preventing-nil-pointer-error-in-go/</loc>
     <lastmod>2024-11-07T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://ezrantn.github.io/posts/surviving-bangkit/</loc>
+    <loc>http://localhost:1313/posts/surviving-bangkit/</loc>
     <lastmod>2024-11-04T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://ezrantn.github.io/posts/who-am-i/</loc>
+    <loc>http://localhost:1313/posts/who-am-i/</loc>
     <lastmod>2024-11-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://ezrantn.github.io/library/</loc>
+    <loc>http://localhost:1313/library/</loc>
   </url><url>
-    <loc>https://ezrantn.github.io/tags/</loc>
+    <loc>http://localhost:1313/tags/</loc>
   </url>
 </urlset>

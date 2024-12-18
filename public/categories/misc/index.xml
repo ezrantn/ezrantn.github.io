@@ -2,17 +2,24 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Misc on Ezra Natanael</title>
-    <link>https://ezrantn.github.io/categories/misc/</link>
+    <link>http://localhost:1313/categories/misc/</link>
     <description>Recent content in Misc on Ezra Natanael</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 16 Dec 2024 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://ezrantn.github.io/categories/misc/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 18 Dec 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/categories/misc/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>How to Focus on One Programming Language</title>
+      <link>http://localhost:1313/posts/how-to-focus-on-one-programming-language/</link>
+      <pubDate>Wed, 18 Dec 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/how-to-focus-on-one-programming-language/</guid>
+      <description>&lt;p&gt;In the world of programming, it’s easy to feel overwhelmed by choices. Every few months, a new language makes headlines, promising to be faster, simpler, or better than everything else. If you’re like me, you’ve probably jumped on a few of these bandwagons, hoping to find the perfect language. I spent years dabbling in different languages - Java, Python, Ruby, C++, JavaScript - convinced that each one would be the key to unlocking my potential. But looking back, I realize I wasted so much time learning languages I barely touched again.&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Why Code Conventions Matter</title>
-      <link>https://ezrantn.github.io/posts/why-code-conventions-matter/</link>
+      <link>http://localhost:1313/posts/why-code-conventions-matter/</link>
       <pubDate>Mon, 16 Dec 2024 00:00:00 +0000</pubDate>
-      <guid>https://ezrantn.github.io/posts/why-code-conventions-matter/</guid>
+      <guid>http://localhost:1313/posts/why-code-conventions-matter/</guid>
       <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;&#xA;&lt;p&gt;In my learning journey over the past 2 years, after tackling various projects and internships, one lesson I’ve carried with me is this: &lt;strong&gt;consistency in code matters&lt;/strong&gt;. Whether I was building scalable RESTful APIs, integrating third-party services, or working with distributed systems, I realized that adhering to a code convention not only made my projects clean and readable but also improved collaboration with teammates.&lt;/p&gt;&#xA;&lt;p&gt;Early on, I didn’t pay much attention to coding style - what mattered to me was making it “work.” But as projects grew larger, bugs harder to track, and teammates more involved, I saw firsthand how inconsistent code slows you down. Naming confusion, messy formatting, or inconsistent structures caused hours of frustration.&lt;/p&gt;</description>
     </item>
   </channel>

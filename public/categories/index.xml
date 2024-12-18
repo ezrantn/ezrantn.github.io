@@ -2,31 +2,31 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories on Ezra Natanael</title>
-    <link>https://ezrantn.github.io/categories/</link>
+    <link>http://localhost:1313/categories/</link>
     <description>Recent content in Categories on Ezra Natanael</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 16 Dec 2024 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://ezrantn.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 18 Dec 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/categories/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Misc</title>
-      <link>https://ezrantn.github.io/categories/misc/</link>
-      <pubDate>Mon, 16 Dec 2024 00:00:00 +0000</pubDate>
-      <guid>https://ezrantn.github.io/categories/misc/</guid>
+      <link>http://localhost:1313/categories/misc/</link>
+      <pubDate>Wed, 18 Dec 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/categories/misc/</guid>
       <description></description>
     </item>
     <item>
       <title>Personal</title>
-      <link>https://ezrantn.github.io/categories/personal/</link>
+      <link>http://localhost:1313/categories/personal/</link>
       <pubDate>Fri, 13 Dec 2024 00:00:00 +0000</pubDate>
-      <guid>https://ezrantn.github.io/categories/personal/</guid>
+      <guid>http://localhost:1313/categories/personal/</guid>
       <description></description>
     </item>
     <item>
       <title>Go</title>
-      <link>https://ezrantn.github.io/categories/go/</link>
+      <link>http://localhost:1313/categories/go/</link>
       <pubDate>Thu, 07 Nov 2024 00:00:00 +0000</pubDate>
-      <guid>https://ezrantn.github.io/categories/go/</guid>
+      <guid>http://localhost:1313/categories/go/</guid>
       <description></description>
     </item>
   </channel>
