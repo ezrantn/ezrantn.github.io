@@ -123,7 +123,7 @@ func main() {
 
 - **Consistent Naming:**
   - `APIHandler` follows **PascalCase** as per Go’s convention for exported functions.
-  - `Response` struct fields are in **CamelCase**.
+  - `Response` struct fields are in **camelCase**.
 - **Readable Code:**
   - Proper spacing and indentation improve readability.
 - **Header Consistency:**
