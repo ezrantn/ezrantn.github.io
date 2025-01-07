@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Software Engineer based in Jakarta, Indonesia">
+    <title>Ezra Natanael</title>
+    
+    <link rel="stylesheet" href="https://ezrantn.github.io/style.css?h=ba4e332b4e56aa7e4f4a">
+    
+    
+    
+    
+</head>
+<body>
+    
+    <header class="space">
+        <h1>Ezra Natanael</h1>
+        
+        
+        <nav class="header-links">
+            
+            <a href="mailto:ezrantn@proton.me">Mail</a>
+            
+            <a href="https:&#x2F;&#x2F;github.com&#x2F;ezrantn">GitHub</a>
+            
+            <a href="https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;ezrantn">LinkedIn</a>
+            
+            
+        </nav>
+        
+    </header>
+    
+    
+    
+    
+    <main>
+        
+        <div class="space">
+            <p>Software Engineer based in Jakarta, Indonesia with areas of research in distributed systems, cloud computing, and eBPF.</p>
+
+        </div>
+        
+        
+        <h2>Recent posts</h2>
+        <ul>
+            
+            <li><a href="https:&#x2F;&#x2F;ezrantn.github.io&#x2F;blog&#x2F;early-return-pattern&#x2F;">Early Return Pattern</a></li>
+            
+            <li><a href="https:&#x2F;&#x2F;ezrantn.github.io&#x2F;blog&#x2F;how-to-focus-on-one-programming-language&#x2F;">How to Focus on One Programming Language</a></li>
+            
+            <li><a href="https:&#x2F;&#x2F;ezrantn.github.io&#x2F;blog&#x2F;bangkit-has-come-to-an-end&#x2F;">Bangkit Has Come to an End</a></li>
+            
+            <li><a href="https:&#x2F;&#x2F;ezrantn.github.io&#x2F;blog&#x2F;understanding-and-preventing-nil-pointer-error-in-go&#x2F;">Understanding and Preventing Nil Pointer Error in Go</a></li>
+            
+            <li><a href="https:&#x2F;&#x2F;ezrantn.github.io&#x2F;blog&#x2F;surviving-bangkit-program&#x2F;">Surviving the Bangkit Program</a></li>
+            
+        </ul>
+        <p><a href="https:&#x2F;&#x2F;ezrantn.github.io&#x2F;blog&#x2F;">Archive</a></p>
+        
+    </main>
+    
+    
+    <div class="dark-mode-buttons">
+        <button class="dark-mode-button" id="dark-mode-on"><img src="https://ezrantn.github.io/dark_mode.svg" width="24" height="24" alt="Dark mode" aria-label="dark mode toggle" title="Dark mode"></button>
+        <button class="dark-mode-button" id="dark-mode-off"><img src="https://ezrantn.github.io/light_mode.svg" width="24" height="24" alt="Light mode" aria-label="light mode toggle" title="Light mode"></button>
+    </div>
+    <script>
+        const cls = document.querySelector("html").classList;
+        const sessionTheme = sessionStorage.getItem("theme");
+
+        function setDark() {
+            cls.add("dark-mode");
+            cls.remove("light-mode");
+            sessionStorage.setItem("theme", "dark");
+        }
+        function setLight() {
+            cls.add("light-mode");
+            cls.remove("dark-mode");
+            sessionStorage.setItem("theme", "light");
+        }
+
+        if (sessionTheme === "dark") {
+            setDark();
+        } else if (sessionTheme === "light") {
+            setLight();
+        } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+            setDark();
+        }
+
+        document.getElementById("dark-mode-on").addEventListener("click", function(e) {
+            setDark();
+        });
+        document.getElementById("dark-mode-off").addEventListener("click", function(e) {
+            setLight();
+        });
+    </script>
+    <noscript>
+        <style>
+            .dark-mode-buttons {
+                display: none;
+            }
+        </style>
+    </noscript>
+</body>
+</html>
