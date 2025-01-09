@@ -74,21 +74,21 @@ Unlike traditional tools, this system combines lightweight design with powerful 
 
    Traditional system monitoring tools such as Nagios, Prometheus, and Datadog have long been used for gathering and analyzing system metrics. However, they come with their limitations:
 
-- Prometheus:
-  - Strength: Offers powerful querying with PromQL and easy integration with Grafana.
-  - Limitation: Collects high-level metrics but struggles with kernel-level insights. Its pull-based model might not suit environments with frequent updates or real-time demands.
+   - Prometheus:
+     - Strength: Offers powerful querying with PromQL and easy integration with Grafana.
+     - Limitation: Collects high-level metrics but struggles with kernel-level insights. Its pull-based model might not suit environments with frequent updates or real-time demands.
 
-- Nagios:
-  - Strength: Effective for basic monitoring with a plugin system for custom metrics.
-  - Limitation: Limited scalability and lacks real-time capabilities, especially for large-scale distributed systems.
+   - Nagios:
+     - Strength: Effective for basic monitoring with a plugin system for custom metrics.
+     - Limitation: Limited scalability and lacks real-time capabilities, especially for large-scale distributed systems.
 
-- Datadog:
-  - Strength: A robust, all-in-one monitoring solution with cloud-native integrations.
-  - Limitation: High cost for scaling and restricted customization due to vendor lock-in.
+   - Datadog:
+     - Strength: A robust, all-in-one monitoring solution with cloud-native integrations.
+     - Limitation: High cost for scaling and restricted customization due to vendor lock-in.
 
-- eBPF-Based Tools (e.g., BCC, bpftrace):
-  - Strength: Provides deep kernel insights and excellent debugging tools.
-  - Limitation: Primarily focused on debugging and ad hoc queries rather than ongoing monitoring at scale.
+   - eBPF-Based Tools (e.g., BCC, bpftrace):
+     - Strength: Provides deep kernel insights and excellent debugging tools.
+     - Limitation: Primarily focused on debugging and ad hoc queries rather than ongoing monitoring at scale.
 
 2. Proposed Program
 
