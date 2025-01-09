@@ -1,6 +1,6 @@
 +++
 title = "Early Return Pattern"
-description = "The end of Bangkit journey"
+description = "Organize your code"
 date = 2024-12-31
 taxonomies.tags = [
     "tips",

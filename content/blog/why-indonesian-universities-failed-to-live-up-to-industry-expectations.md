@@ -1,6 +1,6 @@
 +++
 title = "Why Indonesian Universities \"Failed\" to Live Up to Industry Expectations"
-description = "The end of Bangkit journey"
+description = "Personal yapping"
 date = 2025-01-07
 taxonomies.tags = [
     "story",

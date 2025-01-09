@@ -7,6 +7,10 @@
         <loc>https://ezrantn.github.io/blog/</loc>
     </url>
     <url>
+        <loc>https://ezrantn.github.io/blog/atomic-kernel-level-monitoring-with-ebpf-and-big-data/</loc>
+        <lastmod>2025-01-09</lastmod>
+    </url>
+    <url>
         <loc>https://ezrantn.github.io/blog/bangkit-has-come-to-an-end/</loc>
         <lastmod>2024-12-13</lastmod>
     </url>
@@ -49,10 +53,16 @@
         <loc>https://ezrantn.github.io/tags/go/</loc>
     </url>
     <url>
+        <loc>https://ezrantn.github.io/tags/idea/</loc>
+    </url>
+    <url>
         <loc>https://ezrantn.github.io/tags/msib/</loc>
     </url>
     <url>
         <loc>https://ezrantn.github.io/tags/story/</loc>
+    </url>
+    <url>
+        <loc>https://ezrantn.github.io/tags/thesis/</loc>
     </url>
     <url>
         <loc>https://ezrantn.github.io/tags/tips/</loc>
