@@ -23,26 +23,57 @@ In an era of ever-evolving digital infrastructures, real-time system monitoring 
 
 Monitoring large-scale systems in real time presents a significant challenge. Traditional tools often fall short, either overburdening the system with resource-intensive processes or failing to provide consistent insights during high-demand scenarios. As system complexity grows, so does the need for an approach that can collect, process, and analyze kernel-level metrics with minimal overhead while maintaining high accuracy and consistency. This project addresses these challenges by developing a scalable and efficient monitoring solution that leverages eBPF, big data frameworks, and atomic operations to overcome the limitations of existing tools.
 
+## Product Context
+
+In today's digital era, where the reliability and performance of systems underpin almost every industry, monitoring infrastructure at scale has become both a critical necessity and a formidable challenge. Traditional tools often lack the finesse to provide granular insights without overwhelming system resources. They either compromise on precision to reduce overhead or introduce inefficiencies that can hamper scalability.
+
+This project aims to redefine real-time system monitoring by leveraging eBPF's ability to observe kernel-level events with near-zero overhead. By integrating it with scalable big data technologies like Kafka and Elasticsearch, the proposed system bridges the gap between granular monitoring and scalable analytics. Atomic operations further ensure that every metric, whether tracked during high-traffic periods or at peak concurrency, remains consistent and reliable.
+
+This architecture sets the foundation for a new paradigm in system monitoring: lightweight, precise, and built to scale seamlessly across modern distributed infrastructures.
+
 ## The Proposed Solution
 
 To address these challenges, this project proposes a streamlined system:
 
-1. **Efficient Kernel-Level Data Collection:** Using eBPF, the tool hooks into critical kernel events such as process lifecycles, file system I/O, and network traffic. It filters and forwards only essential data to minimize impact.
-2. **Robust Data Aggregation and Analysis:** Leveraging Apache Kafka for real-time data streaming and Elasticsearch for indexing and historical storage, the system processes vast amounts of data efficiently.
-3. **Atomic Operations for Consistency:** Updates to metrics - like process counts or network bandwidth - are managed using atomic operations, ensuring reliability even under concurrent workloads.
+1. Efficient Kernel-Level Data Collection: Using eBPF, the tool hooks into critical kernel events such as process lifecycles, file system I/O, and network traffic. It filters and forwards only essential data to minimize impact.
+2. Robust Data Aggregation and Analysis: Leveraging Apache Kafka for real-time data streaming and Elasticsearch for indexing and historical storage, the system processes vast amounts of data efficiently.
+3. Atomic Operations for Consistency: Updates to metrics - like process counts or network bandwidth - are managed using atomic operations, ensuring reliability even under concurrent workloads.
 
 ## What Can I Monitor in the Kernel?
 
-1. **System Calls**: Track which system calls are being made by processes (e.g., file operations, network requests).
-2. **Process Lifecycle**: Monitor when processes are created, terminated, or modified (e.g., process IDs, memory usage).
-3. **Network Traffic**: Capture and analyze packet-level data, such as incoming/outgoing traffic, connections, etc.
-4. **CPU and Memory Usage**: Monitor real-time CPU usage, memory allocation, and resource consumption by processes.
-5. **Disk I/O**: Observe disk read/write operations, block device activity, and file system changes.
+1. System Calls: Track which system calls are being made by processes (e.g., file operations, network requests).
+2. Process Lifecycle: Monitor when processes are created, terminated, or modified (e.g., process IDs, memory usage).
+3. Network Traffic: Capture and analyze packet-level data, such as incoming/outgoing traffic, connections, etc.
+4. CPU and Memory Usage: Monitor real-time CPU usage, memory allocation, and resource consumption by processes.
+5. Disk I/O: Observe disk read/write operations, block device activity, and file system changes.
 
 ## Why Kernel-Level Monitoring?
 
-- **Granularity**: You can gather more detailed data from the kernel layer, which gives you a better view of system activity compared to traditional user-space monitoring tools.
-- **Low Overhead**: eBPF runs inside the kernel with minimal performance impact, allowing continuous and high-frequency monitoring without slowing down the system.
+1. Precision
+
+    Kernel-level monitoring provides unparalleled granularity, allowing access to detailed insights such as process-level resource usage, network packet flows, and disk I/O patterns. This level of detail is critical for understanding the root causes of system issues that traditional user-space tools often miss.
+
+2. Low Overhead
+
+    Unlike many monitoring solutions that introduce significant performance penalties, eBPF executes directly within the kernel. This ensures minimal impact on system performance, enabling high-frequency, real-time monitoring even on resource-constrained systems.
+
+3. Proactive Problem Detection
+
+    By capturing detailed, real-time metrics at the kernel level, potential bottlenecks or failures can be detected and addressed before they escalate, ensuring optimal system performance and reliability.
+
+## Why eBPF + Big Data Integration?
+
+1. Real-Time Insights
+
+    With Kafka streaming data as it is collected, and Elasticsearch enabling efficient indexing and querying, the system ensures immediate visibility into critical system metrics. This allows for rapid responses to anomalies, such as resource spikes or unexpected traffic patterns.
+
+2. Scalability
+
+    As infrastructures grow in size and complexity, monitoring systems must scale accordingly. By leveraging big data frameworks, this solution accommodates massive data volumes without degradation in performance.
+
+3. Unified Data Pipeline
+
+    The integration of eBPF and big data systems creates a seamless pipeline from data collection to analysis. This avoids the fragmented workflows and inefficiencies typical of conventional monitoring solutions.
 
 ## The Architecture
 
@@ -66,11 +97,187 @@ More detailed architecture [see here](https://excalidraw.com/#json=ZUNjxhz2T2ufd
 
 ![Architecture](/architecture.png)
 
+## Technical Implementation Details
+
+The system's implementation is broken down into several key components, each designed to handle specific aspects of kernel-level monitoring and data processing.
+
+### Event Monitoring System
+
+At the core of our implementation is the event monitoring system that captures various kernel-level events:
+
+```rust
+#[derive(Clone, Debug)]
+pub enum KernelEvent {
+    Process(ProcessEvent),
+    Network(NetworkEvent),
+    FileSystem(FSEvent),
+    Memory(MemoryEvent),
+}
+```
+
+This structure allows us to capture different types of system events:
+
+- Process events track program execution and resource usage
+- Network events monitor traffic and connections
+- File system events observe disk operations
+- Memory events track allocation and usage patterns
+
+### Configuration and Alerting
+
+The system includes configurable alerting thresholds and sampling rates:
+
+```rust
+pub struct AlertConfig {
+    cpu_threshold: f64,        // e.g., 90% utilization
+    memory_threshold: f64,     // e.g., 85% usage
+    disk_io_threshold: u64,    // e.g., 5000 IOPS
+    network_threshold: u64,    // e.g., 1Gbps sustained
+    alert_interval: Duration,  // e.g., 30 seconds
+}
+```
+
+This configuration allows administrators to:
+
+- Set custom thresholds for different metrics
+- Configure sampling rates for different event types
+- Define data retention policies
+- Manage system overhead
+
+### Data Pipeline Architecture
+
+The data pipeline is built on Kafka and Elasticsearch, with carefully structured topics and schemas:
+
+```rust
+pub struct KafkaTopology {
+    topics: Vec<Topic>,
+    partitions_per_topic: u32,
+    replication_factor: u32,
+}
+```
+
+Elasticsearch schema is optimized for time-series metrics:
+
+```json
+{
+  "mappings": {
+    "properties": {
+      "timestamp": { "type": "date" },
+      "host": { "type": "keyword" },
+      "process_metrics": {
+        "properties": {
+          "pid": { "type": "long" },
+          "cpu_usage": { "type": "float" },
+          "memory_usage": { "type": "long" }
+        }
+      }
+    }
+  }
+}
+```
+
+### Performance Benchmarking
+
+The system includes comprehensive performance testing capabilities:
+
+```rust
+pub struct PerformanceTargets {
+    max_latency: Duration,        // e.g., 100ms
+    max_cpu_overhead: f64,        // e.g., 1%
+    max_memory_overhead: u64,     // e.g., 256MB
+    max_disk_io: u64,             // e.g., 50MB/s
+    max_network_overhead: u64,    // e.g., 10MB/s
+}
+```
+
+Different load scenarios are tested:
+
+- Light load for baseline performance
+- Normal operating conditions
+- Heavy load for stress testing
+- Spike testing for burst scenarios
+
+### Security and Deployment
+
+Security is ensured through comprehensive controls:
+
+```rust
+pub struct SecurityConfig {
+    capabilities: Vec<Capability>,
+    seccomp_filters: SeccompFilter,
+    bpf_restrictions: BPFRestrictions,
+    audit_logging: AuditConfig,
+}
+```
+
+Deployment is managed through a structured process:
+
+```rust
+pub struct Deployment {
+    phases: Vec<DeploymentPhase>,
+    verifications: Vec<VerificationStep>,
+    rollback_procedures: Vec<RollbackStep>,
+}
+```
+
+### Testing and Validation
+
+The system includes a comprehensive test suite:
+
+```rust
+pub struct TestSuite {
+    unit_tests: Vec<UnitTest>,
+    integration_tests: Vec<IntegrationTest>,
+    performance_tests: Vec<PerformanceTest>,
+    security_tests: Vec<SecurityTest>,
+}
+```
+
+Each component undergoes rigorous testing to ensure:
+
+- Functional correctness
+- Performance requirements are met
+- Security standards are maintained
+- System stability under various conditions
+
+This is just pseudocode describing what will happen in the future.
+
+## Security Considerations
+
+Security is a critical aspect of our kernel-level monitoring system, requiring careful attention to multiple layers of protection and access control.
+
+### Kernel-Level Access Security
+
+Our system's interaction with the kernel requires particularly careful security measures. We implement multiple layers of protection:
+
+1. eBPF Program Safety
+
+   - By default all eBPF programs undergo rigorous verification before deployment, see [eBPF Verifier](https://docs.kernel.org/bpf/verifier.html)
+   - Static analysis ensures programs can't harm the kernel
+   - Runtime bounds checking prevents unauthorized memory access
+   - Strict limits on program complexity and resource usage
+   - Automatic detection and prevention of potential infinite loops
+
+2. Privilege Management
+
+   - System operates with minimal required privileges
+   - Careful management of capability requirements
+   - Automated dropping of unnecessary privileges
+   - Strict resource usage limitations to prevent abuse
+   - Regular audit of required permissions
+
+3. Data Protection
+
+   - Encryption of sensitive system metrics
+   - Secure storage of collected data
+   - Data anonymization where appropriate
+   - Regular data access auditing
+   - Secure transmission protocols for metric collection
+
 ## Key Features and Benefits
 
 Unlike traditional tools, this system combines lightweight design with powerful processing capabilities. It doesn’t attempt to solve every problem, but instead focuses on providing accurate, real-time insights into system performance. Its modular design allows for future enhancements, such as predictive analytics or AI-driven anomaly detection.
 
-## vs Existing Programs
+## Existing Programs
 
 1. Existing Programs
 
@@ -122,7 +329,7 @@ Rust is chosen for this project because it aligns perfectly with the performance
 
 4. Integration with eBPF
 
-    Rust’s libraries, such as `libbpf-rs` and `aya`, simplify writing eBPF programs, providing a modern, type-safe alternative to writing them in C.
+    Rust’s libraries, such as [libbpf-rs](https://github.com/libbpf/libbpf-rs) and [aya](https://aya-rs.dev/book/), simplify writing eBPF programs, providing a modern, type-safe alternative to writing them in C.
 
 5. Ecosystem and Future-Proofing
 
@@ -153,11 +360,11 @@ Rust is chosen for this project because it aligns perfectly with the performance
 
 ## Where Atomic Lives?
 
-1. **Atomic Metrics Update**:
-    - As eBPF collects real-time data (e.g., CPU usage, process creation, network traffic), these metrics need to be updated in the **Big Data storage** (like Kafka or Elasticsearch).
-    - When multiple eBPF probes are generating metrics concurrently (such as multiple processes accessing the same resource), **atomic transactions** ensure that the metrics are updated **without race conditions** or inconsistent values.
+1. Atomic Metrics Update:
+    - As eBPF collects real-time data (e.g., CPU usage, process creation, network traffic), these metrics need to be updated in the Big Data storage (like Kafka or Elasticsearch).
+    - When multiple eBPF probes are generating metrics concurrently (such as multiple processes accessing the same resource), atomic transactions ensure that the metrics are updated without [race conditions](https://www.techtarget.com/searchstorage/definition/race-condition) or inconsistent values.
 
-2. **Atomic Aggregation**:
+2. Atomic Aggregation:
     - When processing or aggregating the collected data (e.g., summing up CPU usage across multiple machines), atomic operations can ensure that the results are consistent even in distributed systems where updates happen simultaneously across nodes.
 
 ## Evaluating Metrics and Goals
@@ -168,35 +375,35 @@ To ensure the system meets its goals, several metrics will be measured:
 2. Scalability: Can it handle spikes in data volume without lag?
 3. Consistency: Are metrics accurate and free from race conditions?
 
-The **goal of this project** is to develop a **scalable and efficient monitoring system** that provides real-time insights into the performance and behavior of a computer system by utilizing **eBPF** for kernel-level observability, **Big Data** for handling large volumes of data, and **atomic transactions** to ensure consistency and reliability.
+The goal of this project is to develop a scalable and efficient monitoring system that provides real-time insights into the performance and behavior of a computer system by utilizing eBPF for kernel-level observability, Big Data for handling large volumes of data, and atomic transactions to ensure consistency and reliability.
 
 ### Key Objectives
 
-1. **Kernel-Level Monitoring with eBPF**:
+1. Kernel-Level Monitoring with eBPF:
 
-    - Collect detailed and low-overhead system metrics directly from the **kernel**, such as process activity, network traffic, disk I/O, and resource usage.
+    - Collect detailed and low-overhead system metrics directly from the kernel, such as process activity, network traffic, disk I/O, and resource usage.
 
-2. **Real-Time Data Processing**:
+2. Real-Time Data Processing:
 
-    - Leverage **Big Data** tools (e.g., Kafka, Flink) to process and aggregate the collected data at **scale** in real-time, allowing for fast and efficient analysis.
+    - Leverage Big Data tools (e.g., Kafka, Flink) to process and aggregate the collected data at scale in real-time, allowing for fast and efficient analysis.
 
-3. **Atomicity for Data Consistency**:
+3. Atomicity for Data Consistency:
 
-    - Ensure **data consistency** and **reliable updates** by using **atomic transactions**, preventing race conditions and conflicts during the processing of system metrics.
+    - Ensure data consistency and reliable updates by using atomic transactions, preventing race conditions and conflicts during the processing of system metrics.
 
-4. **Scalability and Efficiency**:
+4. Scalability and Efficiency:
 
-    - Create a system that can handle large amounts of monitoring data in distributed environments, ensuring it remains **scalable** without sacrificing performance.
+    - Create a system that can handle large amounts of monitoring data in distributed environments, ensuring it remains scalable without sacrificing performance.
 
-5. **System Health and Performance Insights**:
+5. System Health and Performance Insights:
 
-    - Provide real-time insights and monitoring dashboards to **detect anomalies**, track system health, and optimize resource usage for efficient system performance.
+    - Provide real-time insights and monitoring dashboards to detect anomalies, track system health, and optimize resource usage for efficient system performance.
 
 ### Why This Is Important?
 
-- **Scalability**: Traditional monitoring systems may struggle with large-scale, distributed systems. This project addresses that by integrating Big Data technologies for scalability.
-- **Performance**: Kernel-level monitoring via eBPF provides high-performance data collection with minimal system overhead.
-- **Consistency**: Atomic transactions ensure that data remains accurate and reliable, even under high-load conditions, which is crucial for real-time monitoring in production environments.
+- Scalability: Traditional monitoring systems may struggle with large-scale, distributed systems. This project addresses that by integrating Big Data technologies for scalability.
+- Performance: Kernel-level monitoring via eBPF provides high-performance data collection with minimal system overhead.
+- Consistency: Atomic transactions ensure that data remains accurate and reliable, even under high-load conditions, which is crucial for real-time monitoring in production environments.
 
 ## Project Output
 
@@ -245,6 +452,14 @@ From monitoring server performance to optimizing cloud resources and debugging p
 
    Even with a highly reliable setup like Kafka and Elasticsearch, failures can happen. For example, if a Kafka broker goes down or data is not indexed correctly in Elasticsearch, it could result in lost data or incomplete metrics. Using Kafka's replication and Elasticsearch's replication features ensures data is fault-tolerant and can be recovered in the event of failure. Implementing retry logic and message deduplication in Kafka consumers can further improve fault tolerance and ensure no data is lost.
 
+10. How do you justify the implementation cost?
+
+    Building and maintaining a new monitoring system requires significant resources. We will justify the cost by demonstrating a clear [ROI using Incident Metrics](https://www.atlassian.com/incident-management/kpis/common-metrics) through improved insights, highlighting reduced operational costs, minimizing downtime through enhanced monitoring, and comparing the costs with existing solutions.
+
+11. How do you prevent monitoring cascade failures?
+
+    A failure in the monitoring system could potentially impact the entire system. To mitigate this, we can implement [circuit breaker](https://en.wikipedia.org/wiki/Circuit_breaker_design_pattern) mechanisms and [graceful degradation](https://www.geeksforgeeks.org/graceful-degradation-in-distributed-systems/) strategies.
+
 ## Key Innovations
 
 This tool stands out in its:
@@ -253,9 +468,25 @@ This tool stands out in its:
 - Safety: Memory-safe interactions through Rust and type-safe eBPF integration.
 - Scalability: Efficient event handling and smart filtering enable large-scale deployments.
 
-## Implementation Challenges
+## Risk Management
 
-Building such a system isn’t without hurdles. Kernel compatibility, managing concurrent data streams, and ensuring security in eBPF programs are all significant challenges. However, careful design and robust error handling mitigate these risks.
+We've identified several key risks and developed mitigation strategies:
+
+1. Technical Risks
+
+- Kernel version compatibility challenges
+- Potential performance impacts
+- Data volume management issues
+- Security vulnerabilities
+- Atomic overhead
+
+2. Mitigation Strategies
+
+- Regular testing across different kernel versions
+- Continuous performance monitoring and optimization
+- Scalable architecture design
+- Frequent security audits
+- Regular backup and recovery testing
 
 ## Project Status
 
