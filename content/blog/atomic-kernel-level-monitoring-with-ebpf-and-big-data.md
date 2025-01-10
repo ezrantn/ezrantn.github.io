@@ -4,7 +4,9 @@ description = "Thesis idea "
 date = 2025-01-09
 taxonomies.tags = [
     "idea",
-    "thesis"
+    "thesis",
+    "distributed systems",
+    "ebpf"
 ]
 taxonomies.categories = [
     "tech"
