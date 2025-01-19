@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Thesis idea ">
-    <title>Ezra Natanael | Atomic Kernel-Level Monitoring with eBPF and Big Data</title>
+    <title>Software Engineer and Performance Optimization Researcher | Atomic Kernel-Level Monitoring with eBPF and Big Data</title>
     
     <link rel="stylesheet" href="https://ezrantn.github.io/style.css?h=ba4e332b4e56aa7e4f4a">
     
@@ -246,6 +246,21 @@
 <li>System stability under various conditions</li>
 </ul>
 <p>This is just pseudocode describing what will happen in the future.</p>
+<h2 id="project-versioning-and-gitflow">Project Versioning and Gitflow</h2>
+<p>We will be using Git for version control and following <a href="https://semver.org/">semantic versioning (semver)</a> to manage project releases. Semantic versioning allows us to clearly communicate the nature of changes in each release with a version format of <code>MAJOR.MINOR.PATCH</code>.</p>
+<ul>
+<li><strong>MAJOR</strong> version: Increments when there are incompatible API changes.</li>
+<li><strong>MINOR</strong> version: Increments when functionality is added in a backward-compatible manner.</li>
+<li><strong>PATCH</strong> version: Increments for backward-compatible bug fixes.</li>
+</ul>
+<p>The code will be hosted on GitHub, under an organization profile (which we will decide later the name of our organization), which will serve as the central repository for our project.</p>
+<p>For our branching strategy, we will adopt <strong>trunk-based development</strong> (TBD). This approach encourages frequent integration of small changes into the main branch (the "trunk"), ensuring that the codebase remains in a deployable state at all times. Here's how we'll implement it:</p>
+<ul>
+<li><strong>Main Branch (Trunk)</strong>: All development will be done directly on the main branch, with developers committing small, incremental changes frequently.</li>
+<li><strong>Short-Lived Feature Branches</strong>: Although the main branch will always be the focus, we may use short-lived feature branches for specific tasks or experimental changes, which will be merged back into the trunk as quickly as possible.</li>
+<li><strong>Feature Flags</strong>: If necessary, feature flags will be used to toggle incomplete or experimental features in the main branch, allowing us to keep the codebase stable while developing new functionality.</li>
+</ul>
+<p>This strategy reduces merge conflicts and ensures fast delivery, while maintaining code quality through continuous integration.</p>
 <h2 id="security-considerations">Security Considerations</h2>
 <p>Security is a critical aspect of our kernel-level monitoring system, requiring careful attention to multiple layers of protection and access control.</p>
 <h3 id="kernel-level-access-security">Kernel-Level Access Security</h3>

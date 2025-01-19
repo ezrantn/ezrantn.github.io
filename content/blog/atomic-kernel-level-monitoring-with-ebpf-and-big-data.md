@@ -241,6 +241,24 @@ Each component undergoes rigorous testing to ensure:
 
 This is just pseudocode describing what will happen in the future.
 
+## Project Versioning and Gitflow
+
+We will be using Git for version control and following [semantic versioning (semver)](https://semver.org/) to manage project releases. Semantic versioning allows us to clearly communicate the nature of changes in each release with a version format of `MAJOR.MINOR.PATCH`.
+
+- **MAJOR** version: Increments when there are incompatible API changes.
+- **MINOR** version: Increments when functionality is added in a backward-compatible manner.
+- **PATCH** version: Increments for backward-compatible bug fixes.
+
+The code will be hosted on GitHub, under an organization profile (which we will decide later the name of our organization), which will serve as the central repository for our project.
+
+For our branching strategy, we will adopt **trunk-based development** (TBD). This approach encourages frequent integration of small changes into the main branch (the "trunk"), ensuring that the codebase remains in a deployable state at all times. Here's how we'll implement it:
+
+- **Main Branch (Trunk)**: All development will be done directly on the main branch, with developers committing small, incremental changes frequently.
+- **Short-Lived Feature Branches**: Although the main branch will always be the focus, we may use short-lived feature branches for specific tasks or experimental changes, which will be merged back into the trunk as quickly as possible.
+- **Feature Flags**: If necessary, feature flags will be used to toggle incomplete or experimental features in the main branch, allowing us to keep the codebase stable while developing new functionality.
+
+This strategy reduces merge conflicts and ensures fast delivery, while maintaining code quality through continuous integration.
+
 ## Security Considerations
 
 Security is a critical aspect of our kernel-level monitoring system, requiring careful attention to multiple layers of protection and access control.
