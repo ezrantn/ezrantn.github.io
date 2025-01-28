@@ -1,7 +1,7 @@
 # The URL the site will be built for
 base_url = "https://ezrantn.github.io"
 theme = "hook"
-title = "Software Engineer and Performance Optimization Researcher"
+title = "Software Engineer and Optimization Researcher"
 description = "Software Engineer based in Jakarta, Indonesia"
 
 # Whether to automatically compile all Sass files in the sass directory
