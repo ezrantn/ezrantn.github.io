@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Organize your code">
+    <title>Software Engineer and Optimization Researcher | Early Return Pattern</title>
+    
+    <link rel="stylesheet" href="https://ezrantn.github.io/style.css?h=ba4e332b4e56aa7e4f4a">
+    
+    
+    
+    
+</head>
+<body>
+    
+<header class="space">
+    <a href="https:&#x2F;&#x2F;ezrantn.github.io">&LeftArrow; Home</a>
+</header>
+
+    
+<main>
+    <h1>Early Return Pattern</h1>
+    
+    <p class="secondary small">
+        31 December, 2024
+
+        
+        
+        
+        
+        
+        
+        
+
+        
+        
+        - Categories:
+        
+        
+        <a href="https:&#x2F;&#x2F;ezrantn.github.io&#x2F;categories&#x2F;tech&#x2F;">tech</a>
+        
+        
+        
+        - Tags:
+        
+        
+        <a href="https:&#x2F;&#x2F;ezrantn.github.io&#x2F;tags&#x2F;tips&#x2F;">tips</a>
+        
+        
+    </p>
+    
+    <div class="space"></div>
+    <h2 id="preface">Preface</h2>
+<p>When writing code, especially as projects grow bigger, it can become easy to fall into a trap of complex, nested logic. As you try to handle various conditions - such as errors or edge cases - you might find yourself writing deeply nested if statements that make the code harder to read and maintain. This is where a technique called early return can help.</p>
+<p>In programming, early return allows us to handle edge cases or errors right away, making the "happy path" (the ideal path where everything works as expected) clearer and the code easier to follow. By exiting a function as soon as something goes wrong, we avoid deep nesting and focus the main logic of the function where it belongs.</p>
+<p>In this article, we’ll talk about early return with a bit of a story-like approach, comparing how functions behave when written with and without it, and explaining why early return can be a good practice to improve readability and maintainability.</p>
+<h2 id="the-problem-deeply-nested-code">The Problem: Deeply Nested Code</h2>
+<p>Imagine you're writing a function to validate someone’s age before proceeding with further logic, like processing a form submission. In the first example, we’ll write it without early return, using nested <code>if</code> statements to handle each edge case.</p>
+<p>Here’s what that might look like:</p>
+<pre data-lang="go" style="background-color:#31333d;color:#ffffffc4;" class="language-go "><code class="language-go" data-lang="go"><span style="color:#a3cbe3;">func </span><span style="color:#a2ba43;">processAge</span><span>(</span><span style="color:#ffffff;">age </span><span style="color:#e7e7e7;">int</span><span>) </span><span style="color:#e7e7e7;">error </span><span>{
+</span><span>    </span><span style="color:#db7c6d;">if </span><span style="font-weight:bold;color:#a3cbe3;">age </span><span style="color:#db7c6d;">&gt;= 0 </span><span>{
+</span><span>        </span><span style="color:#db7c6d;">if </span><span style="font-weight:bold;color:#a3cbe3;">age </span><span style="color:#db7c6d;">&gt;= 18 </span><span>{
+</span><span>            </span><span style="color:#db7c6d;">if </span><span style="font-weight:bold;color:#a3cbe3;">age </span><span style="color:#db7c6d;">&lt;= 100 </span><span>{
+</span><span>                </span><span style="color:#707180;">// Valid age range, process further
+</span><span>                </span><span style="color:#707180;">// More processing here...
+</span><span>                </span><span style="font-weight:bold;color:#a3cbe3;">fmt</span><span>.</span><span style="font-weight:bold;color:#a3cbe3;">Println</span><span>(</span><span style="font-weight:bold;color:#dbbb3d;">&quot;</span><span>Age is valid and processed.</span><span style="font-weight:bold;color:#dbbb3d;">&quot;</span><span>)
+</span><span>                </span><span style="color:#db7c6d;">return </span><span style="color:#ffffff;">nil
+</span><span>            } </span><span style="color:#db7c6d;">else </span><span>{
+</span><span>                </span><span style="color:#707180;">// Age is greater than 100
+</span><span>                </span><span style="color:#db7c6d;">return </span><span style="font-weight:bold;color:#a3cbe3;">fmt</span><span>.</span><span style="font-weight:bold;color:#a3cbe3;">Errorf</span><span>(</span><span style="font-weight:bold;color:#dbbb3d;">&quot;</span><span>age cannot be greater than 100</span><span style="font-weight:bold;color:#dbbb3d;">&quot;</span><span>)
+</span><span>            }
+</span><span>        } </span><span style="color:#db7c6d;">else </span><span>{
+</span><span>            </span><span style="color:#707180;">// Age is less than 18
+</span><span>            </span><span style="color:#db7c6d;">return </span><span style="font-weight:bold;color:#a3cbe3;">fmt</span><span>.</span><span style="font-weight:bold;color:#a3cbe3;">Errorf</span><span>(</span><span style="font-weight:bold;color:#dbbb3d;">&quot;</span><span>age must be at least 18</span><span style="font-weight:bold;color:#dbbb3d;">&quot;</span><span>)
+</span><span>        }
+</span><span>    } </span><span style="color:#db7c6d;">else </span><span>{
+</span><span>        </span><span style="color:#707180;">// Age is negative
+</span><span>        </span><span style="color:#db7c6d;">return </span><span style="font-weight:bold;color:#a3cbe3;">fmt</span><span>.</span><span style="font-weight:bold;color:#a3cbe3;">Errorf</span><span>(</span><span style="font-weight:bold;color:#dbbb3d;">&quot;</span><span>age cannot be negative</span><span style="font-weight:bold;color:#dbbb3d;">&quot;</span><span>)
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p>Now, let’s break this down:</p>
+<ol>
+<li>First, we check if the age is a valid number (<code>age &gt;= 0</code>).</li>
+<li>If the age is valid, we check if it’s greater than or equal to 18.</li>
+<li>Then, we check if the age is less than or equal to 100.</li>
+</ol>
+<p>As you can see, we’re nesting one <code>if</code> statement inside another. This makes the function harder to read, especially as it gets longer. The actual logic - where the age is valid and processed - is buried under multiple checks, and the happy path (when everything is fine) is not immediately obvious.</p>
+<h2 id="the-solution-using-early-return">The Solution: Using Early Return</h2>
+<p>Now let’s try the same function, but this time we’ll use <strong>early return</strong>. The idea is simple: check for edge cases or errors right at the start and return immediately if something is wrong. By doing this, we avoid nesting and make the happy path much clearer.</p>
+<p>Here’s the refactored version using early returns:</p>
+<pre data-lang="go" style="background-color:#31333d;color:#ffffffc4;" class="language-go "><code class="language-go" data-lang="go"><span style="color:#a3cbe3;">func </span><span style="color:#a2ba43;">processAge</span><span>(</span><span style="color:#ffffff;">age </span><span style="color:#e7e7e7;">int</span><span>) </span><span style="color:#e7e7e7;">error </span><span>{
+</span><span>    </span><span style="color:#db7c6d;">if </span><span style="font-weight:bold;color:#a3cbe3;">age </span><span style="color:#db7c6d;">&lt; 0 </span><span>{
+</span><span>        </span><span style="color:#db7c6d;">return </span><span style="font-weight:bold;color:#a3cbe3;">fmt</span><span>.</span><span style="font-weight:bold;color:#a3cbe3;">Errorf</span><span>(</span><span style="font-weight:bold;color:#dbbb3d;">&quot;</span><span>age cannot be negative</span><span style="font-weight:bold;color:#dbbb3d;">&quot;</span><span>)
+</span><span>    }
+</span><span>    </span><span style="color:#db7c6d;">if </span><span style="font-weight:bold;color:#a3cbe3;">age </span><span style="color:#db7c6d;">&lt; 18 </span><span>{
+</span><span>        </span><span style="color:#db7c6d;">return </span><span style="font-weight:bold;color:#a3cbe3;">fmt</span><span>.</span><span style="font-weight:bold;color:#a3cbe3;">Errorf</span><span>(</span><span style="font-weight:bold;color:#dbbb3d;">&quot;</span><span>age must be at least 18</span><span style="font-weight:bold;color:#dbbb3d;">&quot;</span><span>)
+</span><span>    }
+</span><span>    </span><span style="color:#db7c6d;">if </span><span style="font-weight:bold;color:#a3cbe3;">age </span><span style="color:#db7c6d;">&gt; 100 </span><span>{
+</span><span>        </span><span style="color:#db7c6d;">return </span><span style="font-weight:bold;color:#a3cbe3;">fmt</span><span>.</span><span style="font-weight:bold;color:#a3cbe3;">Errorf</span><span>(</span><span style="font-weight:bold;color:#dbbb3d;">&quot;</span><span>age cannot be greater than 100</span><span style="font-weight:bold;color:#dbbb3d;">&quot;</span><span>)
+</span><span>    }
+</span><span>
+</span><span>    </span><span style="color:#707180;">// Valid age range, process further
+</span><span>    </span><span style="color:#707180;">// More processing here...
+</span><span>    </span><span style="font-weight:bold;color:#a3cbe3;">fmt</span><span>.</span><span style="font-weight:bold;color:#a3cbe3;">Println</span><span>(</span><span style="font-weight:bold;color:#dbbb3d;">&quot;</span><span>Age is valid and processed.</span><span style="font-weight:bold;color:#dbbb3d;">&quot;</span><span>)
+</span><span>    </span><span style="color:#db7c6d;">return </span><span style="color:#ffffff;">nil
+</span><span>}
+</span></code></pre>
+<p>In this version:</p>
+<ol>
+<li>We immediately check if the age is invalid and return an error right away if it is.</li>
+<li>If none of those conditions are met, we proceed with the happy path - where the age is valid and everything is processed.</li>
+<li>The main logic, which is simple and clean, is now easy to follow because it comes right after the error checks.</li>
+</ol>
+<p>By returning early, we’ve reduced the nesting and made the happy path much clearer. It’s immediately obvious that if the age is valid, we process it; otherwise, we exit early with an error.</p>
+<h2 id="the-happy-path-and-error-handling-strategies">The Happy Path and Error Handling Strategies</h2>
+<p>Now, let’s talk about some deeper concepts that early return touches on: the happy path and error handling strategies.</p>
+<h3 id="the-happy-path">The Happy Path</h3>
+<p>The happy path refers to the scenario where everything works as expected - the perfect scenario. In our example, the happy path is when the age is between 18 and 100. That’s when the function proceeds with its main logic.</p>
+<p>In the nested version of the function, the happy path is hidden under multiple layers of conditions. We have to go through all the checks before even seeing the part where the age is valid and processed. Using early return brings the happy path to the forefront, making it easier to understand what the function is really doing.</p>
+<h3 id="error-handling-strategy">Error Handling Strategy</h3>
+<p>Good error handling is about catching problems as soon as they happen. Early return is a great way to do this: we handle errors right away, which makes it clear that something went wrong and the function can’t continue. This is a good practice because it prevents us from working with invalid data or running unnecessary logic when an error has already occurred.</p>
+<p>In our nested version, error handling is mixed in with the main logic, which makes it harder to see and follow. With early return, we’ve made error handling upfront and separated it from the core function. This makes our code clearer and safer, as we catch issues right at the start.</p>
+<h2 id="thoughts">Thoughts</h2>
+<p>Early return is a powerful technique in programming languages that can make your code cleaner, easier to read, and easier to maintain. By handling errors and edge cases upfront, you avoid deep nesting and highlight the "happy path" - the part of the code where everything works as expected.</p>
+<p>This technique aligns with good error handling practices and improves the overall flow of your functions. By making error handling upfront and focusing on the core logic afterward, you’ll end up with code that’s not only easier to understand but also safer to run.</p>
+<p>So next time you write a function, consider whether you could use early return to make it clearer and more direct. It’s a small change that can make a big difference in how your code reads and behaves.</p>
+<p>Peace out.</p>
+
+</main>
+
+    <div class="dark-mode-buttons">
+        <button class="dark-mode-button" id="dark-mode-on"><img src="https://ezrantn.github.io/dark_mode.svg" width="24" height="24" alt="Dark mode" aria-label="dark mode toggle" title="Dark mode"></button>
+        <button class="dark-mode-button" id="dark-mode-off"><img src="https://ezrantn.github.io/light_mode.svg" width="24" height="24" alt="Light mode" aria-label="light mode toggle" title="Light mode"></button>
+    </div>
+    <script>
+        const cls = document.querySelector("html").classList;
+        const sessionTheme = sessionStorage.getItem("theme");
+
+        function setDark() {
+            cls.add("dark-mode");
+            cls.remove("light-mode");
+            sessionStorage.setItem("theme", "dark");
+        }
+        function setLight() {
+            cls.add("light-mode");
+            cls.remove("dark-mode");
+            sessionStorage.setItem("theme", "light");
+        }
+
+        if (sessionTheme === "dark") {
+            setDark();
+        } else if (sessionTheme === "light") {
+            setLight();
+        } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+            setDark();
+        }
+
+        document.getElementById("dark-mode-on").addEventListener("click", function(e) {
+            setDark();
+        });
+        document.getElementById("dark-mode-off").addEventListener("click", function(e) {
+            setLight();
+        });
+    </script>
+    <noscript>
+        <style>
+            .dark-mode-buttons {
+                display: none;
+            }
+        </style>
+    </noscript>
+</body>
+</html>
