@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Go on Ezra Natanael</title>
+    <link>https://example.org/tags/go/</link>
+    <description>Recent content in Go on Ezra Natanael</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 07 Nov 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://example.org/tags/go/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Understanding and Preventing Nil Pointer Error in Go</title>
+      <link>https://example.org/posts/understanding-and-preventing-nil-pointer-error-in-go/</link>
+      <pubDate>Thu, 07 Nov 2024 00:00:00 +0000</pubDate>
+      <guid>https://example.org/posts/understanding-and-preventing-nil-pointer-error-in-go/</guid>
+      <description>&lt;p&gt;If you’re coding in Go, there’s one error that’s bound to trip you up at some point: the nil pointer error. It can throw you off, whether you’re a beginner or have some experience. But no need to stress - let me break it down for you.&lt;/p&gt;&#xA;&lt;p&gt;Think of your computer’s memory as a big storage unit with lots of compartments, each with its own unique address. A pointer is like a sticky note with one of those addresses written on it, so you can easily find that compartment later.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

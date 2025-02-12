@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on Ezra Natanael</title>
+    <link>https://example.org/tags/</link>
+    <description>Recent content in Tags on Ezra Natanael</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 10 Feb 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://example.org/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Ai</title>
+      <link>https://example.org/tags/ai/</link>
+      <pubDate>Mon, 10 Feb 2025 00:00:00 +0000</pubDate>
+      <guid>https://example.org/tags/ai/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Genetic Algorithm</title>
+      <link>https://example.org/tags/genetic-algorithm/</link>
+      <pubDate>Mon, 10 Feb 2025 00:00:00 +0000</pubDate>
+      <guid>https://example.org/tags/genetic-algorithm/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Research</title>
+      <link>https://example.org/tags/research/</link>
+      <pubDate>Mon, 10 Feb 2025 00:00:00 +0000</pubDate>
+      <guid>https://example.org/tags/research/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Thesis</title>
+      <link>https://example.org/tags/thesis/</link>
+      <pubDate>Mon, 10 Feb 2025 00:00:00 +0000</pubDate>
+      <guid>https://example.org/tags/thesis/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>U-Net</title>
+      <link>https://example.org/tags/u-net/</link>
+      <pubDate>Mon, 10 Feb 2025 00:00:00 +0000</pubDate>
+      <guid>https://example.org/tags/u-net/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Atomicity</title>
+      <link>https://example.org/tags/atomicity/</link>
+      <pubDate>Thu, 09 Jan 2025 00:00:00 +0000</pubDate>
+      <guid>https://example.org/tags/atomicity/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Big Data</title>
+      <link>https://example.org/tags/big-data/</link>
+      <pubDate>Thu, 09 Jan 2025 00:00:00 +0000</pubDate>
+      <guid>https://example.org/tags/big-data/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Distributed Systems</title>
+      <link>https://example.org/tags/distributed-systems/</link>
+      <pubDate>Thu, 09 Jan 2025 00:00:00 +0000</pubDate>
+      <guid>https://example.org/tags/distributed-systems/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Ebpf</title>
+      <link>https://example.org/tags/ebpf/</link>
+      <pubDate>Thu, 09 Jan 2025 00:00:00 +0000</pubDate>
+      <guid>https://example.org/tags/ebpf/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Story</title>
+      <link>https://example.org/tags/story/</link>
+      <pubDate>Tue, 07 Jan 2025 00:00:00 +0000</pubDate>
+      <guid>https://example.org/tags/story/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Tips</title>
+      <link>https://example.org/tags/tips/</link>
+      <pubDate>Tue, 31 Dec 2024 00:00:00 +0000</pubDate>
+      <guid>https://example.org/tags/tips/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Bangkit</title>
+      <link>https://example.org/tags/bangkit/</link>
+      <pubDate>Fri, 13 Dec 2024 00:00:00 +0000</pubDate>
+      <guid>https://example.org/tags/bangkit/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Msib</title>
+      <link>https://example.org/tags/msib/</link>
+      <pubDate>Fri, 13 Dec 2024 00:00:00 +0000</pubDate>
+      <guid>https://example.org/tags/msib/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Go</title>
+      <link>https://example.org/tags/go/</link>
+      <pubDate>Thu, 07 Nov 2024 00:00:00 +0000</pubDate>
+      <guid>https://example.org/tags/go/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>

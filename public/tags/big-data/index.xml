@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Big Data on Ezra Natanael</title>
+    <link>https://example.org/tags/big-data/</link>
+    <description>Recent content in Big Data on Ezra Natanael</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 09 Jan 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://example.org/tags/big-data/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Atomic Kernel-Level Monitoring with eBPF and Big Data</title>
+      <link>https://example.org/posts/atomic-kernel-level-monitoring-with-ebpf-and-big-data/</link>
+      <pubDate>Thu, 09 Jan 2025 00:00:00 +0000</pubDate>
+      <guid>https://example.org/posts/atomic-kernel-level-monitoring-with-ebpf-and-big-data/</guid>
+      <description>&lt;p&gt;In today’s rapidly evolving digital landscape, real-time system performance monitoring is both a necessity and a challenge. Traditional tools often face limitations, struggling to balance precision, scalability, and system efficiency. But what if we could collect kernel-level data with minimal overhead, process it seamlessly using big data frameworks, and maintain consistent, reliable insights? This project explores that possibility, introducing a novel approach to real-time system monitoring through the integration of eBPF, big data technologies, and atomic operations.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

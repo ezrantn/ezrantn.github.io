@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on Ezra Natanael</title>
+    <link>https://example.org/posts/</link>
+    <description>Recent content in Posts on Ezra Natanael</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 10 Feb 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://example.org/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Brain Tumor Segmentation via U-Net and Genetic Algorithm Optimization</title>
+      <link>https://example.org/posts/brain-tumor-segmentation-via-unet-and-genetic-algorithm-optimization/</link>
+      <pubDate>Mon, 10 Feb 2025 00:00:00 +0000</pubDate>
+      <guid>https://example.org/posts/brain-tumor-segmentation-via-unet-and-genetic-algorithm-optimization/</guid>
+      <description>&lt;h2 id=&#34;abstract&#34;&gt;Abstract&lt;/h2&gt;&#xA;&lt;p&gt;Brain tumor detection and segmentation are critical tasks in medical imaging, significantly impacting early diagnosis and treatment planning. While deep learning models such as U-Net have shown great success in medical image segmentation, manual hyperparameter tuning remains a major bottleneck, requiring expert intuition and extensive computational resources. In this article, we introduce an automated U-Net hyperparameter optimization method using Genetic Algorithms (GA) to enhance segmentation accuracy and efficiency. Unlike traditional methods such as grid search or random search, GA mimics biological evolution to systematically explore optimal hyperparameter combinations, reducing manual effort.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Atomic Kernel-Level Monitoring with eBPF and Big Data</title>
+      <link>https://example.org/posts/atomic-kernel-level-monitoring-with-ebpf-and-big-data/</link>
+      <pubDate>Thu, 09 Jan 2025 00:00:00 +0000</pubDate>
+      <guid>https://example.org/posts/atomic-kernel-level-monitoring-with-ebpf-and-big-data/</guid>
+      <description>&lt;p&gt;In today’s rapidly evolving digital landscape, real-time system performance monitoring is both a necessity and a challenge. Traditional tools often face limitations, struggling to balance precision, scalability, and system efficiency. But what if we could collect kernel-level data with minimal overhead, process it seamlessly using big data frameworks, and maintain consistent, reliable insights? This project explores that possibility, introducing a novel approach to real-time system monitoring through the integration of eBPF, big data technologies, and atomic operations.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Why Indonesian Universities \&#34;Failed\&#34; to Live Up to Industry Expectations</title>
+      <link>https://example.org/posts/why-indonesian-universities-failed-to-live-up-to-industry-expectations/</link>
+      <pubDate>Tue, 07 Jan 2025 00:00:00 +0000</pubDate>
+      <guid>https://example.org/posts/why-indonesian-universities-failed-to-live-up-to-industry-expectations/</guid>
+      <description>&lt;p&gt;Before I start yapping about this, I want to make it clear that I am &lt;strong&gt;not&lt;/strong&gt; a professional on anything related to these. This is just my personal opinion, my wild takes as a student living and learning in Indonesia.&lt;/p&gt;&#xA;&lt;p&gt;This story began in 2022, my first year in college. Fresh out of high school, eager to learn, and optimistic about my future, I enrolled in a Computer Science program, excited about the opportunities ahead. I was ready to dive deep into algorithms, programming languages, and maybe even some cutting-edge technologies. Little did I know, the real world was moving at a pace I wasn’t prepared for.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Early Return Pattern</title>
+      <link>https://example.org/posts/early-return-pattern/</link>
+      <pubDate>Tue, 31 Dec 2024 00:00:00 +0000</pubDate>
+      <guid>https://example.org/posts/early-return-pattern/</guid>
+      <description>&lt;h2 id=&#34;preface&#34;&gt;Preface&lt;/h2&gt;&#xA;&lt;p&gt;When writing code, especially as projects grow bigger, it can become easy to fall into a trap of complex, nested logic. As you try to handle various conditions - such as errors or edge cases - you might find yourself writing deeply nested if statements that make the code harder to read and maintain. This is where a technique called early return can help.&lt;/p&gt;&#xA;&lt;p&gt;In programming, early return allows us to handle edge cases or errors right away, making the &amp;ldquo;happy path&amp;rdquo; (the ideal path where everything works as expected) clearer and the code easier to follow. By exiting a function as soon as something goes wrong, we avoid deep nesting and focus the main logic of the function where it belongs.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>How to Focus on One Programming Language</title>
+      <link>https://example.org/posts/how-to-focus-on-one-programming-language/</link>
+      <pubDate>Wed, 18 Dec 2024 00:00:00 +0000</pubDate>
+      <guid>https://example.org/posts/how-to-focus-on-one-programming-language/</guid>
+      <description>&lt;p&gt;In the world of programming, it&amp;rsquo;s easy to feel overwhelmed by the sheer number of choices available. New languages constantly emerge, each promising to be faster, simpler, or better than its predecessors. If you&amp;rsquo;re like me, you might have found yourself hopping from one language to another, chasing the &amp;ldquo;perfect&amp;rdquo; one. This article reflects on my journey and lessons learned, offering advice on how to focus on one programming language effectively.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Bangkit Has Come to an End</title>
+      <link>https://example.org/posts/bangkit-has-come-to-an-end/</link>
+      <pubDate>Fri, 13 Dec 2024 00:00:00 +0000</pubDate>
+      <guid>https://example.org/posts/bangkit-has-come-to-an-end/</guid>
+      <description>&lt;p&gt;My nearly four-month journey in Bangkit has finally come to an end. It all started when I was 19 years old and saw my senior join the program. At first, I had no idea what Bangkit was, but after researching, it instantly caught my attention.&lt;/p&gt;&#xA;&lt;p&gt;As mentioned in my previous article, Bangkit is a program initiated by major companies like Google and Tokopedia to provide high-quality training in specific areas. At the time of writing, Bangkit offers three learning paths:&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Understanding and Preventing Nil Pointer Error in Go</title>
+      <link>https://example.org/posts/understanding-and-preventing-nil-pointer-error-in-go/</link>
+      <pubDate>Thu, 07 Nov 2024 00:00:00 +0000</pubDate>
+      <guid>https://example.org/posts/understanding-and-preventing-nil-pointer-error-in-go/</guid>
+      <description>&lt;p&gt;If you’re coding in Go, there’s one error that’s bound to trip you up at some point: the nil pointer error. It can throw you off, whether you’re a beginner or have some experience. But no need to stress - let me break it down for you.&lt;/p&gt;&#xA;&lt;p&gt;Think of your computer’s memory as a big storage unit with lots of compartments, each with its own unique address. A pointer is like a sticky note with one of those addresses written on it, so you can easily find that compartment later.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Surviving The Bangkit Program</title>
+      <link>https://example.org/posts/surviving-the-bangkit-program/</link>
+      <pubDate>Mon, 04 Nov 2024 00:00:00 +0000</pubDate>
+      <guid>https://example.org/posts/surviving-the-bangkit-program/</guid>
+      <description>&lt;p&gt;When asked to sum up my Bangkit experience in one word, my answer is simple: resilience - the ability to persevere and adapt when everything seems to pile up all at once.&lt;/p&gt;&#xA;&lt;p&gt;Imagine this: a collaborative initiative by Google, Indonesia&amp;rsquo;s tech giants (Gojek, Tokopedia, Traveloka), and the Ministry of Education to create one of the most rigorous and transformative tech bootcamps. Participants dive into one of three specialized tracks: Cloud Computing, Machine Learning, or Mobile Development.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

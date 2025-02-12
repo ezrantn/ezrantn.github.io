@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Bangkit on Ezra Natanael</title>
+    <link>https://example.org/tags/bangkit/</link>
+    <description>Recent content in Bangkit on Ezra Natanael</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 13 Dec 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://example.org/tags/bangkit/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Bangkit Has Come to an End</title>
+      <link>https://example.org/posts/bangkit-has-come-to-an-end/</link>
+      <pubDate>Fri, 13 Dec 2024 00:00:00 +0000</pubDate>
+      <guid>https://example.org/posts/bangkit-has-come-to-an-end/</guid>
+      <description>&lt;p&gt;My nearly four-month journey in Bangkit has finally come to an end. It all started when I was 19 years old and saw my senior join the program. At first, I had no idea what Bangkit was, but after researching, it instantly caught my attention.&lt;/p&gt;&#xA;&lt;p&gt;As mentioned in my previous article, Bangkit is a program initiated by major companies like Google and Tokopedia to provide high-quality training in specific areas. At the time of writing, Bangkit offers three learning paths:&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Surviving The Bangkit Program</title>
+      <link>https://example.org/posts/surviving-the-bangkit-program/</link>
+      <pubDate>Mon, 04 Nov 2024 00:00:00 +0000</pubDate>
+      <guid>https://example.org/posts/surviving-the-bangkit-program/</guid>
+      <description>&lt;p&gt;When asked to sum up my Bangkit experience in one word, my answer is simple: resilience - the ability to persevere and adapt when everything seems to pile up all at once.&lt;/p&gt;&#xA;&lt;p&gt;Imagine this: a collaborative initiative by Google, Indonesia&amp;rsquo;s tech giants (Gojek, Tokopedia, Traveloka), and the Ministry of Education to create one of the most rigorous and transformative tech bootcamps. Participants dive into one of three specialized tracks: Cloud Computing, Machine Learning, or Mobile Development.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

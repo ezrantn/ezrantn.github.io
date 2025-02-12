@@ -1,0 +1,48 @@
+baseURL: 'https://example.org/'
+languageCode: 'en-us'
+title: 'Ezra Natanael'
+theme: "hugo-xmin"
+
+permalinks:
+  post: "/posts/:slug/"
+
+menu:
+  main:
+    - name: Home
+      url: ""
+      weight: 1
+    - name: Posts
+      url: "posts/"
+      weight: 2
+    - name: Categories
+      url: "categories/"
+      weight: 3
+    - name: Tags
+      url: "tags/"
+      weight: 4
+    - name: Subscribe
+      url: "index.xml"
+
+params:
+  description: "A website built through Hugo and blogdown."
+  footer: "&copy; [Ezra Natanael](https://ezrantn.github.io) 2022 -- {Year} | [Github](https://github.com/ezrantn) | [Twitter](https://twitter.com/e_zt03)"
+
+markup:
+  highlight:
+    codeFences: false
+  goldmark:
+    renderer:
+      unsafe: true
+    extensions:
+      passthrough:
+        enable: true
+        delimiters:
+          block:
+          - - \[
+            - \]
+          - - $$
+            - $$
+          inline:
+          - - \(
+            - \)
+

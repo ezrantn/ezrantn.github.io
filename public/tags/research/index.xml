@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Research on Ezra Natanael</title>
+    <link>https://example.org/tags/research/</link>
+    <description>Recent content in Research on Ezra Natanael</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 10 Feb 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://example.org/tags/research/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Brain Tumor Segmentation via U-Net and Genetic Algorithm Optimization</title>
+      <link>https://example.org/posts/brain-tumor-segmentation-via-unet-and-genetic-algorithm-optimization/</link>
+      <pubDate>Mon, 10 Feb 2025 00:00:00 +0000</pubDate>
+      <guid>https://example.org/posts/brain-tumor-segmentation-via-unet-and-genetic-algorithm-optimization/</guid>
+      <description>&lt;h2 id=&#34;abstract&#34;&gt;Abstract&lt;/h2&gt;&#xA;&lt;p&gt;Brain tumor detection and segmentation are critical tasks in medical imaging, significantly impacting early diagnosis and treatment planning. While deep learning models such as U-Net have shown great success in medical image segmentation, manual hyperparameter tuning remains a major bottleneck, requiring expert intuition and extensive computational resources. In this article, we introduce an automated U-Net hyperparameter optimization method using Genetic Algorithms (GA) to enhance segmentation accuracy and efficiency. Unlike traditional methods such as grid search or random search, GA mimics biological evolution to systematically explore optimal hyperparameter combinations, reducing manual effort.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
