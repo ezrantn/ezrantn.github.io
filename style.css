@@ -1,5 +1,18 @@
 body {
   font-family: "Open Sans", sans-serif;
+  background-color: #000000;
+  color: #fffbff;
+}
+
+a {
+  color: #fffbff;
+  text-decoration: green wavy underline;
+}
+
+.post-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .touch-link {
