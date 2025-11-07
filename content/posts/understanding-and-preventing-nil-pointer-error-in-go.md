@@ -1,7 +1,7 @@
 +++
 title = "Understanding and Preventing Nil Pointer Error in Go"
 date = 2024-11-07
-description = "Example post showing callouts"
+description = "talks about a pointer in Go"
 [taxonomies]
 tags = ["coding", "golang"]
 [extra]

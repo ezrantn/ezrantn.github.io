@@ -53,7 +53,7 @@ func processAge(age int) error {
 
 Now, let’s break this down:
 
-1. First, we check if the age is a valid number (age >= 0).
+1. First, we check if the age is a valid number (`age >= 0`).
 2. If the age is valid, we check if it’s greater than or equal to 18.
 3. Then, we check if the age is less than or equal to 100.
 
