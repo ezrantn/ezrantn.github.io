@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  
+  
+    
+  
+  <meta name="description" content="talks about a pointer in Go">
+
+  <title>Understanding and Preventing Nil Pointer Error in Go</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="https://ezrantn.github.io/img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://ezrantn.github.io/img/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://ezrantn.github.io/img/apple-touch-icon.png">
+  
+  <style>
+
+  /* light mode colors */
+  body {
+    --primary-color: #5871a2;
+    --primary-pale-color: #5871a233;
+    --primary-decoration-color: #5871a210;
+    --bg-color: #ffffff;
+    --text-color: #2f3030;
+    --text-pale-color: #767676;
+    --text-decoration-color: #a9a9a9;
+    --highlight-mark-color: #5f75b020;
+
+    --callout-note-color: #5871a2;
+    --callout-tip-color: #268556;
+    --callout-important-color: #885fc9;
+    --callout-warning-color: #ab6632;
+    --callout-caution-color: #c64e4e;
+  }
+
+  /* dark mode colors */
+  body.dark {
+    --primary-color: #6f8fd1;
+    --primary-pale-color: #6f8fd166;
+    --primary-decoration-color: #6f8fd112;
+    --bg-color: #1c1c1c;
+    --text-color: #c1c1c1;
+    --text-pale-color: #848484;
+    --text-decoration-color: #5f5f5f;
+    --highlight-mark-color: #8296cb3b;
+
+    --callout-note-color: #6f8fd1;
+    --callout-tip-color: #47976f;
+    --callout-important-color: #9776cd;
+    --callout-warning-color: #ad7a52;
+    --callout-caution-color: #d06161;
+  }
+
+  /* typography */
+  body {
+    --main-font: ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    --code-font: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+    --homepage-max-width: 768px;
+    --main-max-width: 768px;
+    --avatar-size: 60px;
+    --font-size: 16px;
+    --line-height: 1.75;
+    --img-border-radius: 0px;
+    --detail-border-radius: 0px;
+    --dark-mode-img-brightness: 0.75;
+    --dark-mode-chart-brightness: 0.75;
+    --inline-code-border-radius: 2px;
+    --inline-code-bg-color: var(--primary-decoration-color);
+    --block-code-border-radius: 0px;
+    --block-code-border-color: var(--primary-color);
+    --detail-border-color: var(--primary-color);
+  }
+
+</style>
+
+  <link rel="stylesheet" href="https://ezrantn.github.io/main.css">
+  
+
+<link id="hl" rel="stylesheet" type="text/css" href="/hl-light.css" />
+
+
+
+  
+</head>
+
+<body class="post">
+  
+  <script>
+    const theme = sessionStorage.getItem('theme');
+    const match = window.matchMedia("(prefers-color-scheme: dark)").matches
+    if ((theme && theme == 'dark') || (!theme && match)) {
+      document.body.classList.add('dark');
+      const hl = document.querySelector('link#hl');
+      if (hl) hl.href = 'https://ezrantn.github.io/hl-dark.css';
+    }
+  </script>
+  
+  
+<div id="wrapper">
+  <div id="blank"></div>
+  <aside>
+    
+    
+    <nav>
+      <ul>
+        
+        <li>
+          <a class="h2" href="#background">Background</a>
+          
+        </li>
+        
+        <li>
+          <a class="h2" href="#when-to-use-pointers">When To Use Pointers?</a>
+          
+        </li>
+        
+        <li>
+          <a class="h2" href="#tips-on-how-to-prevent-nil-pointer">Tips on How To Prevent Nil Pointer</a>
+          
+        </li>
+        
+      </ul>
+    </nav>
+    
+    
+    <button id="back-to-top" aria-label="back to top">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-up"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
+
+    </button>
+    
+  </aside>
+  <main>
+    
+<header>
+  <nav>
+    <a id="back-link" href="https:&#x2F;&#x2F;ezrantn.github.io&#x2F;posts">← Back</a>
+  </nav>
+</header>
+
+
+    <div>
+      
+      
+      
+      
+      <div id="copy-cfg" style="display: none;" data-copy-icon="&lt;svg xmlns=&quot;http:&#x2F;&#x2F;www.w3.org&#x2F;2000&#x2F;svg&quot; viewBox=&quot;0 0 24 24&quot; width=&quot;18&quot; height=&quot;18&quot;&gt;&lt;path d=&quot;M6.9998 6V3C6.9998 2.44772 7.44752 2 7.9998 2H19.9998C20.5521 2 20.9998 2.44772 20.9998 3V17C20.9998 17.5523 20.5521 18 19.9998 18H16.9998V20.9991C16.9998 21.5519 16.5499 22 15.993 22H4.00666C3.45059 22 3 21.5554 3 20.9991L3.0026 7.00087C3.0027 6.44811 3.45264 6 4.00942 6H6.9998ZM5.00242 8L5.00019 20H14.9998V8H5.00242ZM8.9998 6H16.9998V16H18.9998V4H8.9998V6Z&quot; fill=&quot;currentColor&quot;&gt;&lt;&#x2F;path&gt;&lt;&#x2F;svg&gt;
+" data-check-icon="&lt;svg xmlns=&quot;http:&#x2F;&#x2F;www.w3.org&#x2F;2000&#x2F;svg&quot; viewBox=&quot;0 0 24 24&quot; width=&quot;18&quot; height=&quot;18&quot;&gt;&lt;path d=&quot;M10.0007 15.1709L19.1931 5.97852L20.6073 7.39273L10.0007 17.9993L3.63672 11.6354L5.05093 10.2212L10.0007 15.1709Z&quot; fill=&quot;currentColor&quot;&gt;&lt;&#x2F;path&gt;&lt;&#x2F;svg&gt;
+"></div>
+      
+      <article class="prose">
+        <h1>Understanding and Preventing Nil Pointer Error in Go</h1>
+        <div id="post-info">
+          <div id="date">
+            <span id="publish">Nov 7, 2024</span>
+            </div>
+
+          
+          <div id="tags">
+            <a class="instant" href="https://ezrantn.github.io/tags/coding"><span>#</span>coding</a><a class="instant" href="https://ezrantn.github.io/tags/golang"><span>#</span>golang</a>
+          </div>
+          
+        </div>
+
+        
+        
+
+        
+
+        <h1 id="background">Background<a class="zola-anchor" href="#background" aria-label="Anchor link for: background" style="visibility: hidden;"></a>
+</h1>
+<p>If you’re coding in Go, there’s one error that’s bound to trip you up at some point: the nil pointer error. It can throw you off, whether you’re a beginner or have some experience. But no need to stress — let me break it down for you.</p>
+<p>Think of your computer’s memory as a big storage unit with lots of compartments, each with its own unique address. A pointer is like a sticky note with one of those addresses written on it, so you can easily find that compartment later.</p>
+<p>Now, a nil pointer is like a sticky note with nothing on it. It’s blank and doesn’t point to any address, which means it’s pointing nowhere.</p>
+<p>When you dereference a pointer, it’s like reading the note to figure out which compartment it’s pointing to, then going to get the item stored there.</p>
+<p>If you try to dereference a nil pointer (read a blank sticky note), you won’t have an address to go to. In Go, this results in a panic, which is the program saying, “I’ve got nothing! I can’t go anywhere!” The program will then stop running to prevent any further issues.</p>
+<p>So, a nil pointer dereference panic happens when you try to use a pointer that points to nowhere. Since there’s no valid address to work with, Go shuts things down to avoid more problems.</p>
+<p>Let’s see some code in action!</p>
+<p>First, I’ll show you a version of the code without using a pointer:</p>
+<pre data-lang="go" class="language-go z-code"><code class="language-go" data-lang="go"><span class="z-source z-go"><span class="z-keyword z-other z-package z-go">package</span> <span class="z-variable z-other z-go">main</span>
+</span><span class="z-source z-go">
+</span><span class="z-source z-go"><span class="z-keyword z-other z-import z-go">import</span> <span class="z-punctuation z-section z-parens z-begin z-go">(</span>
+</span><span class="z-source z-go">    <span class="z-string z-quoted z-double z-go"><span class="z-punctuation z-definition z-string z-begin z-go">&quot;</span>fmt<span class="z-punctuation z-definition z-string z-end z-go">&quot;</span></span>
+</span><span class="z-source z-go"><span class="z-punctuation z-section z-parens z-end z-go">)</span>
+</span><span class="z-source z-go">
+</span><span class="z-source z-go"><span class="z-comment z-line z-go"><span class="z-punctuation z-definition z-comment z-go">//</span> declare a Person struct with 2 values Name and Age
+</span></span><span class="z-source z-go"><span class="z-storage z-type z-keyword z-type z-go">type</span> <span class="z-entity z-name z-type z-go">Person</span> <span class="z-storage z-type z-keyword z-struct z-go">struct</span> <span class="z-meta z-type z-go"><span class="z-punctuation z-section z-braces z-begin z-go">{</span>
+</span></span><span class="z-source z-go"><span class="z-meta z-type z-go">    <span class="z-variable z-other z-member z-declaration z-go">Name</span> <span class="z-storage z-type z-go"><span class="z-support z-type z-builtin z-go">string</span></span>
+</span></span><span class="z-source z-go"><span class="z-meta z-type z-go">    <span class="z-variable z-other z-member z-declaration z-go">Age</span> <span class="z-storage z-type z-go"><span class="z-support z-type z-builtin z-go">int</span></span>
+</span></span><span class="z-source z-go"><span class="z-meta z-type z-go"><span class="z-punctuation z-section z-braces z-end z-go">}</span></span>
+</span><span class="z-source z-go">
+</span><span class="z-source z-go"><span class="z-comment z-line z-go"><span class="z-punctuation z-definition z-comment z-go">//</span> Accessing Person struct to see the value
+</span></span><span class="z-source z-go"><span class="z-storage z-type z-keyword z-function z-go">func</span> <span class="z-entity z-name z-function z-go">main</span><span class="z-punctuation z-section z-parens z-begin z-go">(</span><span class="z-punctuation z-section z-parens z-end z-go">)</span> <span class="z-meta z-block z-go"><span class="z-punctuation z-section z-braces z-begin z-go">{</span>
+</span></span><span class="z-source z-go"><span class="z-meta z-block z-go">    <span class="z-storage z-type z-keyword z-var z-go">var</span> <span class="z-variable z-declaration z-go">person</span> <span class="z-storage z-type z-go">Person</span>
+</span></span><span class="z-source z-go"><span class="z-meta z-block z-go">    <span class="z-variable z-other z-go">fmt</span><span class="z-punctuation z-accessor z-dot z-go">.</span><span class="z-variable z-function z-go">Println</span><span class="z-punctuation z-section z-parens z-begin z-go">(</span><span class="z-variable z-other z-go">person</span><span class="z-punctuation z-accessor z-dot z-go">.</span><span class="z-variable z-other z-member z-go">Name</span><span class="z-punctuation z-section z-parens z-end z-go">)</span>
+</span></span><span class="z-source z-go"><span class="z-meta z-block z-go">    <span class="z-variable z-other z-go">fmt</span><span class="z-punctuation z-accessor z-dot z-go">.</span><span class="z-variable z-function z-go">Println</span><span class="z-punctuation z-section z-parens z-begin z-go">(</span><span class="z-variable z-other z-go">person</span><span class="z-punctuation z-accessor z-dot z-go">.</span><span class="z-variable z-other z-member z-go">Age</span><span class="z-punctuation z-section z-parens z-end z-go">)</span>
+</span></span><span class="z-source z-go"><span class="z-meta z-block z-go"><span class="z-punctuation z-section z-braces z-end z-go">}</span></span>
+</span></code></pre>
+<p>When you run the code above, you won’t get an error.</p>
+<pre data-lang="bash" class="language-bash z-code"><code class="language-bash" data-lang="bash"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">$</span></span><span class="z-meta z-function-call z-arguments z-shell"> </span>
+</span><span class="z-source z-shell z-bash"> <span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">0</span></span>
+</span></code></pre>
+<p>It simply prints an empty string for <code>Name</code> and 0 for <code>Age</code>, right? But why is that?</p>
+<p>Here’s the reason: when you declare a variable of type <code>Person</code> without initializing it, Go automatically assigns the default zero values for the types in the struct. The default value for a string is an empty string (""), and the default value for an integer is 0.</p>
+<p>So, what’s happening here is that <code>person.Name</code> is an empty string, and <code>person.Age</code> is 0, which is why that’s what gets printed.</p>
+<p>To sum it up, when you declare a struct and access its values without using pointers, Go will automatically use the default values for each data type, even if you don’t explicitly initialize them.</p>
+<p>Now let’s take a look at some code with a pointer:</p>
+<pre data-lang="go" class="language-go z-code"><code class="language-go" data-lang="go"><span class="z-source z-go"><span class="z-keyword z-other z-package z-go">package</span> <span class="z-variable z-other z-go">main</span>
+</span><span class="z-source z-go">
+</span><span class="z-source z-go"><span class="z-keyword z-other z-import z-go">import</span> <span class="z-punctuation z-section z-parens z-begin z-go">(</span>
+</span><span class="z-source z-go">    <span class="z-string z-quoted z-double z-go"><span class="z-punctuation z-definition z-string z-begin z-go">&quot;</span>fmt<span class="z-punctuation z-definition z-string z-end z-go">&quot;</span></span>
+</span><span class="z-source z-go"><span class="z-punctuation z-section z-parens z-end z-go">)</span>
+</span><span class="z-source z-go">            
+</span><span class="z-source z-go"><span class="z-comment z-line z-go"><span class="z-punctuation z-definition z-comment z-go">//</span> declare a Person struct with 2 values Name and Age
+</span></span><span class="z-source z-go"><span class="z-storage z-type z-keyword z-type z-go">type</span> <span class="z-entity z-name z-type z-go">Person</span> <span class="z-storage z-type z-keyword z-struct z-go">struct</span> <span class="z-meta z-type z-go"><span class="z-punctuation z-section z-braces z-begin z-go">{</span>
+</span></span><span class="z-source z-go"><span class="z-meta z-type z-go">    <span class="z-variable z-other z-member z-declaration z-go">Name</span> <span class="z-storage z-type z-go"><span class="z-support z-type z-builtin z-go">string</span></span>
+</span></span><span class="z-source z-go"><span class="z-meta z-type z-go">    <span class="z-variable z-other z-member z-declaration z-go">Age</span> <span class="z-storage z-type z-go"><span class="z-support z-type z-builtin z-go">int</span></span>
+</span></span><span class="z-source z-go"><span class="z-meta z-type z-go"><span class="z-punctuation z-section z-braces z-end z-go">}</span></span>
+</span><span class="z-source z-go">            
+</span><span class="z-source z-go"><span class="z-comment z-line z-go"><span class="z-punctuation z-definition z-comment z-go">//</span> Accessing Person struct with a pointer to see the value
+</span></span><span class="z-source z-go"><span class="z-storage z-type z-keyword z-function z-go">func</span> <span class="z-entity z-name z-function z-go">main</span><span class="z-punctuation z-section z-parens z-begin z-go">(</span><span class="z-punctuation z-section z-parens z-end z-go">)</span> <span class="z-meta z-block z-go"><span class="z-punctuation z-section z-braces z-begin z-go">{</span>
+</span></span><span class="z-source z-go"><span class="z-meta z-block z-go">    <span class="z-storage z-type z-keyword z-var z-go">var</span> <span class="z-variable z-declaration z-go">person</span> <span class="z-keyword z-operator z-go">*</span><span class="z-storage z-type z-go">Person</span>
+</span></span><span class="z-source z-go"><span class="z-meta z-block z-go">    <span class="z-variable z-other z-go">fmt</span><span class="z-punctuation z-accessor z-dot z-go">.</span><span class="z-variable z-function z-go">Println</span><span class="z-punctuation z-section z-parens z-begin z-go">(</span><span class="z-variable z-other z-go">person</span><span class="z-punctuation z-accessor z-dot z-go">.</span><span class="z-variable z-other z-member z-go">Name</span><span class="z-punctuation z-section z-parens z-end z-go">)</span>
+</span></span><span class="z-source z-go"><span class="z-meta z-block z-go">    <span class="z-variable z-other z-go">fmt</span><span class="z-punctuation z-accessor z-dot z-go">.</span><span class="z-variable z-function z-go">Println</span><span class="z-punctuation z-section z-parens z-begin z-go">(</span><span class="z-variable z-other z-go">person</span><span class="z-punctuation z-accessor z-dot z-go">.</span><span class="z-variable z-other z-member z-go">Age</span><span class="z-punctuation z-section z-parens z-end z-go">)</span>
+</span></span><span class="z-source z-go"><span class="z-meta z-block z-go"><span class="z-punctuation z-section z-braces z-end z-go">}</span></span>
+</span></code></pre>
+<pre data-lang="bash" class="language-bash z-code"><code class="language-bash" data-lang="bash"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">$</span></span><span class="z-meta z-function-call z-arguments z-shell"> panic: runtime error: invalid memory address or nil pointer dereference</span>
+</span><span class="z-source z-shell z-bash"> <span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">[signal</span></span><span class="z-meta z-function-call z-arguments z-shell"> SIGSEGV: segmentation violation code=0x1 addr=0x0 pc=0x47afba]</span>
+</span><span class="z-source z-shell z-bash">            
+</span><span class="z-source z-shell z-bash"> <span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">goroutine</span></span><span class="z-meta z-function-call z-arguments z-shell"> 1 <span class="z-keyword z-control z-regexp z-set z-begin z-shell">[</span>running<span class="z-keyword z-control z-regexp z-set z-end z-shell">]</span>:</span>
+</span><span class="z-source z-shell z-bash"><span class="z-meta z-function z-shell"> <span class="z-entity z-name z-function z-shell">main.main</span><span class="z-punctuation z-section z-parens z-begin z-shell">(</span><span class="z-punctuation z-section z-parens z-end z-shell">)</span>
+</span></span><span class="z-source z-shell z-bash"><span class="z-meta z-function z-shell">    /home/ezrantn/Documents/Coding/Golang/pointers/main.go:14 +0x1a
+</span></span><span class="z-source z-shell z-bash"><span class="z-meta z-function z-shell">    exit status 2
+</span></span></code></pre>
+<p>Here’s what happens: since <code>person</code> is a nil pointer (it’s not pointing to any valid memory address), trying to access <code>person.Name</code> or <code>person.Age</code> will cause a nil pointer dereference. This error occurs because Go doesn’t know the values for <code>Name</code> and <code>Age</code>, as the pointer hasn’t been initialized or assigned to a valid memory address.</p>
+<p>To sum it up, using a pointer that isn’t properly initialized will lead to a <strong>“nil pointer dereference”</strong> error. This happens because the pointer is essentially pointing to nowhere, so Go can’t access any data at that memory location.</p>
+<p>Now, let’s look at the code where we initialize both values using a function:</p>
+<pre data-lang="go" class="language-go z-code"><code class="language-go" data-lang="go"><span class="z-source z-go"><span class="z-keyword z-other z-package z-go">package</span> <span class="z-variable z-other z-go">main</span>
+</span><span class="z-source z-go">
+</span><span class="z-source z-go"><span class="z-keyword z-other z-import z-go">import</span> <span class="z-punctuation z-section z-parens z-begin z-go">(</span>
+</span><span class="z-source z-go">    <span class="z-string z-quoted z-double z-go"><span class="z-punctuation z-definition z-string z-begin z-go">&quot;</span>fmt<span class="z-punctuation z-definition z-string z-end z-go">&quot;</span></span>
+</span><span class="z-source z-go"><span class="z-punctuation z-section z-parens z-end z-go">)</span>
+</span><span class="z-source z-go">            
+</span><span class="z-source z-go"><span class="z-storage z-type z-keyword z-type z-go">type</span> <span class="z-entity z-name z-type z-go">Person</span> <span class="z-storage z-type z-keyword z-struct z-go">struct</span> <span class="z-meta z-type z-go"><span class="z-punctuation z-section z-braces z-begin z-go">{</span>
+</span></span><span class="z-source z-go"><span class="z-meta z-type z-go">    <span class="z-variable z-other z-member z-declaration z-go">Name</span> <span class="z-storage z-type z-go"><span class="z-support z-type z-builtin z-go">string</span></span>
+</span></span><span class="z-source z-go"><span class="z-meta z-type z-go">    <span class="z-variable z-other z-member z-declaration z-go">Age</span> <span class="z-storage z-type z-go"><span class="z-support z-type z-builtin z-go">int</span></span>
+</span></span><span class="z-source z-go"><span class="z-meta z-type z-go"><span class="z-punctuation z-section z-braces z-end z-go">}</span></span>
+</span><span class="z-source z-go">            
+</span><span class="z-source z-go"><span class="z-comment z-line z-go"><span class="z-punctuation z-definition z-comment z-go">//</span> function to create new person returning a pointer of Person
+</span></span><span class="z-source z-go"><span class="z-storage z-type z-keyword z-function z-go">func</span> <span class="z-entity z-name z-function z-go">createNewPerson</span><span class="z-punctuation z-section z-parens z-begin z-go">(</span><span class="z-variable z-parameter z-go">name</span> <span class="z-storage z-type z-go"><span class="z-support z-type z-builtin z-go">string</span></span><span class="z-punctuation z-separator z-go">,</span> <span class="z-variable z-parameter z-go">age</span> <span class="z-storage z-type z-go"><span class="z-support z-type z-builtin z-go">int</span></span><span class="z-punctuation z-section z-parens z-end z-go">)</span> <span class="z-keyword z-operator z-go">*</span><span class="z-storage z-type z-go">Person</span> <span class="z-meta z-block z-go"><span class="z-punctuation z-section z-braces z-begin z-go">{</span>
+</span></span><span class="z-source z-go"><span class="z-meta z-block z-go">    <span class="z-keyword z-control z-go">return</span> <span class="z-keyword z-operator z-go">&amp;</span><span class="z-variable z-other z-go">Person</span><span class="z-meta z-block z-go"><span class="z-punctuation z-section z-braces z-begin z-go">{</span>
+</span></span></span><span class="z-source z-go"><span class="z-meta z-block z-go"><span class="z-meta z-block z-go">        <span class="z-variable z-other z-go">Name</span><span class="z-punctuation z-separator z-go">:</span> <span class="z-variable z-other z-go">name</span><span class="z-punctuation z-separator z-go">,</span>
+</span></span></span><span class="z-source z-go"><span class="z-meta z-block z-go"><span class="z-meta z-block z-go">        <span class="z-variable z-other z-go">Age</span><span class="z-punctuation z-separator z-go">:</span> <span class="z-variable z-other z-go">age</span><span class="z-punctuation z-separator z-go">,</span>
+</span></span></span><span class="z-source z-go"><span class="z-meta z-block z-go"><span class="z-meta z-block z-go">    <span class="z-punctuation z-section z-braces z-end z-go">}</span></span>
+</span></span><span class="z-source z-go"><span class="z-meta z-block z-go"><span class="z-punctuation z-section z-braces z-end z-go">}</span></span>
+</span><span class="z-source z-go">            
+</span><span class="z-source z-go"><span class="z-storage z-type z-keyword z-function z-go">func</span> <span class="z-entity z-name z-function z-go">main</span><span class="z-punctuation z-section z-parens z-begin z-go">(</span><span class="z-punctuation z-section z-parens z-end z-go">)</span> <span class="z-meta z-block z-go"><span class="z-punctuation z-section z-braces z-begin z-go">{</span>
+</span></span><span class="z-source z-go"><span class="z-meta z-block z-go">    <span class="z-comment z-line z-go"><span class="z-punctuation z-definition z-comment z-go">//</span> initialized both values
+</span></span></span><span class="z-source z-go"><span class="z-meta z-block z-go">    <span class="z-variable z-declaration z-go">person</span> <span class="z-keyword z-operator z-assignment z-go">:=</span> <span class="z-variable z-function z-go">createNewPerson</span><span class="z-punctuation z-section z-parens z-begin z-go">(</span><span class="z-string z-quoted z-double z-go"><span class="z-punctuation z-definition z-string z-begin z-go">&quot;</span>John<span class="z-punctuation z-definition z-string z-end z-go">&quot;</span></span><span class="z-punctuation z-separator z-go">,</span> <span class="z-constant z-numeric z-integer z-decimal z-go">20</span><span class="z-punctuation z-section z-parens z-end z-go">)</span>
+</span></span><span class="z-source z-go"><span class="z-meta z-block z-go">            
+</span></span><span class="z-source z-go"><span class="z-meta z-block z-go">    <span class="z-variable z-other z-go">fmt</span><span class="z-punctuation z-accessor z-dot z-go">.</span><span class="z-variable z-function z-go">Println</span><span class="z-punctuation z-section z-parens z-begin z-go">(</span><span class="z-variable z-other z-go">person</span><span class="z-punctuation z-accessor z-dot z-go">.</span><span class="z-variable z-other z-member z-go">Name</span><span class="z-punctuation z-section z-parens z-end z-go">)</span>
+</span></span><span class="z-source z-go"><span class="z-meta z-block z-go">    <span class="z-variable z-other z-go">fmt</span><span class="z-punctuation z-accessor z-dot z-go">.</span><span class="z-variable z-function z-go">Println</span><span class="z-punctuation z-section z-parens z-begin z-go">(</span><span class="z-variable z-other z-go">person</span><span class="z-punctuation z-accessor z-dot z-go">.</span><span class="z-variable z-other z-member z-go">Age</span><span class="z-punctuation z-section z-parens z-end z-go">)</span>
+</span></span><span class="z-source z-go"><span class="z-meta z-block z-go"><span class="z-punctuation z-section z-braces z-end z-go">}</span></span>
+</span></code></pre>
+<pre data-lang="bash" class="language-bash z-code"><code class="language-bash" data-lang="bash"><span class="z-source z-shell z-bash"><span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">$</span></span><span class="z-meta z-function-call z-arguments z-shell"> John</span>
+</span><span class="z-source z-shell z-bash">  <span class="z-meta z-function-call z-shell"><span class="z-variable z-function z-shell">20</span></span>
+</span></code></pre>
+<p>In this version, we introduced the <code>createNewPerson</code> function. This function takes a name and age, creates a <code>Person</code> struct, initializes its fields, and returns a pointer to the newly created struct.</p>
+<p>By using this function in main, we ensure that the person pointer points to a valid memory location where the <code>Person</code> data is stored. This way, when we access <code>person.Name</code> and <code>person.Age</code>, the data exist in memory.</p>
+<h1 id="when-to-use-pointers">When To Use Pointers?<a class="zola-anchor" href="#when-to-use-pointers" aria-label="Anchor link for: when-to-use-pointers" style="visibility: hidden;"></a>
+</h1>
+<p>If you’re wondering when to use pointers and when to avoid them, it’s good to know that in Go, pointers are used in different situations to help manage memory more efficiently and support certain programming patterns. Here are some scenarios where pointers are especially useful:</p>
+<ol>
+<li>Modifying Function Arguments</li>
+</ol>
+<p>Pointers are commonly used when you want a function to modify the values of its arguments. By passing a pointer to the function, it can directly change the original variable, rather than just a copy of it.</p>
+<pre data-lang="go" class="language-go z-code"><code class="language-go" data-lang="go"><span class="z-source z-go"><span class="z-keyword z-other z-package z-go">package</span> <span class="z-variable z-other z-go">main</span>
+</span><span class="z-source z-go">
+</span><span class="z-source z-go"><span class="z-keyword z-other z-import z-go">import</span> <span class="z-string z-quoted z-double z-go"><span class="z-punctuation z-definition z-string z-begin z-go">&quot;</span>fmt<span class="z-punctuation z-definition z-string z-end z-go">&quot;</span></span>
+</span><span class="z-source z-go">
+</span><span class="z-source z-go"><span class="z-storage z-type z-keyword z-function z-go">func</span> <span class="z-entity z-name z-function z-go">modifyValue</span><span class="z-punctuation z-section z-parens z-begin z-go">(</span><span class="z-variable z-parameter z-go">val</span> <span class="z-keyword z-operator z-go">*</span><span class="z-storage z-type z-go"><span class="z-support z-type z-builtin z-go">int</span></span><span class="z-punctuation z-section z-parens z-end z-go">)</span> <span class="z-meta z-block z-go"><span class="z-punctuation z-section z-braces z-begin z-go">{</span>
+</span></span><span class="z-source z-go"><span class="z-meta z-block z-go">   <span class="z-keyword z-operator z-go">*</span><span class="z-variable z-other z-go">val</span> <span class="z-keyword z-operator z-assignment z-go">=</span> <span class="z-constant z-numeric z-integer z-decimal z-go">100</span>
+</span></span><span class="z-source z-go"><span class="z-meta z-block z-go"><span class="z-punctuation z-section z-braces z-end z-go">}</span></span>
+</span><span class="z-source z-go">                     
+</span><span class="z-source z-go"><span class="z-storage z-type z-keyword z-function z-go">func</span> <span class="z-entity z-name z-function z-go">main</span><span class="z-punctuation z-section z-parens z-begin z-go">(</span><span class="z-punctuation z-section z-parens z-end z-go">)</span> <span class="z-meta z-block z-go"><span class="z-punctuation z-section z-braces z-begin z-go">{</span>
+</span></span><span class="z-source z-go"><span class="z-meta z-block z-go">   <span class="z-variable z-declaration z-go">num</span> <span class="z-keyword z-operator z-assignment z-go">:=</span> <span class="z-constant z-numeric z-integer z-decimal z-go">10</span>
+</span></span><span class="z-source z-go"><span class="z-meta z-block z-go">   <span class="z-variable z-function z-go">modifyValue</span><span class="z-punctuation z-section z-parens z-begin z-go">(</span><span class="z-keyword z-operator z-go">&amp;</span><span class="z-variable z-other z-go">num</span><span class="z-punctuation z-section z-parens z-end z-go">)</span>
+</span></span><span class="z-source z-go"><span class="z-meta z-block z-go">   <span class="z-variable z-other z-go">fmt</span><span class="z-punctuation z-accessor z-dot z-go">.</span><span class="z-variable z-function z-go">Println</span><span class="z-punctuation z-section z-parens z-begin z-go">(</span><span class="z-variable z-other z-go">num</span><span class="z-punctuation z-section z-parens z-end z-go">)</span> <span class="z-comment z-line z-go"><span class="z-punctuation z-definition z-comment z-go">//</span> Output: 100
+</span></span></span><span class="z-source z-go"><span class="z-meta z-block z-go"><span class="z-punctuation z-section z-braces z-end z-go">}</span></span>
+</span></code></pre>
+<ol start="2">
+<li>Avoiding Copies of Large Structures</li>
+</ol>
+<p>When working with large structs, passing them by value can be inefficient because it involves copying the entire structure. This can be especially problematic for performance when the structs are large. Instead, using pointers helps avoid this overhead by passing references to the structs, rather than copying all the data.</p>
+<pre data-lang="go" class="language-go z-code"><code class="language-go" data-lang="go"><span class="z-source z-go"><span class="z-keyword z-other z-package z-go">package</span> <span class="z-variable z-other z-go">main</span>
+</span><span class="z-source z-go">
+</span><span class="z-source z-go"><span class="z-keyword z-other z-import z-go">import</span> <span class="z-string z-quoted z-double z-go"><span class="z-punctuation z-definition z-string z-begin z-go">&quot;</span>fmt<span class="z-punctuation z-definition z-string z-end z-go">&quot;</span></span>
+</span><span class="z-source z-go">
+</span><span class="z-source z-go"><span class="z-storage z-type z-keyword z-type z-go">type</span> <span class="z-entity z-name z-type z-go">LargeStruct</span> <span class="z-storage z-type z-keyword z-struct z-go">struct</span> <span class="z-meta z-type z-go"><span class="z-punctuation z-section z-braces z-begin z-go">{</span>
+</span></span><span class="z-source z-go"><span class="z-meta z-type z-go">   <span class="z-variable z-other z-member z-declaration z-go">Data</span> <span class="z-punctuation z-section z-brackets z-begin z-go">[</span><span class="z-constant z-numeric z-integer z-decimal z-go">1000</span><span class="z-punctuation z-section z-brackets z-end z-go">]</span><span class="z-storage z-type z-go"><span class="z-support z-type z-builtin z-go">int</span></span>
+</span></span><span class="z-source z-go"><span class="z-meta z-type z-go"><span class="z-punctuation z-section z-braces z-end z-go">}</span></span>
+</span><span class="z-source z-go">                     
+</span><span class="z-source z-go"><span class="z-storage z-type z-keyword z-function z-go">func</span> <span class="z-entity z-name z-function z-go">processStruct</span><span class="z-punctuation z-section z-parens z-begin z-go">(</span><span class="z-variable z-parameter z-go">ls</span> <span class="z-keyword z-operator z-go">*</span><span class="z-storage z-type z-go">LargeStruct</span><span class="z-punctuation z-section z-parens z-end z-go">)</span> <span class="z-meta z-block z-go"><span class="z-punctuation z-section z-braces z-begin z-go">{</span>
+</span></span><span class="z-source z-go"><span class="z-meta z-block z-go">   <span class="z-comment z-line z-go"><span class="z-punctuation z-definition z-comment z-go">//</span> Process the struct
+</span></span></span><span class="z-source z-go"><span class="z-meta z-block z-go">   <span class="z-variable z-other z-go">ls</span><span class="z-punctuation z-accessor z-dot z-go">.</span><span class="z-variable z-other z-member z-go">Data</span><span class="z-punctuation z-section z-brackets z-begin z-go">[</span><span class="z-constant z-numeric z-integer z-decimal z-go">0</span><span class="z-punctuation z-section z-brackets z-end z-go">]</span> <span class="z-keyword z-operator z-assignment z-go">=</span> <span class="z-constant z-numeric z-integer z-decimal z-go">1</span> <span class="z-comment z-line z-go"><span class="z-punctuation z-definition z-comment z-go">//</span> Example modification
+</span></span></span><span class="z-source z-go"><span class="z-meta z-block z-go"><span class="z-punctuation z-section z-braces z-end z-go">}</span></span>
+</span><span class="z-source z-go">                     
+</span><span class="z-source z-go"><span class="z-storage z-type z-keyword z-function z-go">func</span> <span class="z-entity z-name z-function z-go">main</span><span class="z-punctuation z-section z-parens z-begin z-go">(</span><span class="z-punctuation z-section z-parens z-end z-go">)</span> <span class="z-meta z-block z-go"><span class="z-punctuation z-section z-braces z-begin z-go">{</span>
+</span></span><span class="z-source z-go"><span class="z-meta z-block z-go">   <span class="z-variable z-declaration z-go">ls</span> <span class="z-keyword z-operator z-assignment z-go">:=</span> <span class="z-variable z-other z-go">LargeStruct</span><span class="z-meta z-block z-go"><span class="z-punctuation z-section z-braces z-begin z-go">{</span><span class="z-punctuation z-section z-braces z-end z-go">}</span></span>
+</span></span><span class="z-source z-go"><span class="z-meta z-block z-go">   <span class="z-variable z-function z-go">processStruct</span><span class="z-punctuation z-section z-parens z-begin z-go">(</span><span class="z-keyword z-operator z-go">&amp;</span><span class="z-variable z-other z-go">ls</span><span class="z-punctuation z-section z-parens z-end z-go">)</span>
+</span></span><span class="z-source z-go"><span class="z-meta z-block z-go">   <span class="z-variable z-other z-go">fmt</span><span class="z-punctuation z-accessor z-dot z-go">.</span><span class="z-variable z-function z-go">Println</span><span class="z-punctuation z-section z-parens z-begin z-go">(</span><span class="z-variable z-other z-go">ls</span><span class="z-punctuation z-accessor z-dot z-go">.</span><span class="z-variable z-other z-member z-go">Data</span><span class="z-punctuation z-section z-brackets z-begin z-go">[</span><span class="z-constant z-numeric z-integer z-decimal z-go">0</span><span class="z-punctuation z-section z-brackets z-end z-go">]</span><span class="z-punctuation z-section z-parens z-end z-go">)</span> <span class="z-comment z-line z-go"><span class="z-punctuation z-definition z-comment z-go">//</span> Output: 1
+</span></span></span><span class="z-source z-go"><span class="z-meta z-block z-go"><span class="z-punctuation z-section z-braces z-end z-go">}</span></span>
+</span></code></pre>
+<ol start="3">
+<li>Implementing Methods that Modify the Receiver</li>
+</ol>
+<p>Pointers are also used to define methods that modify the receiver’s state. If a method needs to change the values of the receiver (i.e., the struct it’s attached to), it must have a pointer receiver.</p>
+<pre data-lang="go" class="language-go z-code"><code class="language-go" data-lang="go"><span class="z-source z-go"><span class="z-keyword z-other z-package z-go">package</span> <span class="z-variable z-other z-go">main</span>
+</span><span class="z-source z-go">
+</span><span class="z-source z-go"><span class="z-keyword z-other z-import z-go">import</span> <span class="z-string z-quoted z-double z-go"><span class="z-punctuation z-definition z-string z-begin z-go">&quot;</span>fmt<span class="z-punctuation z-definition z-string z-end z-go">&quot;</span></span>
+</span><span class="z-source z-go">
+</span><span class="z-source z-go"><span class="z-storage z-type z-keyword z-type z-go">type</span> <span class="z-entity z-name z-type z-go">Counter</span> <span class="z-storage z-type z-keyword z-struct z-go">struct</span> <span class="z-meta z-type z-go"><span class="z-punctuation z-section z-braces z-begin z-go">{</span>
+</span></span><span class="z-source z-go"><span class="z-meta z-type z-go">   <span class="z-variable z-other z-member z-declaration z-go">value</span> <span class="z-storage z-type z-go"><span class="z-support z-type z-builtin z-go">int</span></span>
+</span></span><span class="z-source z-go"><span class="z-meta z-type z-go"><span class="z-punctuation z-section z-braces z-end z-go">}</span></span>
+</span><span class="z-source z-go">                     
+</span><span class="z-source z-go"><span class="z-storage z-type z-keyword z-function z-go">func</span> <span class="z-meta z-function z-declaration z-go"><span class="z-punctuation z-section z-parens z-begin z-go">(</span><span class="z-variable z-parameter z-go">c</span> <span class="z-keyword z-operator z-go">*</span><span class="z-storage z-type z-go">Counter</span><span class="z-punctuation z-section z-parens z-end z-go">)</span></span><span class="z-meta z-function z-declaration z-go"> <span class="z-entity z-name z-function z-go">Increment</span></span><span class="z-punctuation z-section z-parens z-begin z-go">(</span><span class="z-punctuation z-section z-parens z-end z-go">)</span> <span class="z-meta z-block z-go"><span class="z-punctuation z-section z-braces z-begin z-go">{</span>
+</span></span><span class="z-source z-go"><span class="z-meta z-block z-go">   <span class="z-variable z-other z-go">c</span><span class="z-punctuation z-accessor z-dot z-go">.</span><span class="z-variable z-other z-member z-go">value</span><span class="z-keyword z-operator z-go">++</span>
+</span></span><span class="z-source z-go"><span class="z-meta z-block z-go"><span class="z-punctuation z-section z-braces z-end z-go">}</span></span>
+</span><span class="z-source z-go">                     
+</span><span class="z-source z-go"><span class="z-storage z-type z-keyword z-function z-go">func</span> <span class="z-entity z-name z-function z-go">main</span><span class="z-punctuation z-section z-parens z-begin z-go">(</span><span class="z-punctuation z-section z-parens z-end z-go">)</span> <span class="z-meta z-block z-go"><span class="z-punctuation z-section z-braces z-begin z-go">{</span>
+</span></span><span class="z-source z-go"><span class="z-meta z-block z-go">   <span class="z-variable z-declaration z-go">c</span> <span class="z-keyword z-operator z-assignment z-go">:=</span> <span class="z-keyword z-operator z-go">&amp;</span><span class="z-variable z-other z-go">Counter</span><span class="z-meta z-block z-go"><span class="z-punctuation z-section z-braces z-begin z-go">{</span><span class="z-punctuation z-section z-braces z-end z-go">}</span></span>
+</span></span><span class="z-source z-go"><span class="z-meta z-block z-go">   <span class="z-variable z-other z-go">c</span><span class="z-punctuation z-accessor z-dot z-go">.</span><span class="z-variable z-function z-go">Increment</span><span class="z-punctuation z-section z-parens z-begin z-go">(</span><span class="z-punctuation z-section z-parens z-end z-go">)</span>
+</span></span><span class="z-source z-go"><span class="z-meta z-block z-go">   <span class="z-variable z-other z-go">fmt</span><span class="z-punctuation z-accessor z-dot z-go">.</span><span class="z-variable z-function z-go">Println</span><span class="z-punctuation z-section z-parens z-begin z-go">(</span><span class="z-variable z-other z-go">c</span><span class="z-punctuation z-accessor z-dot z-go">.</span><span class="z-variable z-other z-member z-go">value</span><span class="z-punctuation z-section z-parens z-end z-go">)</span> <span class="z-comment z-line z-go"><span class="z-punctuation z-definition z-comment z-go">//</span> Output: 1
+</span></span></span><span class="z-source z-go"><span class="z-meta z-block z-go"><span class="z-punctuation z-section z-braces z-end z-go">}</span></span>
+</span></code></pre>
+<p>In addition to these, there are many other situations where pointers are helpful in Go. They provide powerful capabilities and help with performance optimization, especially in more complex programs. I recommend reading more about pointers and experimenting with them to fully grasp their potential.</p>
+<p>So, the key question is: <em>How can I prevent my code from causing a nil pointer dereference?</em> Let’s go through some tips and best practices to help you avoid these issues.</p>
+<h1 id="tips-on-how-to-prevent-nil-pointer">Tips on How To Prevent Nil Pointer<a class="zola-anchor" href="#tips-on-how-to-prevent-nil-pointer" aria-label="Anchor link for: tips-on-how-to-prevent-nil-pointer" style="visibility: hidden;"></a>
+</h1>
+<p>Preventing nil pointer dereference in Go is crucial to avoid runtime panics and ensure your code is reliable. Here are some best practices, along with code examples, to handle and prevent nil pointer dereferences effectively:</p>
+<ol>
+<li>Check for <code>nil</code> Before Dereferencing</li>
+</ol>
+<p>Before accessing a pointer’s value, it’s essential to check if the pointer is nil. This simple step ensures that you don’t attempt to dereference a nil pointer, which would cause a runtime panic and crash your program.</p>
+<pre data-lang="go" class="language-go z-code"><code class="language-go" data-lang="go"><span class="z-source z-go"><span class="z-keyword z-other z-package z-go">package</span> <span class="z-variable z-other z-go">main</span>
+</span><span class="z-source z-go">
+</span><span class="z-source z-go"><span class="z-keyword z-other z-import z-go">import</span> <span class="z-string z-quoted z-double z-go"><span class="z-punctuation z-definition z-string z-begin z-go">&quot;</span>fmt<span class="z-punctuation z-definition z-string z-end z-go">&quot;</span></span>
+</span><span class="z-source z-go">
+</span><span class="z-source z-go"><span class="z-storage z-type z-keyword z-type z-go">type</span> <span class="z-entity z-name z-type z-go">Node</span> <span class="z-storage z-type z-keyword z-struct z-go">struct</span> <span class="z-meta z-type z-go"><span class="z-punctuation z-section z-braces z-begin z-go">{</span>
+</span></span><span class="z-source z-go"><span class="z-meta z-type z-go">   <span class="z-variable z-other z-member z-declaration z-go">Value</span> <span class="z-storage z-type z-go"><span class="z-support z-type z-builtin z-go">int</span></span>
+</span></span><span class="z-source z-go"><span class="z-meta z-type z-go">   <span class="z-variable z-other z-member z-declaration z-go">Next</span>  <span class="z-keyword z-operator z-go">*</span><span class="z-storage z-type z-go">Node</span>
+</span></span><span class="z-source z-go"><span class="z-meta z-type z-go"><span class="z-punctuation z-section z-braces z-end z-go">}</span></span>
+</span><span class="z-source z-go">                         
+</span><span class="z-source z-go"><span class="z-storage z-type z-keyword z-function z-go">func</span> <span class="z-entity z-name z-function z-go">printNodeValue</span><span class="z-punctuation z-section z-parens z-begin z-go">(</span><span class="z-variable z-parameter z-go">node</span> <span class="z-keyword z-operator z-go">*</span><span class="z-storage z-type z-go">Node</span><span class="z-punctuation z-section z-parens z-end z-go">)</span> <span class="z-meta z-block z-go"><span class="z-punctuation z-section z-braces z-begin z-go">{</span>
+</span></span><span class="z-source z-go"><span class="z-meta z-block z-go">   <span class="z-keyword z-control z-go">if</span> <span class="z-variable z-other z-go">node</span> <span class="z-keyword z-operator z-go">==</span> <span class="z-constant z-language z-go">nil</span> <span class="z-meta z-block z-go"><span class="z-punctuation z-section z-braces z-begin z-go">{</span>
+</span></span></span><span class="z-source z-go"><span class="z-meta z-block z-go"><span class="z-meta z-block z-go">       <span class="z-variable z-other z-go">fmt</span><span class="z-punctuation z-accessor z-dot z-go">.</span><span class="z-variable z-function z-go">Println</span><span class="z-punctuation z-section z-parens z-begin z-go">(</span><span class="z-string z-quoted z-double z-go"><span class="z-punctuation z-definition z-string z-begin z-go">&quot;</span>Node is nil<span class="z-punctuation z-definition z-string z-end z-go">&quot;</span></span><span class="z-punctuation z-section z-parens z-end z-go">)</span>
+</span></span></span><span class="z-source z-go"><span class="z-meta z-block z-go"><span class="z-meta z-block z-go">       <span class="z-keyword z-control z-go">return</span>
+</span></span></span><span class="z-source z-go"><span class="z-meta z-block z-go"><span class="z-meta z-block z-go">   <span class="z-punctuation z-section z-braces z-end z-go">}</span></span>
+</span></span><span class="z-source z-go"><span class="z-meta z-block z-go">   <span class="z-variable z-other z-go">fmt</span><span class="z-punctuation z-accessor z-dot z-go">.</span><span class="z-variable z-function z-go">Println</span><span class="z-punctuation z-section z-parens z-begin z-go">(</span><span class="z-string z-quoted z-double z-go"><span class="z-punctuation z-definition z-string z-begin z-go">&quot;</span>Node Value:<span class="z-punctuation z-definition z-string z-end z-go">&quot;</span></span><span class="z-punctuation z-separator z-go">,</span> <span class="z-variable z-other z-go">node</span><span class="z-punctuation z-accessor z-dot z-go">.</span><span class="z-variable z-other z-member z-go">Value</span><span class="z-punctuation z-section z-parens z-end z-go">)</span>
+</span></span><span class="z-source z-go"><span class="z-meta z-block z-go"><span class="z-punctuation z-section z-braces z-end z-go">}</span></span>
+</span><span class="z-source z-go">                         
+</span><span class="z-source z-go"><span class="z-storage z-type z-keyword z-function z-go">func</span> <span class="z-entity z-name z-function z-go">main</span><span class="z-punctuation z-section z-parens z-begin z-go">(</span><span class="z-punctuation z-section z-parens z-end z-go">)</span> <span class="z-meta z-block z-go"><span class="z-punctuation z-section z-braces z-begin z-go">{</span>
+</span></span><span class="z-source z-go"><span class="z-meta z-block z-go">   <span class="z-storage z-type z-keyword z-var z-go">var</span> <span class="z-variable z-declaration z-go">node</span> <span class="z-keyword z-operator z-go">*</span><span class="z-storage z-type z-go">Node</span>
+</span></span><span class="z-source z-go"><span class="z-meta z-block z-go">   <span class="z-variable z-function z-go">printNodeValue</span><span class="z-punctuation z-section z-parens z-begin z-go">(</span><span class="z-variable z-other z-go">node</span><span class="z-punctuation z-section z-parens z-end z-go">)</span> <span class="z-comment z-line z-go"><span class="z-punctuation z-definition z-comment z-go">//</span> Output: Node is nil
+</span></span></span><span class="z-source z-go"><span class="z-meta z-block z-go">                         
+</span></span><span class="z-source z-go"><span class="z-meta z-block z-go">   <span class="z-variable z-other z-go">node</span> <span class="z-keyword z-operator z-assignment z-go">=</span> <span class="z-keyword z-operator z-go">&amp;</span><span class="z-variable z-other z-go">Node</span><span class="z-meta z-block z-go"><span class="z-punctuation z-section z-braces z-begin z-go">{</span><span class="z-variable z-other z-go">Value</span><span class="z-punctuation z-separator z-go">:</span> <span class="z-constant z-numeric z-integer z-decimal z-go">42</span><span class="z-punctuation z-section z-braces z-end z-go">}</span></span>
+</span></span><span class="z-source z-go"><span class="z-meta z-block z-go">   <span class="z-variable z-function z-go">printNodeValue</span><span class="z-punctuation z-section z-parens z-begin z-go">(</span><span class="z-variable z-other z-go">node</span><span class="z-punctuation z-section z-parens z-end z-go">)</span> <span class="z-comment z-line z-go"><span class="z-punctuation z-definition z-comment z-go">//</span> Output: Node Value: 42
+</span></span></span><span class="z-source z-go"><span class="z-meta z-block z-go"><span class="z-punctuation z-section z-braces z-end z-go">}</span></span>
+</span></code></pre>
+<ol start="2">
+<li>Use Default Values and Initialization</li>
+</ol>
+<p>To avoid issues with nil pointer dereferencing, it’s crucial to ensure that your pointers are properly initialized before use. This can be done by providing default values or initializing pointers as part of struct initialization. Proper initialization guarantees that your pointers always point to valid memory, preventing runtime panics.</p>
+<pre data-lang="go" class="language-go z-code"><code class="language-go" data-lang="go"><span class="z-source z-go"><span class="z-keyword z-other z-package z-go">package</span> <span class="z-variable z-other z-go">main</span>
+</span><span class="z-source z-go">
+</span><span class="z-source z-go"><span class="z-keyword z-other z-import z-go">import</span> <span class="z-string z-quoted z-double z-go"><span class="z-punctuation z-definition z-string z-begin z-go">&quot;</span>fmt<span class="z-punctuation z-definition z-string z-end z-go">&quot;</span></span>
+</span><span class="z-source z-go">                         
+</span><span class="z-source z-go"><span class="z-storage z-type z-keyword z-type z-go">type</span> <span class="z-entity z-name z-type z-go">Config</span> <span class="z-storage z-type z-keyword z-struct z-go">struct</span> <span class="z-meta z-type z-go"><span class="z-punctuation z-section z-braces z-begin z-go">{</span>
+</span></span><span class="z-source z-go"><span class="z-meta z-type z-go">   <span class="z-variable z-other z-member z-declaration z-go">Name</span>    <span class="z-storage z-type z-go"><span class="z-support z-type z-builtin z-go">string</span></span>
+</span></span><span class="z-source z-go"><span class="z-meta z-type z-go">   <span class="z-variable z-other z-member z-declaration z-go">Timeout</span> <span class="z-keyword z-operator z-go">*</span><span class="z-storage z-type z-go"><span class="z-support z-type z-builtin z-go">int</span></span>
+</span></span><span class="z-source z-go"><span class="z-meta z-type z-go"><span class="z-punctuation z-section z-braces z-end z-go">}</span></span>
+</span><span class="z-source z-go">                                                 
+</span><span class="z-source z-go"><span class="z-storage z-type z-keyword z-function z-go">func</span> <span class="z-entity z-name z-function z-go">main</span><span class="z-punctuation z-section z-parens z-begin z-go">(</span><span class="z-punctuation z-section z-parens z-end z-go">)</span> <span class="z-meta z-block z-go"><span class="z-punctuation z-section z-braces z-begin z-go">{</span>
+</span></span><span class="z-source z-go"><span class="z-meta z-block z-go">   <span class="z-variable z-declaration z-go">defaultTimeout</span> <span class="z-keyword z-operator z-assignment z-go">:=</span> <span class="z-constant z-numeric z-integer z-decimal z-go">30</span>
+</span></span><span class="z-source z-go"><span class="z-meta z-block z-go">   <span class="z-variable z-declaration z-go">cfg</span> <span class="z-keyword z-operator z-assignment z-go">:=</span> <span class="z-variable z-other z-go">Config</span><span class="z-meta z-block z-go"><span class="z-punctuation z-section z-braces z-begin z-go">{</span><span class="z-variable z-other z-go">Name</span><span class="z-punctuation z-separator z-go">:</span> <span class="z-string z-quoted z-double z-go"><span class="z-punctuation z-definition z-string z-begin z-go">&quot;</span>AppConfig<span class="z-punctuation z-definition z-string z-end z-go">&quot;</span></span><span class="z-punctuation z-separator z-go">,</span> <span class="z-variable z-other z-go">Timeout</span><span class="z-punctuation z-separator z-go">:</span> <span class="z-keyword z-operator z-go">&amp;</span><span class="z-variable z-other z-go">defaultTimeout</span><span class="z-punctuation z-section z-braces z-end z-go">}</span></span>
+</span></span><span class="z-source z-go"><span class="z-meta z-block z-go">                                                 
+</span></span><span class="z-source z-go"><span class="z-meta z-block z-go">   <span class="z-keyword z-control z-go">if</span> <span class="z-variable z-other z-go">cfg</span><span class="z-punctuation z-accessor z-dot z-go">.</span><span class="z-variable z-other z-member z-go">Timeout</span> <span class="z-keyword z-operator z-go">!=</span> <span class="z-constant z-language z-go">nil</span> <span class="z-meta z-block z-go"><span class="z-punctuation z-section z-braces z-begin z-go">{</span>
+</span></span></span><span class="z-source z-go"><span class="z-meta z-block z-go"><span class="z-meta z-block z-go">       <span class="z-variable z-other z-go">fmt</span><span class="z-punctuation z-accessor z-dot z-go">.</span><span class="z-variable z-function z-go">Println</span><span class="z-punctuation z-section z-parens z-begin z-go">(</span><span class="z-string z-quoted z-double z-go"><span class="z-punctuation z-definition z-string z-begin z-go">&quot;</span>Timeout:<span class="z-punctuation z-definition z-string z-end z-go">&quot;</span></span><span class="z-punctuation z-separator z-go">,</span> <span class="z-keyword z-operator z-go">*</span><span class="z-variable z-other z-go">cfg</span><span class="z-punctuation z-accessor z-dot z-go">.</span><span class="z-variable z-other z-member z-go">Timeout</span><span class="z-punctuation z-section z-parens z-end z-go">)</span> <span class="z-comment z-line z-go"><span class="z-punctuation z-definition z-comment z-go">//</span> Output: Timeout: 30
+</span></span></span></span><span class="z-source z-go"><span class="z-meta z-block z-go"><span class="z-meta z-block z-go">   <span class="z-punctuation z-section z-braces z-end z-go">}</span></span> <span class="z-keyword z-control z-go">else</span> <span class="z-meta z-block z-go"><span class="z-punctuation z-section z-braces z-begin z-go">{</span>
+</span></span></span><span class="z-source z-go"><span class="z-meta z-block z-go"><span class="z-meta z-block z-go">       <span class="z-variable z-other z-go">fmt</span><span class="z-punctuation z-accessor z-dot z-go">.</span><span class="z-variable z-function z-go">Println</span><span class="z-punctuation z-section z-parens z-begin z-go">(</span><span class="z-string z-quoted z-double z-go"><span class="z-punctuation z-definition z-string z-begin z-go">&quot;</span>Timeout is not set<span class="z-punctuation z-definition z-string z-end z-go">&quot;</span></span><span class="z-punctuation z-section z-parens z-end z-go">)</span>
+</span></span></span><span class="z-source z-go"><span class="z-meta z-block z-go"><span class="z-meta z-block z-go">   <span class="z-punctuation z-section z-braces z-end z-go">}</span></span>
+</span></span><span class="z-source z-go"><span class="z-meta z-block z-go">                                                 
+</span></span><span class="z-source z-go"><span class="z-meta z-block z-go">   <span class="z-comment z-line z-go"><span class="z-punctuation z-definition z-comment z-go">//</span> Without initialization
+</span></span></span><span class="z-source z-go"><span class="z-meta z-block z-go">   <span class="z-storage z-type z-keyword z-var z-go">var</span> <span class="z-variable z-declaration z-go">uninitConfig</span> <span class="z-storage z-type z-go">Config</span>
+</span></span><span class="z-source z-go"><span class="z-meta z-block z-go">   <span class="z-keyword z-control z-go">if</span> <span class="z-variable z-other z-go">uninitConfig</span><span class="z-punctuation z-accessor z-dot z-go">.</span><span class="z-variable z-other z-member z-go">Timeout</span> <span class="z-keyword z-operator z-go">!=</span> <span class="z-constant z-language z-go">nil</span> <span class="z-meta z-block z-go"><span class="z-punctuation z-section z-braces z-begin z-go">{</span>
+</span></span></span><span class="z-source z-go"><span class="z-meta z-block z-go"><span class="z-meta z-block z-go">       <span class="z-variable z-other z-go">fmt</span><span class="z-punctuation z-accessor z-dot z-go">.</span><span class="z-variable z-function z-go">Println</span><span class="z-punctuation z-section z-parens z-begin z-go">(</span><span class="z-string z-quoted z-double z-go"><span class="z-punctuation z-definition z-string z-begin z-go">&quot;</span>Timeout:<span class="z-punctuation z-definition z-string z-end z-go">&quot;</span></span><span class="z-punctuation z-separator z-go">,</span> <span class="z-keyword z-operator z-go">*</span><span class="z-variable z-other z-go">uninitConfig</span><span class="z-punctuation z-accessor z-dot z-go">.</span><span class="z-variable z-other z-member z-go">Timeout</span><span class="z-punctuation z-section z-parens z-end z-go">)</span>
+</span></span></span><span class="z-source z-go"><span class="z-meta z-block z-go"><span class="z-meta z-block z-go">   <span class="z-punctuation z-section z-braces z-end z-go">}</span></span> <span class="z-keyword z-control z-go">else</span> <span class="z-meta z-block z-go"><span class="z-punctuation z-section z-braces z-begin z-go">{</span>
+</span></span></span><span class="z-source z-go"><span class="z-meta z-block z-go"><span class="z-meta z-block z-go">       <span class="z-variable z-other z-go">fmt</span><span class="z-punctuation z-accessor z-dot z-go">.</span><span class="z-variable z-function z-go">Println</span><span class="z-punctuation z-section z-parens z-begin z-go">(</span><span class="z-string z-quoted z-double z-go"><span class="z-punctuation z-definition z-string z-begin z-go">&quot;</span>Timeout is not set<span class="z-punctuation z-definition z-string z-end z-go">&quot;</span></span><span class="z-punctuation z-section z-parens z-end z-go">)</span> <span class="z-comment z-line z-go"><span class="z-punctuation z-definition z-comment z-go">//</span> Output: Timeout is not set
+</span></span></span></span><span class="z-source z-go"><span class="z-meta z-block z-go"><span class="z-meta z-block z-go">   <span class="z-punctuation z-section z-braces z-end z-go">}</span></span>
+</span></span><span class="z-source z-go"><span class="z-meta z-block z-go"><span class="z-punctuation z-section z-braces z-end z-go">}</span></span>
+</span></code></pre>
+<ol start="3">
+<li>Use Constructor Function</li>
+</ol>
+<p>Creating constructor functions is an excellent practice to initialize structs and their pointer fields. By using constructor functions, you ensure that all fields in your structs are properly set up and initialized, reducing the risk of nil pointer dereference. This method is particularly useful when you need to ensure that all fields have valid values before the object is used.</p>
+<pre data-lang="go" class="language-go z-code"><code class="language-go" data-lang="go"><span class="z-source z-go"><span class="z-keyword z-other z-package z-go">package</span> <span class="z-variable z-other z-go">main</span>
+</span><span class="z-source z-go">
+</span><span class="z-source z-go"><span class="z-keyword z-other z-import z-go">import</span> <span class="z-string z-quoted z-double z-go"><span class="z-punctuation z-definition z-string z-begin z-go">&quot;</span>fmt<span class="z-punctuation z-definition z-string z-end z-go">&quot;</span></span>
+</span><span class="z-source z-go">
+</span><span class="z-source z-go"><span class="z-storage z-type z-keyword z-type z-go">type</span> <span class="z-entity z-name z-type z-go">User</span> <span class="z-storage z-type z-keyword z-struct z-go">struct</span> <span class="z-meta z-type z-go"><span class="z-punctuation z-section z-braces z-begin z-go">{</span>
+</span></span><span class="z-source z-go"><span class="z-meta z-type z-go">   <span class="z-variable z-other z-member z-declaration z-go">Name</span>  <span class="z-storage z-type z-go"><span class="z-support z-type z-builtin z-go">string</span></span>
+</span></span><span class="z-source z-go"><span class="z-meta z-type z-go">   <span class="z-variable z-other z-member z-declaration z-go">Email</span> <span class="z-keyword z-operator z-go">*</span><span class="z-storage z-type z-go"><span class="z-support z-type z-builtin z-go">string</span></span>
+</span></span><span class="z-source z-go"><span class="z-meta z-type z-go"><span class="z-punctuation z-section z-braces z-end z-go">}</span></span>
+</span><span class="z-source z-go">                         
+</span><span class="z-source z-go"><span class="z-storage z-type z-keyword z-function z-go">func</span> <span class="z-entity z-name z-function z-go">NewUser</span><span class="z-punctuation z-section z-parens z-begin z-go">(</span><span class="z-variable z-parameter z-go">name</span><span class="z-punctuation z-separator z-go">,</span> <span class="z-variable z-parameter z-go">email</span> <span class="z-storage z-type z-go"><span class="z-support z-type z-builtin z-go">string</span></span><span class="z-punctuation z-section z-parens z-end z-go">)</span> <span class="z-keyword z-operator z-go">*</span><span class="z-storage z-type z-go">User</span> <span class="z-meta z-block z-go"><span class="z-punctuation z-section z-braces z-begin z-go">{</span>
+</span></span><span class="z-source z-go"><span class="z-meta z-block z-go">   <span class="z-keyword z-control z-go">return</span> <span class="z-keyword z-operator z-go">&amp;</span><span class="z-variable z-other z-go">User</span><span class="z-meta z-block z-go"><span class="z-punctuation z-section z-braces z-begin z-go">{</span><span class="z-variable z-other z-go">Name</span><span class="z-punctuation z-separator z-go">:</span> <span class="z-variable z-other z-go">name</span><span class="z-punctuation z-separator z-go">,</span> <span class="z-variable z-other z-go">Email</span><span class="z-punctuation z-separator z-go">:</span> <span class="z-keyword z-operator z-go">&amp;</span><span class="z-variable z-other z-go">email</span><span class="z-punctuation z-section z-braces z-end z-go">}</span></span>
+</span></span><span class="z-source z-go"><span class="z-meta z-block z-go"><span class="z-punctuation z-section z-braces z-end z-go">}</span></span>
+</span><span class="z-source z-go">                         
+</span><span class="z-source z-go"><span class="z-storage z-type z-keyword z-function z-go">func</span> <span class="z-entity z-name z-function z-go">main</span><span class="z-punctuation z-section z-parens z-begin z-go">(</span><span class="z-punctuation z-section z-parens z-end z-go">)</span> <span class="z-meta z-block z-go"><span class="z-punctuation z-section z-braces z-begin z-go">{</span>
+</span></span><span class="z-source z-go"><span class="z-meta z-block z-go">   <span class="z-variable z-declaration z-go">user</span> <span class="z-keyword z-operator z-assignment z-go">:=</span> <span class="z-variable z-function z-go">NewUser</span><span class="z-punctuation z-section z-parens z-begin z-go">(</span><span class="z-string z-quoted z-double z-go"><span class="z-punctuation z-definition z-string z-begin z-go">&quot;</span>Alice<span class="z-punctuation z-definition z-string z-end z-go">&quot;</span></span><span class="z-punctuation z-separator z-go">,</span> <span class="z-string z-quoted z-double z-go"><span class="z-punctuation z-definition z-string z-begin z-go">&quot;</span>alice@example.com<span class="z-punctuation z-definition z-string z-end z-go">&quot;</span></span><span class="z-punctuation z-section z-parens z-end z-go">)</span>
+</span></span><span class="z-source z-go"><span class="z-meta z-block z-go">                             
+</span></span><span class="z-source z-go"><span class="z-meta z-block z-go">   <span class="z-keyword z-control z-go">if</span> <span class="z-variable z-other z-go">user</span><span class="z-punctuation z-accessor z-dot z-go">.</span><span class="z-variable z-other z-member z-go">Email</span> <span class="z-keyword z-operator z-go">!=</span> <span class="z-constant z-language z-go">nil</span> <span class="z-meta z-block z-go"><span class="z-punctuation z-section z-braces z-begin z-go">{</span>
+</span></span></span><span class="z-source z-go"><span class="z-meta z-block z-go"><span class="z-meta z-block z-go">       <span class="z-variable z-other z-go">fmt</span><span class="z-punctuation z-accessor z-dot z-go">.</span><span class="z-variable z-function z-go">Println</span><span class="z-punctuation z-section z-parens z-begin z-go">(</span><span class="z-string z-quoted z-double z-go"><span class="z-punctuation z-definition z-string z-begin z-go">&quot;</span>User Email:<span class="z-punctuation z-definition z-string z-end z-go">&quot;</span></span><span class="z-punctuation z-separator z-go">,</span> <span class="z-keyword z-operator z-go">*</span><span class="z-variable z-other z-go">user</span><span class="z-punctuation z-accessor z-dot z-go">.</span><span class="z-variable z-other z-member z-go">Email</span><span class="z-punctuation z-section z-parens z-end z-go">)</span> <span class="z-comment z-line z-go"><span class="z-punctuation z-definition z-comment z-go">//</span> Output: User Email: alice@example.com
+</span></span></span></span><span class="z-source z-go"><span class="z-meta z-block z-go"><span class="z-meta z-block z-go">   <span class="z-punctuation z-section z-braces z-end z-go">}</span></span> <span class="z-keyword z-control z-go">else</span> <span class="z-meta z-block z-go"><span class="z-punctuation z-section z-braces z-begin z-go">{</span>
+</span></span></span><span class="z-source z-go"><span class="z-meta z-block z-go"><span class="z-meta z-block z-go">       <span class="z-variable z-other z-go">fmt</span><span class="z-punctuation z-accessor z-dot z-go">.</span><span class="z-variable z-function z-go">Println</span><span class="z-punctuation z-section z-parens z-begin z-go">(</span><span class="z-string z-quoted z-double z-go"><span class="z-punctuation z-definition z-string z-begin z-go">&quot;</span>Email is not set<span class="z-punctuation z-definition z-string z-end z-go">&quot;</span></span><span class="z-punctuation z-section z-parens z-end z-go">)</span>
+</span></span></span><span class="z-source z-go"><span class="z-meta z-block z-go"><span class="z-meta z-block z-go">   <span class="z-punctuation z-section z-braces z-end z-go">}</span></span>
+</span></span><span class="z-source z-go"><span class="z-meta z-block z-go">                         
+</span></span><span class="z-source z-go"><span class="z-meta z-block z-go">   <span class="z-comment z-line z-go"><span class="z-punctuation z-definition z-comment z-go">//</span> Handling nil pointer initialization
+</span></span></span><span class="z-source z-go"><span class="z-meta z-block z-go">   <span class="z-storage z-type z-keyword z-var z-go">var</span> <span class="z-variable z-declaration z-go">email</span> <span class="z-storage z-type z-go"><span class="z-support z-type z-builtin z-go">string</span></span>
+</span></span><span class="z-source z-go"><span class="z-meta z-block z-go">   <span class="z-variable z-declaration z-go">userWithoutEmail</span> <span class="z-keyword z-operator z-assignment z-go">:=</span> <span class="z-keyword z-operator z-go">&amp;</span><span class="z-variable z-other z-go">User</span><span class="z-meta z-block z-go"><span class="z-punctuation z-section z-braces z-begin z-go">{</span><span class="z-variable z-other z-go">Name</span><span class="z-punctuation z-separator z-go">:</span> <span class="z-string z-quoted z-double z-go"><span class="z-punctuation z-definition z-string z-begin z-go">&quot;</span>Bob<span class="z-punctuation z-definition z-string z-end z-go">&quot;</span></span><span class="z-punctuation z-section z-braces z-end z-go">}</span></span>
+</span></span><span class="z-source z-go"><span class="z-meta z-block z-go">   <span class="z-keyword z-control z-go">if</span> <span class="z-variable z-other z-go">userWithoutEmail</span><span class="z-punctuation z-accessor z-dot z-go">.</span><span class="z-variable z-other z-member z-go">Email</span> <span class="z-keyword z-operator z-go">!=</span> <span class="z-constant z-language z-go">nil</span> <span class="z-meta z-block z-go"><span class="z-punctuation z-section z-braces z-begin z-go">{</span>
+</span></span></span><span class="z-source z-go"><span class="z-meta z-block z-go"><span class="z-meta z-block z-go">       <span class="z-variable z-other z-go">fmt</span><span class="z-punctuation z-accessor z-dot z-go">.</span><span class="z-variable z-function z-go">Println</span><span class="z-punctuation z-section z-parens z-begin z-go">(</span><span class="z-string z-quoted z-double z-go"><span class="z-punctuation z-definition z-string z-begin z-go">&quot;</span>User Email:<span class="z-punctuation z-definition z-string z-end z-go">&quot;</span></span><span class="z-punctuation z-separator z-go">,</span> <span class="z-keyword z-operator z-go">*</span><span class="z-variable z-other z-go">userWithoutEmail</span><span class="z-punctuation z-accessor z-dot z-go">.</span><span class="z-variable z-other z-member z-go">Email</span><span class="z-punctuation z-section z-parens z-end z-go">)</span>
+</span></span></span><span class="z-source z-go"><span class="z-meta z-block z-go"><span class="z-meta z-block z-go">   <span class="z-punctuation z-section z-braces z-end z-go">}</span></span> <span class="z-keyword z-control z-go">else</span> <span class="z-meta z-block z-go"><span class="z-punctuation z-section z-braces z-begin z-go">{</span>
+</span></span></span><span class="z-source z-go"><span class="z-meta z-block z-go"><span class="z-meta z-block z-go">       <span class="z-variable z-other z-go">fmt</span><span class="z-punctuation z-accessor z-dot z-go">.</span><span class="z-variable z-function z-go">Println</span><span class="z-punctuation z-section z-parens z-begin z-go">(</span><span class="z-string z-quoted z-double z-go"><span class="z-punctuation z-definition z-string z-begin z-go">&quot;</span>Email is not set<span class="z-punctuation z-definition z-string z-end z-go">&quot;</span></span><span class="z-punctuation z-section z-parens z-end z-go">)</span> <span class="z-comment z-line z-go"><span class="z-punctuation z-definition z-comment z-go">//</span> Output: Email is not set
+</span></span></span></span><span class="z-source z-go"><span class="z-meta z-block z-go"><span class="z-meta z-block z-go">   <span class="z-punctuation z-section z-braces z-end z-go">}</span></span>
+</span></span><span class="z-source z-go"><span class="z-meta z-block z-go">                         
+</span></span><span class="z-source z-go"><span class="z-meta z-block z-go">   <span class="z-variable z-other z-go">userWithoutEmail</span><span class="z-punctuation z-accessor z-dot z-go">.</span><span class="z-variable z-other z-member z-go">Email</span> <span class="z-keyword z-operator z-assignment z-go">=</span> <span class="z-keyword z-operator z-go">&amp;</span><span class="z-variable z-other z-go">email</span>
+</span></span><span class="z-source z-go"><span class="z-meta z-block z-go">   <span class="z-keyword z-operator z-go">*</span><span class="z-variable z-other z-go">userWithoutEmail</span><span class="z-punctuation z-accessor z-dot z-go">.</span><span class="z-variable z-other z-member z-go">Email</span> <span class="z-keyword z-operator z-assignment z-go">=</span> <span class="z-string z-quoted z-double z-go"><span class="z-punctuation z-definition z-string z-begin z-go">&quot;</span>bob@example.com<span class="z-punctuation z-definition z-string z-end z-go">&quot;</span></span>
+</span></span><span class="z-source z-go"><span class="z-meta z-block z-go">   <span class="z-variable z-other z-go">fmt</span><span class="z-punctuation z-accessor z-dot z-go">.</span><span class="z-variable z-function z-go">Println</span><span class="z-punctuation z-section z-parens z-begin z-go">(</span><span class="z-string z-quoted z-double z-go"><span class="z-punctuation z-definition z-string z-begin z-go">&quot;</span>User Email:<span class="z-punctuation z-definition z-string z-end z-go">&quot;</span></span><span class="z-punctuation z-separator z-go">,</span> <span class="z-keyword z-operator z-go">*</span><span class="z-variable z-other z-go">userWithoutEmail</span><span class="z-punctuation z-accessor z-dot z-go">.</span><span class="z-variable z-other z-member z-go">Email</span><span class="z-punctuation z-section z-parens z-end z-go">)</span> <span class="z-comment z-line z-go"><span class="z-punctuation z-definition z-comment z-go">//</span> Output: User Email: bob@example.com
+</span></span></span><span class="z-source z-go"><span class="z-meta z-block z-go"><span class="z-punctuation z-section z-braces z-end z-go">}</span></span>
+</span></code></pre>
+<p>By following these best practices, you can write safer Go code and avoid common pitfalls like nil pointer dereference errors. Properly handling pointers, ensuring they are initialized, and using constructor functions all contribute to more robust, crash-free applications.</p>
+<p>For more detailed information on pointers and how to handle them in Go, I highly recommend checking out the official Go documentation. It covers a wide range of topics, from basic pointer operations to advanced memory management techniques.</p>
+<p>I know there’s a lot to take in, but if you’re new to coding and run into the nil pointer dereference issue, don’t worry! It’s a common challenge, and understanding how to handle it will definitely make you a better developer. Just remember: with a little practice, you’ll be able to avoid these errors like a pro. Thanks for taking the time to read through this — you’ve got this! Keep coding and learning!</p>
+
+      </article>
+
+      
+      
+
+      
+      
+    </div>
+
+    
+
+
+<footer>
+  <div class="left">
+    <div class="copyright">
+      © 2025 Ezra Natanael
+      
+      <span>|</span>
+      Built with <a href="https://www.getzola.org" rel="noreferrer" target="_blank">zola</a> and <a href="https://github.com/isunjn/serene" rel="noreferrer" target="_blank">serene</a>
+      
+    </div>
+  </div>
+
+  <div class="right">
+    
+    
+      
+    
+    
+    <a id="rss-btn" href="https://ezrantn.github.io/posts/feed.xml">RSS</a>
+    
+    
+
+    
+    
+    
+    <button id="theme-toggle" aria-label="theme switch">
+      <span class="moon-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18"><path d="M10 7C10 10.866 13.134 14 17 14C18.9584 14 20.729 13.1957 21.9995 11.8995C22 11.933 22 11.9665 22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C12.0335 2 12.067 2 12.1005 2.00049C10.8043 3.27098 10 5.04157 10 7ZM4 12C4 16.4183 7.58172 20 12 20C15.0583 20 17.7158 18.2839 19.062 15.7621C18.3945 15.9187 17.7035 16 17 16C12.0294 16 8 11.9706 8 7C8 6.29648 8.08133 5.60547 8.2379 4.938C5.71611 6.28423 4 8.9417 4 12Z" fill="currentColor"></path></svg>
+</span>
+      <span class="sun-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18"><path d="M12 18C8.68629 18 6 15.3137 6 12C6 8.68629 8.68629 6 12 6C15.3137 6 18 8.68629 18 12C18 15.3137 15.3137 18 12 18ZM12 16C14.2091 16 16 14.2091 16 12C16 9.79086 14.2091 8 12 8C9.79086 8 8 9.79086 8 12C8 14.2091 9.79086 16 12 16ZM11 1H13V4H11V1ZM11 20H13V23H11V20ZM3.51472 4.92893L4.92893 3.51472L7.05025 5.63604L5.63604 7.05025L3.51472 4.92893ZM16.9497 18.364L18.364 16.9497L20.4853 19.0711L19.0711 20.4853L16.9497 18.364ZM19.0711 3.51472L20.4853 4.92893L18.364 7.05025L16.9497 5.63604L19.0711 3.51472ZM5.63604 16.9497L7.05025 18.364L4.92893 20.4853L3.51472 19.0711L5.63604 16.9497ZM23 11V13H20V11H23ZM4 11V13H1V11H4Z" fill="currentColor"></path></svg>
+</span>
+    </button>
+    
+  </div>
+</footer>
+
+
+
+
+<dialog id="rss-mask">
+  <div>
+    <a href="https:&#x2F;&#x2F;ezrantn.github.io&#x2F;posts&#x2F;feed.xml">https:&#x2F;&#x2F;ezrantn.github.io&#x2F;posts&#x2F;feed.xml</a>
+    
+    
+    <button autofocus aria-label="copy" data-link="https:&#x2F;&#x2F;ezrantn.github.io&#x2F;posts&#x2F;feed.xml" data-copy-icon="&lt;svg xmlns=&quot;http:&#x2F;&#x2F;www.w3.org&#x2F;2000&#x2F;svg&quot; viewBox=&quot;0 0 24 24&quot; width=&quot;18&quot; height=&quot;18&quot;&gt;&lt;path d=&quot;M6.9998 6V3C6.9998 2.44772 7.44752 2 7.9998 2H19.9998C20.5521 2 20.9998 2.44772 20.9998 3V17C20.9998 17.5523 20.5521 18 19.9998 18H16.9998V20.9991C16.9998 21.5519 16.5499 22 15.993 22H4.00666C3.45059 22 3 21.5554 3 20.9991L3.0026 7.00087C3.0027 6.44811 3.45264 6 4.00942 6H6.9998ZM5.00242 8L5.00019 20H14.9998V8H5.00242ZM8.9998 6H16.9998V16H18.9998V4H8.9998V6Z&quot; fill=&quot;currentColor&quot;&gt;&lt;&#x2F;path&gt;&lt;&#x2F;svg&gt;
+" data-check-icon="&lt;svg xmlns=&quot;http:&#x2F;&#x2F;www.w3.org&#x2F;2000&#x2F;svg&quot; viewBox=&quot;0 0 24 24&quot; width=&quot;18&quot; height=&quot;18&quot;&gt;&lt;path d=&quot;M10.0007 15.1709L19.1931 5.97852L20.6073 7.39273L10.0007 17.9993L3.63672 11.6354L5.05093 10.2212L10.0007 15.1709Z&quot; fill=&quot;currentColor&quot;&gt;&lt;&#x2F;path&gt;&lt;&#x2F;svg&gt;
+" >
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18"><path d="M6.9998 6V3C6.9998 2.44772 7.44752 2 7.9998 2H19.9998C20.5521 2 20.9998 2.44772 20.9998 3V17C20.9998 17.5523 20.5521 18 19.9998 18H16.9998V20.9991C16.9998 21.5519 16.5499 22 15.993 22H4.00666C3.45059 22 3 21.5554 3 20.9991L3.0026 7.00087C3.0027 6.44811 3.45264 6 4.00942 6H6.9998ZM5.00242 8L5.00019 20H14.9998V8H5.00242ZM8.9998 6H16.9998V16H18.9998V4H8.9998V6Z" fill="currentColor"></path></svg>
+
+    </button>
+  </div>
+</dialog>
+
+
+
+  </main>
+</div>
+
+  
+<script src="/js/lightense.min.js"></script>
+
+
+  <script src="https://ezrantn.github.io/js/main.js"></script>
+</body>
+
+</html>
