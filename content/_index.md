@@ -26,4 +26,3 @@ date_format = "%b %-d, %Y"
 +++
 
 Hi, I’m Ezra — a software engineer based in Jakarta, Indonesia. I build systems, break them, and occasionally fix them. My interests orbit around compilers, systems programming, and databases. When I’m not deep in code, you’ll find me at the gym, over-caffeinated, or out having an actual social life (_rare for a CS grad, I know_).
-I sometimes write papers — check them out on [Google Scholar](https://scholar.google.com/citations?user=iubOEX4AAAAJ&hl=en).
