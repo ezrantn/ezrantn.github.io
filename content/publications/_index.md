@@ -13,5 +13,6 @@ lang = "en"
 
 ### A Blockchain and InterPlanetary File System (IPFS) Based Smart Contract Framework for Preventing Certificate Fraud in Academia
 
-**Conference:** ICITACEE 2025, 28–29 August 2025  
-**Published at:** [IEEE Xplore](https://ieeexplore.ieee.org/document/11233026)
+- **Role:** Author, under the supervision [Ridwan Sanjaya](https://siega.id/prof-dr-ridwan-sanjaya/) and [Erdhi Widyarto Nugroho](https://siega.id/erdhi-widyarto-n/)
+- **Conference:** ICITACEE 2025, 28–29 August 2025
+- **Published at:** [IEEE Xplore](https://ieeexplore.ieee.org/document/11233026)
