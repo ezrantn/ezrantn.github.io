@@ -25,4 +25,4 @@ recent_more_text = "more »"
 date_format = "%b %-d, %Y"
 +++
 
-Hi, I’m Ezra — a software engineer based in Jakarta, Indonesia. I build systems, break them, and occasionally fix them. My interests orbit around compilers, systems programming, and databases. When I’m not deep in code, you’ll find me at the gym, over-caffeinated, or out having an actual social life (_rare for a CS grad, I know_).
+Hi, I’m Natan — a software engineer based in Indonesia with a strong interest in formal verification and building reliable software. I enjoy working with compilers, programming languages, and database systems, especially where theory meets real-world engineering. I’m also passionate about open-source and learning through contribution. Outside of work, you’ll usually find me lifting, caffeinating, or trying to have a social life.
