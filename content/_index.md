@@ -25,4 +25,4 @@ recent_more_text = "more »"
 date_format = "%b %-d, %Y"
 +++
 
-Hi, I’m Natan — a software engineer based in Indonesia with a strong interest in formal verification and building reliable software. I enjoy working with compilers, programming languages, and database systems, especially where theory meets real-world engineering. I’m also passionate about open-source and learning through contribution. Outside of work, you’ll usually find me lifting, caffeinating, or trying to have a social life.
+Hi, I’m Natan — a software engineer based in Indonesia with a strong interest in formal verification. I enjoy working with compilers, programming languages, and database systems. I’m currently working on [Katon](https://github.com/katon-lang/katon), a mini verification programming language aimed at solving the aliasing problem. You can read more about Katon in the [official documentation](https://katon-lang.github.io). Outside of coding, you might find me at the gym or just trying to have a social life.
