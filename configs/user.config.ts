@@ -1,12 +1,12 @@
 import type { UserConfig } from "../src/site.config";
 
 const userConfig: UserConfig = {
-  title: "Lipi",
+  title: "EN",
   description:
-    "A minimal editorial theme for Astro built for blogs, journals, travel writing, and long-form publishing.",
+    "Jack of all trades, master of none.",
 
-  url: "https://astro-lipi.pages.dev",
-  author: "John Doe",
+  url: "https://ezrantn.github.io",
+  author: "Ezra Natanael",
 
   logo: "/logo.svg",
   avatar: "/avatar.png",

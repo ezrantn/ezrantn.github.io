@@ -1,19 +1,35 @@
 ---
 title: About
-description: Lipi is a typography-first Astro template for long-form writing, made by The Localhost Studio.
-updated: 2026-05-26
+description: Software engineer, writer, and a chronic overthinker.
+updated: 2026-06-26
 ---
 
-Lipi is a template for Astro, built for writers who care about how their words look on the page. It is not a general-purpose blog theme, and it is not trying to be. It is a publishing environment for essays, travel notes, developer journals, and personal archives: the kind of writing that benefits from a considered layout and a quiet interface.
+Greetings, my name is **Ezra**.
 
-Lipi's visual design draws inspiration from the [Kami](https://kami.tw93.fun) design language: warm neutrals, a constrained measure, generous spacing, and an interface that stays out of the way. The type is set in Literata, a serif face designed for reading at length. The layout holds under Cmd+P. The output is static HTML with minimal JavaScript.
+I am a software engineer, a writer, and someone who loves to break down how things work. Honestly, I am also a chronic overthinker. By day, I work a corporate job in IT. By night, I use that exact same logical, problem-solving mindset to look at history, philosophy, and christian theology.
+
+I know how working in a corporate structure sounds—it is a routine machine. But it also trained me to look at things structurally. When I see an idea, whether it is a piece of code or an old religious doctrine, I always want to look under the hood, find the core framework, and clear out the unnecessary noise.
+
+> Hell is empty and all the devils are here. — William Shakespeare
 
 ---
 
-## The Localhost Studio
+## What I Do Here
 
-The Localhost Studio is a small independent studio building thoughtful tools for writers and publishers. We work at the intersection of typography, publishing, and the web, with a preference for things that are made carefully and maintained honestly.
+This website is my personal notebook. It is a place where I store my thoughts, theories, and projects. I write about anything that catches my attention. Because of how my brain works, the style might change from page to page:
 
-Lipi began as a personal template, became a design exploration, and eventually became something we thought was worth sharing. The inspiration from Kami runs through everything we make: the same warmth, the same restraint, the same conviction that the content should come first.
+* **The Deep Analytical Stuff:** Where I use math, logic, or data models to test historical claims and clean up old arguments.
+* **The Simple Side:** Chill articles where I share casual thoughts on life, work, design, or just interesting things I read about during the week.
 
-If you are building something with Lipi, or if you have a question about the design, you can find us at [The Localhost Studio](https://thelocalhoststudio.in) or through the links in the footer.
+---
+
+## Current Baseline
+
+* **Location:** Based in Jakarta, Indonesia.
+* **Approach:** Keep it clean, keep it logical, and cut out the fluff.
+
+---
+
+### Disclaimer
+
+*All of my writings are my own personal opinions. They are the results of my own independent research and thinking, and they do not represent any company or institution I work for.*
