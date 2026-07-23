@@ -1,0 +1,45 @@
+{{ define "main" }}
+
+<h1>{{ .Site.Title }}</h1>
+
+My research interests are in formal verification, artificial intelligence, and software engineering.
+
+<p>
+<a href="{{ .Site.Params.orcid }}">ORCID</a> /
+<a href="{{ .Site.Params.github }}">GitHub</a> /
+<a href="{{ .Site.Params.linkedin }}">LinkedIn</a> /
+<a href="/index.xml">RSS</a>
+</p>
+
+<h2>Publications</h2>
+
+<ul>
+<li>
+<a href="https://doi.org/10.1109/ICITACEE66165.2025.11233026">A Blockchain and InterPlanetary File System (IPFS) Based Smart Contract Framework for Preventing Certificate Fraud in Academia.</a>
+<em>ICITACEE 2025</em>
+</li>
+</ul>
+
+<h2>Posts</h2>
+
+<ul>
+
+{{ range .Site.RegularPages }}
+
+<li>
+<a href="{{ .RelPermalink }}">
+{{ .Title }}
+</a>
+
+<small>
+/ {{ .Date.Format "2006-01-02" }}
+</small>
+
+</li>
+
+{{ end }}
+
+</ul>
+
+
+{{ end }}

@@ -1,0 +1,26 @@
+baseURL = 'https://example.org/'
+locale = 'en-us'
+title = 'Ezra Natanael'
+
+enableRobotsTXT = true
+
+[markup]
+  [markup.highlight]
+    codeFences = true
+    guessSyntax = true
+    lineNos = false
+    style = "github"
+    noClasses = false
+
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+
+[params]
+github = "https://github.com/ezrantn"
+linkedin = "https://linkedin.com/in/ezrantn"
+orcid = "https://orcid.org/0009-0004-2902-3983"
+
+[caches]
+  [caches.images]
+    dir = ':cacheDir/images'

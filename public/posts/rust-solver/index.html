@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<meta name="description" content="Ezra Natanael">
+
+<title>
+
+DPLL(T) Solver Architecture | Ezra Natanael
+
+</title>
+
+
+
+<link rel="stylesheet" href="/css/style.css">
+<link rel="icon" href="/favicon.ico">
+</head>
+
+<body>
+
+<main>
+
+
+
+<article>
+
+<h1>DPLL(T) Solver Architecture</h1>
+
+<p>
+<small>
+2026-07-22
+</small>
+</p>
+
+<h2 id="abstract">Abstract</h2>
+<p>This document describes an experimental SMT solver implementation.</p>
+<h2 id="algorithm">Algorithm</h2>
+<p>The solver consists of:</p>
+<ol>
+<li>Parsing</li>
+<li>Constraint propagation</li>
+<li>Branching</li>
+<li>Backtracking</li>
+</ol>
+<h2 id="implementation">Implementation</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">pub</span><span class="w"> </span><span class="k">fn</span> <span class="nf">solve</span><span class="p">(</span><span class="n">problem</span>: <span class="nc">Formula</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">Result</span><span class="o">&lt;</span><span class="n">Model</span><span class="p">,</span><span class="w"> </span><span class="n">Error</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="o">..</span><span class="p">.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div>
+
+</article>
+
+
+
+</main>
+
+</body>
+
+</html>

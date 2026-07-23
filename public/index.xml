@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Hello, Research Notes on Ezra Natanael</title>
+    <link>http://localhost:1313/</link>
+    <description>Recent content in Hello, Research Notes on Ezra Natanael</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 25 May 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Understanding and Preventing Nil Pointer Dereference Panics in Go</title>
+      <link>http://localhost:1313/posts/understanding-and-preventing-nil-pointer-dereference-panics-in-go/</link>
+      <pubDate>Sat, 25 May 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/understanding-and-preventing-nil-pointer-dereference-panics-in-go/</guid>
+      <description>&lt;p&gt;For those who code in Go, you might encounter a common error: the nil pointer error. This error can be confusing for beginners and even for those with previous programming experience. But don’t worry, I’ll explain everything about the nil pointer error and how to prevent it.&lt;/p&gt;&#xA;&lt;p&gt;Imagine your computer’s memory as a big storage unit with many compartments. Each compartment has a unique number, which we call an address. A pointer is like a note that you write down one of these addresses on, so you can quickly find a specific compartment again.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
