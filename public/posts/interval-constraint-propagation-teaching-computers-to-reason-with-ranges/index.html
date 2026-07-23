@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<meta name="description" content="Basis on constraint solver">
+
+<title>
+
+Interval Constraint Propagation: Teaching Computers to Reason with Ranges | Ezra Natanael
+
+</title>
+
+
+<script>
+window.MathJax = {
+tex: {
+inlineMath: [['$', '$']]
+}
+};
+</script>
+
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+
+
+<link rel="stylesheet" href="/css/style.css">
+<link rel="icon" href="/favicon.ico">
+</head>
+
+<body>
+
+<main>
+
+
+
+<article>
+
+<h1>Interval Constraint Propagation: Teaching Computers to Reason with Ranges</h1>
+
+<p>
+<small>
+2026-07-23
+</small>
+</p>
+
+<p>When we write programs, we usually think about variables as having a single value.</p>
+<p>For example:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">x = 10
+</span></span></code></pre></div><p>The variable <code>x</code> contains exactly one value.</p>
+<p>However, many problems in computer science and engineering are not about finding one exact value immediately. Sometimes, we only know that a variable exists within a certain range.</p>
+<p>For example:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">x ∈ [0, 10]
+</span></span></code></pre></div><p>This means that the value of <code>x</code> can be anywhere between 0 and 10.</p>
+<p>This simple idea becomes powerful when combined with constraints. Instead of checking every possible value, we can reason about the possible ranges of variables and eliminate impossible solutions.</p>
+<p>This technique is called <strong>Interval Constraint Propagation</strong>.</p>
+<hr>
+<h2 id="what-is-an-interval">What is an Interval?</h2>
+<p>An interval represents a range of possible values.</p>
+<p>A normal variable:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">x = 5
+</span></span></code></pre></div><p>contains one exact value.</p>
+<p>An interval variable:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">x ∈ [1, 5]
+</span></span></code></pre></div><p>means:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">1 ≤ x ≤ 5
+</span></span></code></pre></div><p>The exact value of <code>x</code> is unknown, but we know its boundaries.</p>
+<p>For example:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">Temperature ∈ [20°C, 30°C]
+</span></span></code></pre></div><p>means the temperature can be any value between 20 and 30 degrees.</p>
+<hr>
+<h2 id="interval-arithmetic">Interval Arithmetic</h2>
+<p>To reason about intervals, we need operations that work on ranges.</p>
+<p>Consider two intervals:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">A = [1, 5]
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">B = [10, 20]
+</span></span></code></pre></div><p>If we add them together:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">A + B
+</span></span></code></pre></div><p>The smallest possible result is:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">1 + 10 = 11
+</span></span></code></pre></div><p>The largest possible result is:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">5 + 20 = 25
+</span></span></code></pre></div><p>Therefore:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">[1,5] + [10,20] = [11,25]
+</span></span></code></pre></div><p>The result is another interval representing all possible outcomes.</p>
+<hr>
+<h2 id="why-do-we-need-constraint-propagation">Why Do We Need Constraint Propagation?</h2>
+<p>Imagine we have this constraint:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">x + y = 10
+</span></span></code></pre></div><p>Initially, we only know:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">x ∈ [0,10]
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">y ∈ [0,10]
+</span></span></code></pre></div><p>At this point, many possibilities exist.</p>
+<p><code>x</code> could be 0, 1, 2, &hellip;, 10.</p>
+<p>However, constraints can provide additional information.</p>
+<p>Suppose we discover:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">y ∈ [7,10]
+</span></span></code></pre></div><p>Since:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">x + y = 10
+</span></span></code></pre></div><p>we can rewrite the constraint:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">x = 10 - y
+</span></span></code></pre></div><p>Because:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">y ∈ [7,10]
+</span></span></code></pre></div><p>then:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">x ∈ [0,3]
+</span></span></code></pre></div><p>The possible values of <code>x</code> have been reduced.</p>
+<p>Before propagation:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">x ∈ [0,10]
+</span></span></code></pre></div><p>After propagation:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">x ∈ [0,3]
+</span></span></code></pre></div><p>The solver has learned more information without trying every possible value.</p>
+<p>This process is called <strong>constraint propagation</strong>.</p>
+<hr>
+<h2 id="detecting-impossible-constraints">Detecting Impossible Constraints</h2>
+<p>Interval propagation can also detect contradictions.</p>
+<p>Consider:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">x ∈ [0,5]
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">y ∈ [0,5]
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">x + y = 20
+</span></span></code></pre></div><p>The maximum possible value of:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">x + y
+</span></span></code></pre></div><p>is:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">5 + 5 = 10
+</span></span></code></pre></div><p>However, the constraint requires:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">x + y = 20
+</span></span></code></pre></div><p>The required value is outside the possible range.</p>
+<p>Therefore, this branch is impossible.</p>
+<p>A solver can immediately reject this constraint without exploring every possible combination.</p>
+<hr>
+<h2 id="branch-and-prune">Branch and Prune</h2>
+<p>Propagation alone is sometimes not enough.</p>
+<p>Consider:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">x ∈ [0,100]
+</span></span></code></pre></div><p>There are still many possible values.</p>
+<p>A common strategy is <strong>branch and prune</strong>.</p>
+<p>The solver splits the interval:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">x ∈ [0,50]
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">x ∈ [50,100]
+</span></span></code></pre></div><p>Then each branch is analyzed separately.</p>
+<p>For each branch:</p>
+<ol>
+<li>Apply constraint propagation.</li>
+<li>Remove impossible ranges.</li>
+<li>Continue searching if necessary.</li>
+</ol>
+<p>This creates a search process where the solver continuously narrows the solution space.</p>
+<hr>
+<h2 id="implementing-interval-propagation-in-rust">Implementing Interval Propagation in Rust</h2>
+<p>A minimal interval representation can be defined as:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="cp">#[derive(Debug, Clone)]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="k">pub</span><span class="w"> </span><span class="k">struct</span> <span class="nc">Interval</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">lower</span>: <span class="kt">f64</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">upper</span>: <span class="kt">f64</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>An interval addition operation:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">impl</span><span class="w"> </span><span class="n">Interval</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="k">fn</span> <span class="nf">add</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">other</span>: <span class="kp">&amp;</span><span class="nc">Interval</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">Interval</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Interval</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">lower</span>: <span class="nc">self</span><span class="p">.</span><span class="n">lower</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">other</span><span class="p">.</span><span class="n">lower</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">upper</span>: <span class="nc">self</span><span class="p">.</span><span class="n">upper</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">other</span><span class="p">.</span><span class="n">upper</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>For example:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Interval</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">lower</span>: <span class="mf">1.0</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">upper</span>: <span class="mf">5.0</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">};</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Interval</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">lower</span>: <span class="mf">10.0</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">upper</span>: <span class="mf">20.0</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">};</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="o">&amp;</span><span class="n">b</span><span class="p">);</span><span class="w">
+</span></span></span></code></pre></div><p>The result:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">[11,25]
+</span></span></code></pre></div><p>represents every possible value produced by adding the two intervals.</p>
+<hr>
+<h2 id="relationship-with-smt-solvers">Relationship with SMT Solvers</h2>
+<p>Interval Constraint Propagation is closely related to how modern constraint solvers reduce search spaces.</p>
+<p>Instead of blindly exploring every possible assignment:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">x = 0
+</span></span><span class="line"><span class="cl">x = 1
+</span></span><span class="line"><span class="cl">x = 2
+</span></span><span class="line"><span class="cl">...
+</span></span></code></pre></div><p>the solver uses mathematical reasoning to eliminate impossible regions.</p>
+<p>This idea appears in many areas:</p>
+<ul>
+<li>SMT solving</li>
+<li>formal verification</li>
+<li>symbolic execution</li>
+<li>optimization</li>
+<li>numerical analysis</li>
+</ul>
+<p>A solver becomes more efficient when it can prove that an entire region of the search space is impossible.</p>
+<hr>
+<h2 id="conclusion">Conclusion</h2>
+<p>Interval Constraint Propagation is a simple idea with powerful consequences.</p>
+<p>Instead of asking:</p>
+<blockquote>
+<p>&ldquo;What is the exact value of this variable?&rdquo;</p>
+</blockquote>
+<p>we ask:</p>
+<blockquote>
+<p>&ldquo;What values are still possible?&rdquo;</p>
+</blockquote>
+<p>By representing uncertainty as ranges and continuously refining those ranges through constraints, a solver can reason about complex problems more efficiently.</p>
+<p>This idea became one of the foundations of the constraint solver I have been building in Rust, where interval reasoning is combined with branch-and-prune strategies to explore continuous constraint spaces.</p>
+<p>Understanding intervals is not only about mathematics. It is about teaching computers how to reason.</p>
+
+
+<footer class="post-footer">
+    <hr>
+    <p><a href="/">← Back to Home</a></p>
+</footer>
+
+</article>
+
+
+
+</main>
+
+</body>
+
+</html>

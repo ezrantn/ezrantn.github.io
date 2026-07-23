@@ -6,8 +6,15 @@
     <description>Recent content in Hello, Research Notes on Ezra Natanael</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 25 May 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 23 Jul 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Interval Constraint Propagation: Teaching Computers to Reason with Ranges</title>
+      <link>http://localhost:1313/posts/interval-constraint-propagation-teaching-computers-to-reason-with-ranges/</link>
+      <pubDate>Thu, 23 Jul 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/interval-constraint-propagation-teaching-computers-to-reason-with-ranges/</guid>
+      <description>&lt;p&gt;When we write programs, we usually think about variables as having a single value.&lt;/p&gt;&#xA;&lt;p&gt;For example:&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-text&#34; data-lang=&#34;text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;x = 10&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;The variable &lt;code&gt;x&lt;/code&gt; contains exactly one value.&lt;/p&gt;&#xA;&lt;p&gt;However, many problems in computer science and engineering are not about finding one exact value immediately. Sometimes, we only know that a variable exists within a certain range.&lt;/p&gt;&#xA;&lt;p&gt;For example:&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-text&#34; data-lang=&#34;text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;x ∈ [0, 10]&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;This means that the value of &lt;code&gt;x&lt;/code&gt; can be anywhere between 0 and 10.&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Understanding and Preventing Nil Pointer Dereference Panics in Go</title>
       <link>http://localhost:1313/posts/understanding-and-preventing-nil-pointer-dereference-panics-in-go/</link>
