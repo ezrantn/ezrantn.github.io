@@ -18,7 +18,6 @@ enableRobotsTXT = true
 
 [params]
 github = "https://github.com/ezrantn"
-linkedin = "https://linkedin.com/in/ezrantn"
 orcid = "https://orcid.org/0009-0004-2902-3983"
 
 [caches]
