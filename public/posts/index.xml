@@ -2,24 +2,31 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on Ezra Natanael</title>
-    <link>http://localhost:1313/posts/</link>
+    <link>https://ezrantn.github.io/posts/</link>
     <description>Recent content in Posts on Ezra Natanael</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 23 Jul 2026 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 18 Aug 2026 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://ezrantn.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Decidability Traps in Non-Linear Real Arithmetic</title>
+      <link>https://ezrantn.github.io/posts/decidability-traps-in-non-linear-real-arithmetic/</link>
+      <pubDate>Tue, 18 Aug 2026 00:00:00 +0000</pubDate>
+      <guid>https://ezrantn.github.io/posts/decidability-traps-in-non-linear-real-arithmetic/</guid>
+      <description>&lt;p&gt;In automated reasoning, one of the deceptively difficult questions is also one of the simplest to state:&lt;/p&gt;&#xA;&lt;p&gt;$$&#xA;E(x) = 0 ;?&#xA;$$&lt;/p&gt;&#xA;&lt;p&gt;For a polynomial, this is a well-understood computational problem. But once sufficiently expressive transcendental functions are introduced, the situation changes dramatically.&lt;/p&gt;&#xA;&lt;p&gt;Formulated by Daniel Richardson in 1968, Richardson&amp;rsquo;s Theorem established a fundamental limitation of symbolic computation: for a broad class of elementary expressions involving functions such as $\sin$, $\exp$, $\log$, and absolute value, certain basic semantic properties of the expression are undecidable.&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Interval Constraint Propagation: Teaching Computers to Reason with Ranges</title>
-      <link>http://localhost:1313/posts/interval-constraint-propagation-teaching-computers-to-reason-with-ranges/</link>
+      <link>https://ezrantn.github.io/posts/interval-constraint-propagation-teaching-computers-to-reason-with-ranges/</link>
       <pubDate>Thu, 23 Jul 2026 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/interval-constraint-propagation-teaching-computers-to-reason-with-ranges/</guid>
+      <guid>https://ezrantn.github.io/posts/interval-constraint-propagation-teaching-computers-to-reason-with-ranges/</guid>
       <description>&lt;p&gt;When we write programs, we usually think about variables as having a single value.&lt;/p&gt;&#xA;&lt;p&gt;For example:&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-text&#34; data-lang=&#34;text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;x = 10&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;The variable &lt;code&gt;x&lt;/code&gt; contains exactly one value.&lt;/p&gt;&#xA;&lt;p&gt;However, many problems in computer science and engineering are not about finding one exact value immediately. Sometimes, we only know that a variable exists within a certain range.&lt;/p&gt;&#xA;&lt;p&gt;For example:&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-text&#34; data-lang=&#34;text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;x ∈ [0, 10]&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;This means that the value of &lt;code&gt;x&lt;/code&gt; can be anywhere between 0 and 10.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Understanding and Preventing Nil Pointer Dereference Panics in Go</title>
-      <link>http://localhost:1313/posts/understanding-and-preventing-nil-pointer-dereference-panics-in-go/</link>
+      <link>https://ezrantn.github.io/posts/understanding-and-preventing-nil-pointer-dereference-panics-in-go/</link>
       <pubDate>Sat, 25 May 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/understanding-and-preventing-nil-pointer-dereference-panics-in-go/</guid>
+      <guid>https://ezrantn.github.io/posts/understanding-and-preventing-nil-pointer-dereference-panics-in-go/</guid>
       <description>&lt;p&gt;For those who code in Go, you might encounter a common error: the nil pointer error. This error can be confusing for beginners and even for those with previous programming experience. But don’t worry, I’ll explain everything about the nil pointer error and how to prevent it.&lt;/p&gt;&#xA;&lt;p&gt;Imagine your computer’s memory as a big storage unit with many compartments. Each compartment has a unique number, which we call an address. A pointer is like a note that you write down one of these addresses on, so you can quickly find a specific compartment again.&lt;/p&gt;</description>
     </item>
   </channel>
