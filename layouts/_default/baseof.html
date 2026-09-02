@@ -3,7 +3,7 @@
 
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>
 {{ if .Title }}
@@ -22,22 +22,17 @@
 </head>
 
 <body>
+    <main class="container">
+        {{ block "main" . }}
+        {{ end }}
+    </main>
 
-<main>
-
-{{ block "main" . }}
-
-{{ end }}
-
-</main>
-
-{{ if .Store.Get "hasMermaid" }}
-  <script type="module">
-    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.esm.min.mjs';
-    mermaid.initialize({ startOnLoad: true });
-  </script>
-{{ end }}
-
+    {{ if .Store.Get "hasMermaid" }}
+      <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true });
+      </script>
+    {{ end }}
 </body>
 
 </html>
